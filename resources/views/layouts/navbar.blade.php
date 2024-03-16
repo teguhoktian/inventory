@@ -2,9 +2,9 @@
     <!-- Logo -->
     <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">SIGI</span>
+        <span class="logo-mini">INV</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg" style="font-size: normal;">SI Ruang Gigi</span>
+        <span class="logo-lg" style="font-size: normal;">Inventory</span>
     </a>
 
     <!-- Header Navbar -->
