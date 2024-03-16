@@ -9,23 +9,15 @@
                     <i class="fa fa-home"></i> <span>Dashboard</span>
                 </a>
             </li>
+
             @hasrole('Administrator')
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-th"></i> <span>{{ __('Data Master') }}</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+            <li class="@if(Request::route()->getName() == 'user.index') active @endif">
+                <a href="{{ route('user.index') }}">
+                    <i class="fa fa-user"></i> <span>{{ __('Data Pengguna') }}</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
-                        <a href="{{ route('user.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Pengguna') }}
-                        </a>
-                    </li>
-                </ul>
             </li>
             @endhasrole
+
 
         </ul>
         <!-- /.sidebar-menu -->
