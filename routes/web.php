@@ -4,6 +4,7 @@ use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KunjunganPasienController;
 use App\Http\Controllers\MasterDusunController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // URL /auth/master
             Route::prefix('master')->group(function () {
                 Route::resource('jenis-barang', JenisBarangController::class)->except(['show']);
+                Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
             });
         });
     });

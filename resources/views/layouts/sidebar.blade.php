@@ -36,8 +36,8 @@
                             <i class="fa fa-circle-o"></i> {{ __('Jenis Barang') }}
                         </a>
                     </li>
-                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
-                        <a href="{{ route('user.index') }}">
+                    <li class="@if(Request::route()->getName() == 'satuan-barang.index') active @endif">
+                        <a href="{{ route('satuan-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Satuan Barang') }}
                         </a>
                     </li>
