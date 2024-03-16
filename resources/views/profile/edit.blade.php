@@ -8,7 +8,7 @@
             <div class="box box-body">
                 <div class="col-md-6">
                     <h4>
-                        <i class="fa fa-user"></i> 
+                        <i class="fa fa-user"></i>
                         {{ __('Profil') }}
                     </h4>
                 </div>
@@ -26,15 +26,16 @@
         <!-- /.com-md-12 -->
     </div>
     <!-- /.row -->
-    
+
     <div class="content">
         <div class="box border-top-solid">
-			<div class="box-body my-form-body">
-                {{ Form::open(['route' => 'profile.update', 'files' => true, 'id' => 'moduleForm', 'class' => 'form-horizontal' ]) }}
+            <div class="box-body my-form-body">
+                {{ Form::open(['route' => 'profile.update', 'files' => true, 'id' => 'moduleForm', 'class' =>
+                'form-horizontal' ]) }}
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Nama') }}</label>
                     <div class="col-sm-9">
-                        {{ Form::text('nama', Auth::user()->name, [ 'class' => 'form-control']) }}
+                        {{ Form::text('name', Auth::user()->name, [ 'class' => 'form-control']) }}
                     </div>
                 </div>
 
@@ -59,12 +60,12 @@
                         <span class="help-block">Kosongkan jika tidak diganti</span>
                     </div>
                 </div>
-               
+
                 <div class="form-group">
                     <div class="col-sm-11">
                         <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
                             {{ __('Simpan') }}
-                        </button>	
+                        </button>
                     </div>
                 </div>
                 {{ Form::close() }}
