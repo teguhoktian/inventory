@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KunjunganPasienController;
 use App\Http\Controllers\MasterDusunController;
 use App\Http\Controllers\PasienController;
@@ -36,9 +37,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // URL /auth/
         Route::prefix('auth')->group(function () {
 
-            // URL /auth/master/
+            // URL /auth
+            Route::resource('user', UserController::class);
+
+            // URL /auth/master
             Route::prefix('master')->group(function () {
-                Route::resource('user', UserController::class);
+                Route::resource('jenis-barang', JenisBarangController::class)->except(['show']);
             });
         });
     });
