@@ -2,20 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\BarangMasuk;
-use App\Models\BarangMasukDetail;
+use App\Models\BarangKeluar;
+use App\Models\BarangKeluarDetail;
 use Yajra\DataTables\DataTables;
 
-class BarangMasukService
+class BarangKeluarService
 {
     public function getDT()
     {
-        return DataTables::of(BarangMasuk::withCount('detail')
-            ->with(['supplier'])->latest()->get())
-            ->addColumn('supplier', function ($row) {
-                return $row->supplier?->nama;
+        return DataTables::of(BarangKeluar::with(['kantor'])->latest()->get())
+            ->addColumn('kantor', function ($row) {
+                return $row->kantor?->nama;
             })
-            ->addColumn('action', 'barangmasuk.action')
+            ->addColumn('action', 'barangkeluar.action')
             ->addIndexColumn()
             ->make(true);
     }
@@ -28,7 +27,7 @@ class BarangMasukService
 
     public function create($request)
     {
-        $collection = BarangMasuk::create($request->all());
+        $collection = BarangKeluar::create($request->all());
         $this->addCart($collection);
         return $collection;
     }
@@ -40,16 +39,16 @@ class BarangMasukService
 
     function addCart($collection)
     {
-        $cart_products = collect(request()->session()->get('cart'));
+        $cart_products = collect(request()->session()->get('cart_out'));
         foreach ($cart_products as $key => $product) {
-            BarangMasukDetail::create([
-                'id_barang_masuk' => $collection->id,
+            BarangKeluarDetail::create([
+                'id_barang_keluar' => $collection->id,
                 'id_barang' => $product['id_barang'],
                 'quantity' => $product['quantity'],
                 'harga' => $product['harga']
             ]);
         }
 
-        request()->session()->put('cart', []);
+        request()->session()->put('cart_out', []);
     }
 }

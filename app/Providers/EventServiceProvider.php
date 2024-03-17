@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\BarangKeluarDetail;
 use App\Models\BarangMasukDetail;
+use App\Observers\BarangKeluarDetailObserver;
 use App\Observers\BarangMasukDetailObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -31,5 +33,6 @@ class EventServiceProvider extends ServiceProvider
     {
         //
         BarangMasukDetail::observe(BarangMasukDetailObserver::class);
+        BarangKeluarDetail::observe(BarangKeluarDetailObserver::class);
     }
 }

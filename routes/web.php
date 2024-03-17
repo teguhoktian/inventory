@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
@@ -54,9 +55,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/transaksi
             Route::prefix('transaksi')->group(function () {
+
+                // URL /auth/transaksi/barang-masuk
                 Route::post('barang-masuk/addtocart', [BarangMasukController::class, 'addtocart'])->name('barang-masuk.addtocart');
                 Route::delete('barang-masuk/{key}/removecartitem', [BarangMasukController::class, 'removecartitem'])->name('barang-masuk.removecartitem');
                 Route::resource('barang-masuk', BarangMasukController::class);
+
+                // URL /auth/transaksi/barang-masuk
+                Route::post('barang-keluar/addtocart', [BarangKeluarController::class, 'addtocart'])->name('barang-keluar.addtocart');
+                Route::delete('barang-keluar/{key}/removecartitem', [BarangKeluarController::class, 'removecartitem'])->name('barang-keluar.removecartitem');
+                Route::get('barang-keluar/{id}/getLastPrice', [BarangKeluarController::class, 'getLastPrice'])->name('barang-keluar.getLastPrice');
+                Route::resource('barang-keluar', BarangKeluarController::class);
             });
         });
     });
