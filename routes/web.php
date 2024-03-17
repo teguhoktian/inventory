@@ -1,9 +1,7 @@
 <?php
 
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JenisBarangController;
-use App\Http\Controllers\KunjunganPasienController;
-use App\Http\Controllers\MasterDusunController;
-use App\Http\Controllers\PasienController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -44,7 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {
+                Route::resource('barang', BarangController::class)->except(['show']);
                 Route::resource('jenis-barang', JenisBarangController::class)->except(['show']);
+                Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
             });

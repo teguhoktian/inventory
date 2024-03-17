@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JenisBarang extends Model
 {
@@ -32,5 +33,15 @@ class JenisBarang extends Model
     public function setNamaAttribute($value)
     {
         return $this->attributes['nama'] = strtoupper($value);
+    }
+
+    /**
+     * Get all of the barang for the JenisBarang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function barang(): HasMany
+    {
+        return $this->hasMany(Barang::class);
     }
 }
