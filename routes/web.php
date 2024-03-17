@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\SupplierController;
@@ -47,6 +48,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
+            });
+
+            // URL /auth/transaksi
+            Route::prefix('transaksi')->group(function () {
+                Route::post('barang-masuk/addtocart', [BarangMasukController::class, 'addtocart'])->name('barang-masuk.addtocart');
+                Route::delete('barang-masuk/{key}/removecartitem', [BarangMasukController::class, 'removecartitem'])->name('barang-masuk.removecartitem');
+                Route::resource('barang-masuk', BarangMasukController::class);
             });
         });
     });

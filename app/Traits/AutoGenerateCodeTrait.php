@@ -7,19 +7,19 @@ trait AutoGenerateCodeTrait
     protected function generateCode($modelClass, $prefix = 'JB')
     {
         $currentMonth = date('m');
-        $currentYear = date('Y');
+        $currentYear = substr(date('Y'), -2);
 
         $lastCode = $this->getLastCode($modelClass, $prefix, $currentMonth, $currentYear);
 
         // Logika untuk menghasilkan kode baru
         if ($lastCode) {
             // Jika kode terakhir ada, maka ambil nomor urut terakhir
-            $lastNumber = intval(substr($lastCode, -3));
+            $lastNumber = intval(substr($lastCode, -5));
             $newNumber = $lastNumber + 1;
-            $code = $prefix . $currentMonth . $currentYear . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+            $code = $prefix . $currentMonth . $currentYear . str_pad($newNumber, 5, '0', STR_PAD_LEFT);
         } else {
             // Jika belum ada kode sebelumnya, mulai dari nomor 1
-            $code = $prefix . $currentMonth . $currentYear . '001';
+            $code = $prefix . $currentMonth . $currentYear . '00001';
         }
 
         return $code; // Kembalikan kode yang dihasilkan
