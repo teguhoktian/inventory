@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
+use App\Http\Controllers\KantorCabangController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -48,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
+                Route::resource('kantor-cabang', KantorCabangController::class)->except(['show']);
             });
 
             // URL /auth/transaksi

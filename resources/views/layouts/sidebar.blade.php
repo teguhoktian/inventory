@@ -26,6 +26,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li class="@if(Route::is('kantor-cabang.*')) active @endif">
+                        <a href="{{ route('kantor-cabang.index') }}">
+                            <i class="fa fa-circle-o"></i> {{ __('Cabang') }}
+                        </a>
+                    </li>
                     <li class="@if(Route::is('barang.*')) active @endif">
                         <a href="{{ route('barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Barang') }}
