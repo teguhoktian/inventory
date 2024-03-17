@@ -26,22 +26,22 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Request::route()->getName() == 'barang.index') active @endif">
+                    <li class="@if(Route::is('barang.*')) active @endif">
                         <a href="{{ route('barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Barang') }}
                         </a>
                     </li>
-                    <li class="@if(Request::route()->getName() == 'jenis-barang.index') active @endif">
+                    <li class="@if(Route::is('jenis-barang.*')) active @endif">
                         <a href="{{ route('jenis-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Jenis Barang') }}
                         </a>
                     </li>
-                    <li class="@if(Request::route()->getName() == 'satuan-barang.index') active @endif">
+                    <li class="@if(Route::is('satuan-barang.*')) active @endif">
                         <a href="{{ route('satuan-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Satuan Barang') }}
                         </a>
                     </li>
-                    <li class="@if(Request::route()->getName() == 'supplier.index') active @endif">
+                    <li class="@if(Route::is('supplier.*')) active @endif">
                         <a href="{{ route('supplier.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Supplier') }}
                         </a>
