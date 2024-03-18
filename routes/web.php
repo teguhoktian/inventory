@@ -42,6 +42,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth
             Route::resource('user', UserController::class);
+        });
+    });
+
+    Route::group(['middleware' => ['role:Administrator|Admin ATK']], function () {
+        Route::prefix('auth')->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {

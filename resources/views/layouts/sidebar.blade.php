@@ -18,6 +18,7 @@
             </li>
             @endhasrole
 
+            @hasrole('Administrator|Admin ATK')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>{{ __('Data Master') }}</span>
@@ -106,6 +107,7 @@
                 </ul>
             </li>
 
+            @endhasrole
         </ul>
         <!-- /.sidebar-menu -->
     </section>
