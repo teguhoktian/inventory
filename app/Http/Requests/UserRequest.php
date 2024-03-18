@@ -23,12 +23,11 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->method() == 'PATCH')
-        {
+        if ($this->method() == 'PATCH') {
             $username_rules = 'required|alpha_dash|unique:users,username,' . $this->route('user')->id;
             $email_rules = 'required|email|unique:users,email,' . $this->route('user')->id;
             $password_rules = 'nullable';
-        }else{
+        } else {
             $username_rules = 'required|alpha_dash|unique:users,username';
             $email_rules = 'required|email|unique:users,email';
             $password_rules = 'required';
@@ -40,7 +39,7 @@ class UserRequest extends FormRequest
             'email' => $email_rules,
             'password' => $password_rules,
             'roles' => 'required',
-            'penduduk' => 'required_if:roles,==,3'
+            // 'penduduk' => 'required_if:roles,==,3'
         ];
     }
 
@@ -52,7 +51,7 @@ class UserRequest extends FormRequest
             'email' => __('Email'),
             'password' => __('Password'),
             'roles' => __('Hak Akses'),
-            'penduduk' => __('NIK Penduduk')
+            // 'penduduk' => __('NIK Penduduk')
         ];
     }
 
