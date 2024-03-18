@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {
-                Route::resource('barang', BarangController::class)->except(['show']);
+                Route::resource('barang', BarangController::class);
                 Route::resource('jenis-barang', JenisBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);

@@ -1,4 +1,7 @@
 <div class="text-right">
+    <a href="{{ route('barang.show', ['barang' => $id]) }}" class="btn btn-success text-muted mr-2">
+        <i class="fa fa-eye"></i>
+    </a>
     <a href="{{ route('barang.edit', ['barang' => $id]) }}" class="btn btn-primary text-muted mr-2">
         <i class="fa fa-edit"></i>
     </a>

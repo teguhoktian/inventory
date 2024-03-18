@@ -33,4 +33,14 @@ class BarangMasukDetail extends Model
     {
         return $this->belongsTo(Barang::class, 'id_barang');
     }
+
+    /**
+     * Get the barangMasuk that owns the BarangMasukDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function barangMasuk(): BelongsTo
+    {
+        return $this->belongsTo(BarangMasuk::class, 'id_barang_masuk');
+    }
 }
