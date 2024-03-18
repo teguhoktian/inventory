@@ -75,7 +75,7 @@
                     </li>
                 </ul>
             </li>
-
+            <!-- 
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>{{ __('Laporan') }}</span>
@@ -105,7 +105,8 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> 
+        -->
 
             @endhasrole
         </ul>
