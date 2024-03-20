@@ -83,7 +83,7 @@ class BarangKeluarController extends Controller
         }
 
         // Cek Apakah Stok tersedia
-        if (($product->stok) <= ($cart[$product->id]['quantity'])) {
+        if (($product->stok) < ($cart[$product->id]['quantity'])) {
             throw ValidationException::withMessages(['quantity' => 'Pesanan Melebihi Stok']);
         } else {
 

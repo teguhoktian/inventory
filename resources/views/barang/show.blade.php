@@ -116,7 +116,7 @@
                                     @else
                                     @php $sisaSaldo -= $brg->quantity * $brg->harga @endphp
                                     @endif
-                                    {{ number_format($sisaSaldo, 2, ',', '.') }}
+                                    {{ number_format(max($sisaSaldo,0), 2, ',', '.') }}
                                 </td>
                             </tr>
                             @endforeach
@@ -129,7 +129,7 @@
                                 <td></td>
                                 <td style="font-weight: bold;">Saldo Akhir</td>
                                 <td style="font-weight: bold;">{{ number_format($sisaStok, 0, ',', '.') }}</td>
-                                <td style="font-weight: bold;">{{ number_format($sisaSaldo, 2, ',', '.') }}</td>
+                                <td style="font-weight: bold;">{{ number_format(max($sisaSaldo,0), 2, ',', '.') }}</td>
                             </tr>
                         </tfoot>
                     </table>
