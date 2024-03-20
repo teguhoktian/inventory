@@ -3,15 +3,27 @@
 namespace App\Services;
 
 use App\Models\Barang;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class BarangService
 {
     public function getDT()
     {
-        return DataTables::of(Barang::with(['satuan', 'jenis'])->latest()->get())
+        return DataTables::of(Barang::withCount([
+            'barangMasuk as harga_masuk' => function ($query) {
+                $query->select(DB::raw('SUM(quantity * harga)'));
+            },
+            'barangKeluar as harga_keluar' => function ($query) {
+                $query->select(DB::raw('SUM(quantity * harga)'));
+            }
+        ])
+            ->latest()->get())
             ->addColumn('jenis_barang', function ($row) {
                 return $row->jenis?->nama;
+            })
+            ->addColumn('posisi_kas', function ($row) {
+                return number_format($row->harga_masuk - $row->harga_keluar, 2, '.', ',');
             })
             ->addColumn('satuan', function ($row) {
                 return $row->satuan?->nama;

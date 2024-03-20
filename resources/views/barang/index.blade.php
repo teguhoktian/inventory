@@ -36,6 +36,7 @@
                             <th>{{ __('Jenis Barang') }}</th>
                             <th>{{ __('Satuan') }}</th>
                             <th>{{ __('Stok') }}</th>
+                            <th>{{ __('Posisi Kas') }}</th>
                             <th>{{ __('Aksi') }}</th>
                         </tr>
                     </thead>
@@ -83,12 +84,16 @@
         {
             data: 'jenis_barang'
         },
-
         {
             data: 'satuan'
         },
         {
             data: 'stok'
+        },
+        {
+            data: 'posisi_kas',
+            sortable: false,
+            searchable: false
         },
         {
             data: 'action',
