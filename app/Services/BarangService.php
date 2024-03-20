@@ -23,7 +23,7 @@ class BarangService
                 return $row->jenis?->nama;
             })
             ->addColumn('posisi_kas', function ($row) {
-                return number_format($row->harga_masuk - $row->harga_keluar, 2, '.', ',');
+                return number_format(max($row->harga_masuk - $row->harga_keluar, 0), 2, '.', ',');
             })
             ->addColumn('satuan', function ($row) {
                 return $row->satuan?->nama;
