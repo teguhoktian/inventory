@@ -20,39 +20,42 @@
             <div class="content row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                        <span class="info-box-icon bg-aqua"><i class="fa fa-shopping-cart"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Barang</span>
-                            <span class="info-box-number">1,410</span>
+                            <span class="info-box-text">{{ __('Total Barang') }}</span>
+                            <span class="info-box-number">{{ $barangs->count() }} Item</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                        <span class="info-box-icon bg-green"><i class="fa fa-sign-in"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Barang Masuk</span>
-                            <span class="info-box-number">410</span>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Barang Keluar</span>
-                            <span class="info-box-number">93,139</span>
+                            <span class="info-box-text">{{ __('Barang Masuk') }}</span>
+                            <span class="info-box-number">{{ $barangMasuk->count() }} Item</span>
                         </div>
 
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
-                        <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+                        <span class="info-box-icon bg-red"><i class="fa fa-sign-out"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Sisa Kas</span>
-                            <span class="info-box-number">13,648</span>
+                            <span class="info-box-text">{{ __('Barang Keluar') }}</span>
+                            <span class="info-box-number">{{ $barangKeluar->count() }} Item</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="fa fa-money"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">{{__('Sisa Kas')}}</span>
+                            <span class="info-box-number">
+                                {{ number_format($barangMasuk->sum('total') - $barangKeluar->sum('total'),0,".",",") }}
+
+                            </span>
                         </div>
 
                     </div>
