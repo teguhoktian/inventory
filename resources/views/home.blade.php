@@ -9,7 +9,7 @@
                 <div class="col-md-6">
                     <h4>
                         <i class="fa fa-home"></i>
-                        {{ __('Sistem Informasi Ruang Gigi') }}
+                        {{ __('Sistem Informasi Inventori Barang') }}
                     </h4>
                     <h3>{{ __('Selamat Datang') }}, {{ Auth::user()->name }}.</h3>
                 </div>
