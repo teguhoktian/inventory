@@ -75,7 +75,6 @@
                     </li>
                 </ul>
             </li>
-            <!-- 
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-folder"></i> <span>{{ __('Laporan') }}</span>
@@ -86,11 +85,6 @@
                 <ul class="treeview-menu">
                     <li class="@if(Request::route()->getName() == 'user.index') active @endif">
                         <a href="{{ route('user.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Stok Barang') }}
-                        </a>
-                    </li>
-                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
-                        <a href="{{ route('user.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Barang Masuk') }}
                         </a>
                     </li>
@@ -99,14 +93,20 @@
                             <i class="fa fa-circle-o"></i> {{ __('Barang Keluar') }}
                         </a>
                     </li>
+                    <!-- 
+                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
+                        <a href="{{ route('user.index') }}">
+                            <i class="fa fa-circle-o"></i> {{ __('Stok Barang') }}
+                        </a>
+                    </li>
                     <li class="@if(Request::route()->getName() == 'user.index') active @endif">
                         <a href="{{ route('user.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Suplier') }}
                         </a>
                     </li>
+                    -->
                 </ul>
-            </li> 
-        -->
+            </li>
 
             @endhasrole
         </ul>
