@@ -70,6 +70,7 @@
             </td>
             <td>
                 {{$product['nama']}}
+                <p><small class="help-block">{{$product['jenis']}}</small></p>
             </td>
             <td>
                 {{$product['quantity']}} {{$product['satuan']}}

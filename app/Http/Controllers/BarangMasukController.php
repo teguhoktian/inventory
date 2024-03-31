@@ -78,6 +78,7 @@ class BarangMasukController extends Controller
             $cart[$product->id] = [
                 "id_barang" => $product->id,
                 "satuan" => $product->satuan?->nama,
+                "jenis" => $product->jenis?->nama,
                 "nama" => $product->nama,
                 "quantity" => $request->quantity,
                 "harga" => $request->harga,
@@ -179,5 +180,17 @@ class BarangMasukController extends Controller
             'status' => 'success',
             'message' => __('Data telah berhasil dihapus.')
         ], 200);
+    }
+
+    public function print(BarangMasuk $barangMasuk)
+    {
+
+        return view(
+            'barangmasuk.print',
+            [
+                'barangMasuk' => $barangMasuk,
+                'cart' => $barangMasuk->detail
+            ]
+        );
     }
 }

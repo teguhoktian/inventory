@@ -63,10 +63,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                 // URL /auth/transaksi/barang-masuk
                 Route::post('barang-masuk/addtocart', [BarangMasukController::class, 'addtocart'])->name('barang-masuk.addtocart');
+                Route::post('barang-masuk/{barang_masuk}/print', [BarangMasukController::class, 'print'])->name('barang-masuk.print');
                 Route::delete('barang-masuk/{key}/removecartitem', [BarangMasukController::class, 'removecartitem'])->name('barang-masuk.removecartitem');
                 Route::resource('barang-masuk', BarangMasukController::class)->except(['update', 'edit']);;
 
                 // URL /auth/transaksi/barang-masuk
+                Route::post('barang-keluar/{barang_keluar}/print', [BarangKeluarController::class, 'print'])->name('barang-keluar.print');
                 Route::post('barang-keluar/addtocart', [BarangKeluarController::class, 'addtocart'])->name('barang-keluar.addtocart');
                 Route::delete('barang-keluar/{key}/removecartitem', [BarangKeluarController::class, 'removecartitem'])->name('barang-keluar.removecartitem');
                 Route::get('barang-keluar/{id}/getLastPrice', [BarangKeluarController::class, 'getLastPrice'])->name('barang-keluar.getLastPrice');

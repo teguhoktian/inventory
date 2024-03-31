@@ -94,6 +94,7 @@
                             </td>
                             <td>
                                 {{$product->barang->nama}}
+                                <p><small class="help-block">{{$product->barang->jenis->nama}}</small></p>
                             </td>
                             <td>{{$product['quantity']}} {{$product->barang->satuan->nama}}</td>
                             <td>{{
@@ -126,9 +127,16 @@
             </div>
 
             <div class="box-footer">
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                    {{ __('Cetak') }}
+
+                {!! Form::open([
+                'id' => 'delete-form-'.$barangMasuk->id,
+                'target' => '_blank',
+                'route' => ['barang-masuk.print', $barangMasuk->id],'style'=>'display:inline'])
+                !!}
+                <button type="submit" id="btbSubmit" class="btn btn-default">
+                    <i class="fa fa-print"></i> {{ __('Cetak') }}
                 </button>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
