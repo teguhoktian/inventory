@@ -54,7 +54,7 @@
     @yield('style')
 </head>
 
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-red-light fixed sidebar-mini">
     <div id="loading">
         <i id="spinner" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
     </div>
@@ -130,32 +130,32 @@
 
         $.ajaxSetup({
             statusCode: {
-                403: function() {
+                403: function () {
                     swal({
                         'title': 'Akses tidak diizinkan!',
                         'text': 'Sessi Anda tidak valid.',
                         'type': 'error'
-                    }, function() {
+                    }, function () {
                         location.reload();
                     });
                 }
             },
         });
 
-        $(function() {
+        $(function () {
             $('input').attr('autocomplete', 'off');
             $('.treeview-menu li.active').closest('li.treeview').addClass('menu-open active');
         });
 
-        $(window).load(function() {
+        $(window).load(function () {
             $("#loading").fadeOut();
         });
 
-        $(document).ajaxStart(function() {
+        $(document).ajaxStart(function () {
             $("#loading").show();
         });
 
-        $(document).ajaxComplete(function() {
+        $(document).ajaxComplete(function () {
             $("#loading").hide();
             $("#btbSubmit").attr("disabled", false);
         });
