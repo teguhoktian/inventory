@@ -3,29 +3,16 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-body">
-                <div class="col-md-6">
-                    <h4><i class="fa fa-user"></i> {{ __('Detail Transaksi') }}</h4>
-                </div>
-                <!-- /.com-md-6 -->
-
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('barang-masuk.index') }}" class="btn-flat btn btn-success">
-                        <i class="fa fa-list"></i> {{ __('Daftar') }}
-                    </a>
-                </div>
-                <!-- /.com-md-6 -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.com-md-12 -->
-    </div>
-    <!-- /.row -->
+    <x-content-header :title="__('Detail Transaksi')" :subtitle="__('Transaksi Barang Masuk')" />
 
     <div class="content">
         <div class="box border-top-solid">
+
+            <div class="box-header with-border">
+                <a href="{{ route('barang-masuk.index') }}" class="btn-sm btn btn-success">
+                    <i class="fa fa-angle-double-left"></i> {{ __('Kembali') }}
+                </a>
+            </div>
 
             <!-- Atas -->
             <div class="box-body">

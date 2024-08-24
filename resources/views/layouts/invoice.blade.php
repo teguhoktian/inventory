@@ -15,6 +15,9 @@
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="adminLTE/bootstrap/css/bootstrap.min.css">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="adminLTE/bootstrap/css/font-awesome.min.css">
+
     <!-- Theme style -->
     <link rel="stylesheet" href="adminLTE/dist/css/AdminLTE.min.css">
 
