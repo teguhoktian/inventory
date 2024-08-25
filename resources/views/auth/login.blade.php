@@ -42,7 +42,7 @@
                 <div
                     class="form-group has-feedback @if($errors->has('username') || $errors->has('email')) has-error @endif">
                     <input type="text" name="username" class="form-control"
-                        placeholder="{{ __('Username atau EMail') }}">
+                        placeholder="{{ __('Username atau EMail') }}" value="{{ old('username') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @error('username')
@@ -69,8 +69,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-4 col-xs-offset-8">
-                        <button type="submit" id="button-login" class="btn btn-primary btn-block"><i
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" {{ old('remember') ? 'checked' : '' }} name="remember"> Remember
+                                Me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="submit" id="button-login" class="btn btn-flat btn-primary btn-block"><i
                                 class="fa fa-lock"></i> {{ __('Masuk') }}</button>
                     </div>
                     <!-- /.col -->
@@ -93,8 +101,18 @@
     <!-- jQuery 2.2.3 -->
     <script src="adminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 
-    <!-- AdminLTE App -->
-    <script src="adminLTE/js/adminlte.min.js"></script>
+    <!-- iCheck -->
+    <script src="adminLTE/plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' /* optional */
+            });
+        });
+    </script>
 </body>
 
 </html>

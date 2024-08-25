@@ -39,7 +39,8 @@
                 @csrf
 
                 <div class="form-group has-feedback @if($errors->has('name')) has-error @endif">
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="{{ __('Nama Lengkap') }}">
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control"
+                        placeholder="{{ __('Nama Lengkap') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @error('name')
@@ -50,7 +51,8 @@
                 </div>
 
                 <div class="form-group has-feedback @if($errors->has('email')) has-error @endif">
-                    <input type="text" name="email" value="{{ old('email') }}" class="form-control" placeholder="{{ __('EMail') }}">
+                    <input type="text" name="email" value="{{ old('email') }}" class="form-control"
+                        placeholder="{{ __('EMail') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @error('email')
@@ -61,7 +63,8 @@
                 </div>
 
                 <div class="form-group has-feedback @if($errors->has('username')) has-error @endif">
-                    <input type="text" name="username" value="{{ old('username') }}" class="form-control" placeholder="{{ __('Username') }}">
+                    <input type="text" name="username" value="{{ old('username') }}" class="form-control"
+                        placeholder="{{ __('Username') }}">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
                     @error('username')
@@ -82,13 +85,15 @@
                 </div>
 
                 <div class="form-group has-feedback  @error('password') has-error @enderror">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Confirm Password') }}">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                        placeholder="{{ __('Confirm Password') }}">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-4 col-xs-offset-8">
-                        <button type="submit" id="button-login" class="btn btn-primary btn-block"><i class="fa fa-lock"></i> {{ __('Register') }}</button>
+                        <button type="submit" id="button-login" class="btn btn-flat btn-primary btn-block"><i
+                                class="fa fa-lock"></i> {{ __('Register') }}</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -105,8 +110,6 @@
     <!-- jQuery 2.2.3 -->
     <script src="adminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 
-    <!-- AdminLTE App -->
-    <script src="adminLTE/js/adminlte.min.js"></script>
 </body>
 
 </html>
