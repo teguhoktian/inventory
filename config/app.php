@@ -179,6 +179,9 @@ return [
 
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        //Datatable
+        Yajra\DataTables\DataTablesServiceProvider::class,  
+
     ],
 
     /*

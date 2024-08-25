@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Services\UserServices;
@@ -14,10 +15,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(UserServices $services)
+    public function index(UsersDataTable $dataTable)
     {
-        if (request()->ajax()) return $services->getDT();
-        return view('user.index');
+        // if (request()->ajax()) return $services->getDT();
+        // return view('user.index');
+        return $dataTable->render('user.index');
     }
 
     /**

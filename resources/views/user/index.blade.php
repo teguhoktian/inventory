@@ -27,7 +27,10 @@
     <div class="content">
         <div class="box border-top-solid">
             <div class="box-body table-responsive">
-                <table id="dataTable" class="table table-bordered table-striped">
+                {{
+                $dataTable->table(['class' => 'table table-striped table-bordered'])
+                }}
+                <!-- <table id="dataTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th width="1">{{ __('No.') }}</th>
@@ -38,7 +41,7 @@
                             <th>{{ __('Aksi') }}</th>
                         </tr>
                     </thead>
-                </table>
+                </table> -->
                 <!-- table -->
             </div>
             <!-- /.box-body -->
@@ -58,39 +61,6 @@
 <script src="adminLTE/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="adminLTE/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script>
-    var table = '';
-    var ajaxRoute = '{{ route("user.index") }}';
-    table = $('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        autoWidth: false,
-        responsive: true,
-        ajax: ajaxRoute,
-        columns: [{
-                data: 'DT_RowIndex',
-                sortable: false,
-                searchable: false
-            },
-            {
-                data: 'name'
-            },
-            {
-                data: 'email'
-            },
-            {
-                data: 'username'
-            },
-            {
-                data: 'role'
-            },
-            {
-                data: 'action',
-                sortable: false,
-                searchable: false
-            }
-        ]
-    });
-
     function submitDelete(ID) {
         swal({
             title: "{{ __('Kofirmasi') }}",
@@ -101,7 +71,7 @@
             cancelButtonText: "Cancel",
             closeOnCancel: false,
             closeOnConfirm: false
-        }, function(isConfirm) {
+        }, function (isConfirm) {
             if (isConfirm) {
 
                 var form = $('#' + ID);
@@ -114,9 +84,9 @@
                     type: _method,
                     data: data,
                     dataType: "json",
-                    success: function(data) {
+                    success: function (data) {
                         swal("{{ __('Hapus Data') }}", "{{ __('Data Berhasil dihapus') }}", "info");
-                        table.ajax.reload();
+                        $("#users-table").DataTable().ajax.reload();
                     }
                 });
             } else {
@@ -125,4 +95,5 @@
         });
     }
 </script>
+{{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @stop
