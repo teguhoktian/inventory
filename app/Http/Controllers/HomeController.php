@@ -45,6 +45,12 @@ class HomeController extends Controller
 
     public function updateProfile(Request $request)
     {
+        //validate $request
+        $request->validate([
+            'password' => 'nullable|confirmed|min:6',
+            'password_confirmation' => 'nullable',
+        ]);
+
         if (is_null($request['password'])) {
             $request['password'] = Auth::user()->password;
         } else {
