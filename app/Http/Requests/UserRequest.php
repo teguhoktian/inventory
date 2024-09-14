@@ -24,11 +24,11 @@ class UserRequest extends FormRequest
     public function rules()
     {
         if ($this->method() == 'PATCH') {
-            $username_rules = 'required|alpha_dash|unique:users,username,' . $this->route('user')->id;
+            $username_rules = 'required|regex:/^[a-zA-Z0-9._-]+$/|unique:users,username,' . $this->route('user')->id;
             $email_rules = 'required|email|unique:users,email,' . $this->route('user')->id;
             $password_rules = 'nullable';
         } else {
-            $username_rules = 'required|alpha_dash|unique:users,username';
+            $username_rules = 'required|regex:/^[a-zA-Z0-9._-]+$/|unique:users,username';
             $email_rules = 'required|email|unique:users,email';
             $password_rules = 'required';
         }
