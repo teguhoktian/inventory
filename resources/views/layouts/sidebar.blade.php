@@ -8,6 +8,11 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu tree">
+
+            <li class="header">
+                {{ __('MAIN NAVIGATION') }}
+            </li>
+
             <li class="@if(Request::segment(1) == 'home') active @endif">
                 <a href="{{ route('home') }}">
                     <i class="fa fa-home"></i> <span>Dashboard</span>
@@ -15,27 +20,38 @@
             </li>
 
             @hasrole('Administrator')
-            <li class="@if(Request::route()->getName() == 'user.index') active @endif">
-                <a href="{{ route('user.index') }}">
-                    <i class="fa fa-user"></i> <span>{{ __('Data Pengguna') }}</span>
-                </a>
-            </li>
-            @endhasrole
-
-            @hasrole('Administrator|Admin ATK')
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-folder"></i> <span>{{ __('Data Master') }}</span>
+                    <i class="fa fa-database"></i> <span>{{ __('Database') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
+                        <a href="{{ route('user.index') }}">
+                            <i class="fa fa-circle-o"></i> <span>{{ __('Pengguna') }}</span>
+                        </a>
+                    </li>
                     <li class="@if(Route::is('kantor-cabang.*')) active @endif">
                         <a href="{{ route('kantor-cabang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Cabang') }}
                         </a>
                     </li>
+                </ul>
+            </li>
+
+            @endhasrole
+
+            @hasrole('Administrator|Admin ATK')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cubes"></i> <span>{{ __('Master Inventory') }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
                     <li class="@if(Route::is('barang.*')) active @endif">
                         <a href="{{ route('barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Barang') }}
@@ -61,7 +77,7 @@
 
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-folder"></i> <span>{{ __('Data Transaksi') }}</span>
+                    <i class="fa fa-shopping-cart"></i> <span>{{ __('Data Transaksi') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -81,7 +97,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-folder"></i> <span>{{ __('Laporan') }}</span>
+                    <i class="fa fa-archive"></i> <span>{{ __('Laporan') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
