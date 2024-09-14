@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -73,6 +74,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('barang-keluar/{key}/removecartitem', [BarangKeluarController::class, 'removecartitem'])->name('barang-keluar.removecartitem');
                 Route::get('barang-keluar/{id}/getLastPrice', [BarangKeluarController::class, 'getLastPrice'])->name('barang-keluar.getLastPrice');
                 Route::resource('barang-keluar', BarangKeluarController::class)->except(['update', 'edit']);
+            });
+
+            //URL 
+            Route::prefix('laporan')->group(function () {
+                Route::get('barang-masuk', [LaporanController::class, 'barangMasuk'])->name('laporan.barang-masuk');
+                Route::get('barang-keluar', [LaporanController::class, 'barangKeluar'])->name('laporan.barang-keluar');
             });
         });
     });
