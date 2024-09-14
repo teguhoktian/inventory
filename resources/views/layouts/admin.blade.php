@@ -54,7 +54,7 @@
     @yield('style')
 </head>
 
-<body class="hold-transition skin-red-light fixed sidebar-mini">
+<body class="hold-transition skin-blue-light fixed sidebar-mini">
     <div id="loading">
         <i id="spinner" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
     </div>
