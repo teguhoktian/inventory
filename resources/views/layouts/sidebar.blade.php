@@ -2,8 +2,12 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+
+        <x-user-panel-sidebar userAvatar="{{ url('/img/no_foto.png') }}" userName="{{ Auth::user()->name }}"
+            userEmail="{{ Auth::user()->email }}" />
+
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu">
+        <ul class="sidebar-menu tree">
             <li class="@if(Request::segment(1) == 'home') active @endif">
                 <a href="{{ route('home') }}">
                     <i class="fa fa-home"></i> <span>Dashboard</span>
