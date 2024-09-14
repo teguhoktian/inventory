@@ -69,15 +69,17 @@
                     </thead>
                     <tbody>
                         @php
-                        $total_harga = 0
+                        $total_harga = 0;
+                        $counter = 0;
                         @endphp
                         @foreach($cart as $key => $product)
                         @php
+                        $counter++;
                         $total_harga += $product['harga'] * $product['quantity'];
                         @endphp
                         <tr>
                             <td>
-                                #
+                                {{ $counter; }}
                             </td>
                             <td>
                                 {{$product->barang->nama}}
@@ -97,16 +99,11 @@
                     @if($total_harga > 0)
                     <tfoot>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                {{
-                                number_format($total_harga, 2, ".")
-
-                                }}
-                            </td>
+                            <th></th>
+                            <th>{{ __('Total Harga') }}</th>
+                            <th></th>
+                            <th></th>
+                            <th> {{ number_format($total_harga, 2, ".") }} </th>
                         </tr>
                     </tfoot>
                     @endif

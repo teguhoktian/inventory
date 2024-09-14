@@ -8,11 +8,7 @@
     <div class="content">
         <div class="box border-top-solid">
 
-            <div class="box-header with-border">
-                <a href="{{ route('barang-masuk.index') }}" class="btn-sm btn btn-success">
-                    <i class="fa fa-angle-double-left"></i> {{ __('Kembali') }}
-                </a>
-            </div>
+            <!-- <div class="box-header with-border"></div> -->
 
             <div class="box-body">
                 @include('barangmasuk.form2')
@@ -27,6 +23,9 @@
 
             @if($cart_count>0)
             <div class="box-footer">
+                <a href="{{ route('barang-masuk.index') }}" class="btn-flat btn btn-default">
+                    <i class="fa fa-angle-double-left"></i> {{ __('Cancel') }}
+                </a>
                 <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
                     {{ __('Simpan') }}
                 </button>
@@ -48,7 +47,7 @@
     var routeIndex = "{{ route('barang-masuk.index') }}";
     $(function () {
 
-        $("#hargaBeli, #qty").change(function () {
+        $("#hargaBeli, #qty").on("input", function () {
             var Qty = $('#qty').val();
             var hargaBeli = $('#hargaBeli').val();
             console.log(Qty * hargaBeli)

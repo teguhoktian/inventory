@@ -10,12 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        {{
-        Form::open(
-        [
-        'route' => 'barang-masuk.addtocart'
-        ]
-        )}}
+        {{ Form::open(['route' => 'barang-masuk.addtocart'])}}
         <tr style="background-color: #fcf4f4;;">
             <td width="1">
                 <strong>#</strong>
@@ -31,7 +26,7 @@
                 @enderror
             </td>
             <td width="80">
-                <input name="quantity" id="qty" type="number" class="form-control" />
+                <input name="quantity" id="qty" type="number" min="0" class="form-control" />
                 @error('quantity')
                 <span class="has-error text-sm text-danger" role="alert">
                     {{ $message }}
@@ -39,7 +34,7 @@
                 @enderror
             </td>
             <td width="120">
-                <input name="harga" id="hargaBeli" type="number" class="form-control" />
+                <input name="harga" id="hargaBeli" type="number" min="0" class="form-control" />
                 @error('harga')
                 <span class="has-error text-sm text-danger" role="alert">
                     {{ $message }}
@@ -50,23 +45,25 @@
                 <input class="form-control" id="totalHarga" value="0" disabled />
             </td>
             <td width="1">
-                <button id="addtocart" class="btn btn-success">Add</button>
+                <button id="addtocart" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                </button>
             </td>
         </tr>
         {{Form::close()}}
     </tbody>
     <tbody>
         @php
-        $total_harga = 0
+        $total_harga = 0;
+        $counter = 0;
         @endphp
         @foreach($cart as $key => $product)
         @php
+        $counter++;
         $total_harga += $product['harga'] * $product['quantity'];
         @endphp
         <tr>
-            <td>
-                #
-            </td>
+            <td>{{ $counter }}</td>
             <td>
                 {{$product['nama']}}
                 <p><small class="help-block">{{$product['jenis']}}</small></p>
@@ -80,13 +77,12 @@
                 number_format($product['harga'] * $product['quantity'], 2, ".")
                 }}</td>
             <td>
-                <button class="btn btn-danger" onclick="document.getElementById('delete-form-{{$key}}').submit();">
-                    {{ __('Delete') }}
+                <button class="btn btn-danger btn-sm"
+                    onclick="document.getElementById('delete-form-{{$key}}').submit();">
+                    <i class="fa fa-times"></i>
                 </button>
-                {!! Form::open([
-                'id' => 'delete-form-'.$key,
-                'method' => 'DELETE',
-                'route' => ['barang-masuk.removecartitem', $key],'style'=>'display:inline'])
+                {!! Form::open(['id' => 'delete-form-'.$key, 'method' => 'DELETE', 'route' =>
+                ['barang-masuk.removecartitem', $key],'style'=>'display:inline'])
                 !!}
                 {!! Form::close() !!}
             </td>
@@ -96,17 +92,17 @@
     @if($total_harga > 0)
     <tfoot>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
+            <th></th>
+            <th>{{ __('TOTAL') }}</th>
+            <th></th>
+            <th></th>
+            <th>
                 {{
                 number_format($total_harga, 2, ".")
 
                 }}
-            </td>
-            <td></td>
+            </th>
+            <th></th>
         </tr>
     </tfoot>
     @endif
