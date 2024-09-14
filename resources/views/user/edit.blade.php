@@ -3,49 +3,32 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-body">
-                <div class="col-md-6">
-                    <h4><i class="fa fa-user"></i> {{ __('Ubah Pengguna') }}</h4>
-                </div>
-                <!-- /.com-md-6 -->
-
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('user.index') }}" class="btn-flat btn btn-success">
-                        <i class="fa fa-list"></i> {{ __('Pengguna') }}
-                    </a>
-                </div>
-                <!-- /.com-md-6 -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.com-md-12 -->
-    </div>
-    <!-- /.row -->
+    <x-content-header :title="__('Edit Pengguna')" :subtitle="__('Edit Data Pengguna')" />
 
     <div class="content">
         <div class="box border-top-solid">
-            <div class="box-body my-form-body">
-                {{ Form::model($user, 
-                    [ 
-                        'route' => ['user.update', $user->id], 
-                        'files' => true, 
-                        'id' => 'moduleForm', 
-                        'class' => 'form-horizontal',
-                        'method' => 'PATCH'
-                    ]) 
+            <div class="box-body">
+                {{ Form::model($user,
+                [
+                'route' => ['user.update', $user->id],
+                'files' => true,
+                'id' => 'moduleForm',
+                'class' => 'form-horizontal',
+                'method' => 'PATCH'
+                ])
                 }}
                 @include('user.form')
-                <div class="form-group">
-                    <div class="col-sm-11">
-                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                            {{ __('Update') }}
-                        </button>
-                    </div>
-                </div>
-                {{ Form::close() }}
+
             </div>
+            <div class="box-footer with-border">
+                <a href="{{ route('user.index') }}" class="btn-flat btn-default btn btn-default">
+                    {{ __('Cancel') }}
+                </a>
+                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
+                    {{ __('Update') }}
+                </button>
+            </div>
+            {{ Form::close() }}
         </div>
     </div>
 </div>
@@ -60,8 +43,8 @@
 @section('javascript')
 <script type="text/javascript">
     var routeIndex = "{{ route('user.index') }}";
-    $(function() {
-        $("#moduleForm").submit(function(e) {
+    $(function () {
+        $("#moduleForm").submit(function (e) {
             e.preventDefault();
 
             var form = $(this);
@@ -74,25 +57,25 @@
                 type: _method,
                 data: data,
                 dataType: 'json',
-                beforeSend: function() {
+                beforeSend: function () {
                     $('div').removeClass('has-error');
                     $('.help-block').remove();
                     $("#btbSubmit").attr("disabled", true);
                 },
-                error: function(response) {
+                error: function (response) {
                     if (response.status == '422') {
-                        $.each(response.responseJSON.errors, function(i, error) {
+                        $.each(response.responseJSON.errors, function (i, error) {
                             var el = $(document).find('[name="' + i + '"]');
                             el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
                         });
                     }
                 },
-                success: function(response) {
+                success: function (response) {
                     swal({
                         title: "{{ __('Simpan Data') }}",
                         type: "success",
                         text: "{{ __('Data Berhasil Disimpan') }}"
-                    }, function() {
+                    }, function () {
                         window.location = "{{ route('user.index') }}";
                     });
                 }
