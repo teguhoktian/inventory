@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\BarangMasukDetail;
 use App\Models\JenisBarang;
+use App\Models\KartuStokBarang;
 use App\Models\SatuanBarang;
 use App\Services\BarangService;
 use App\Traits\AutoGenerateCodeTrait;
@@ -95,14 +96,19 @@ class BarangController extends Controller
     public function show(Barang $barang)
     {
 
-        $timeLineBarang = $barang->barangMasuk->merge($barang->barangKeluar)->sortBy('created_at');
+        // $timeLineBarang = $barang->barangMasuk->merge($barang->barangKeluar)->sortBy('created_at'); 
+
+        $timeLineBarang = KartuStokBarang::where('id_barang', $barang->id)->orderBy('created_at', 'ASC')->get();
+        
+        // dd($timeLineBarang->toArray());
+
         return view(
             'barang.show',
             [
                 'barang' => $barang,
                 'timeLineBarang' => $timeLineBarang,
                 'sisaSaldo' => 0,
-                'sisaStok' => 0,
+                // 'sisaStok' => 0,
             ]
         );
     }

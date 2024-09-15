@@ -3,31 +3,18 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-body">
-                <div class="col-md-6">
-                    <h4><i class="fa fa-user"></i> {{ __('Detail Barang') }}</h4>
-                </div>
-                <!-- /.com-md-6 -->
-
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('barang.index') }}" class="btn-flat btn btn-success">
-                        <i class="fa fa-list"></i> {{ __('Daftar') }}
-                    </a>
-                </div>
-                <!-- /.com-md-6 -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.com-md-12 -->
-    </div>
-    <!-- /.row -->
+    <x-content-header :title="__('Detail Barang')" :subtitle="$barang->nama" />
 
     <div class="content">
         <div class="box border-top-solid">
-            <div class="box-body">
 
+            <div class="box-header with-border">
+                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
+                    <i class="fa  fa-chevron-left"></i> {{ __('Kembali') }}
+                </a>
+            </div>
+
+            <div class="box-body">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -67,74 +54,77 @@
         </div>
 
         <div class="box border-top-solid">
+            <div class="box-header with-border">
+                <h4><i class="fa fa-list"></i> {{ __('Kartu Stok') }}
+                    <small>{{ __('Mutasi Stok') }} {{ $barang->nama }}</small>
+                </h4>
+            </div>
             <div class="box-body">
-                <div class="row">
-                    <!-- Barang Masuk -->
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Jenis</th>
-                                <th>Tanggal</th>
-                                <th>Qty</th>
-                                <th>Harga</th>
-                                <th>Total</th>
-                                <th>Sisa Qty</th>
-                                <th>Sisa Saldo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($timeLineBarang as $key => $brg)
-                            <tr>
-                                <td>
-                                    @if($brg->id_barang_masuk)
-                                    Barang Masuk
-                                    @else
-                                    Barang Keluar
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($brg->id_barang_masuk)
-                                    {{$brg->barangMasuk->tanggal_masuk}}
-                                    @else
-                                    {{$brg->barangKeluar->tanggal_keluar}}
-                                    @endif
-                                </td>
-                                <td>{{ $brg->quantity }}</td>
-                                <td>{{ $brg->harga }}</td>
-                                <td>{{ number_format($brg->harga * $brg->quantity, 2, ',', '.') }}</td>
-                                <td>
-                                    @if($brg->id_barang_masuk)
-                                    @php $sisaStok += $brg->quantity @endphp
-                                    @else
-                                    @php $sisaStok -= $brg->quantity @endphp
-                                    @endif
-                                    {{ number_format($sisaStok, 0, ',', '.') }}
-                                </td>
-                                <td>
-                                    @if($brg->id_barang_masuk)
-                                    @php $sisaSaldo += $brg->quantity * $brg->harga @endphp
-                                    @else
-                                    @php $sisaSaldo -= $brg->quantity * $brg->harga @endphp
-                                    @endif
-                                    {{ number_format($sisaSaldo, 2, ',', '.') }}
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="font-weight: bold;">Saldo Akhir</td>
-                                <td style="font-weight: bold;">{{ number_format($sisaStok, 0, ',', '.') }}</td>
-                                <td style="font-weight: bold;">{{ number_format($sisaSaldo, 2, ',', '.') }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                <!-- Barang Masuk -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Jenis</th>
+                            <th>Tanggal</th>
+                            <th>Qty</th>
+                            <th>Harga</th>
+                            <th>Total</th>
+                            <th>Sisa Qty</th>
+                            <th>Sisa Saldo</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($timeLineBarang as $key => $mutasi)
+                        <tr>
+                            <td>
+                                @if($mutasi->tipe == 'Masuk')
+                                <span class="btn btn-xs btn-primary">
+                                    {{ $mutasi->tipe }}
+                                </span>
+                                @else
+                                <span class="btn btn-xs btn-danger">
+                                    {{ $mutasi->tipe }}
+                                </span>
+                                @endif
+                            </td>
+                            <td>
+                                {{ $mutasi->tanggal }}
+                            </td>
+                            <td style="text-align: right;">{{ $mutasi->jumlah }}</td>
+                            <td style="text-align: right;">{{ number_format($mutasi->harga,0) }}</td>
+                            <td style="text-align: right;">{{ number_format($mutasi->harga * $mutasi->jumlah, 0) }}</td>
+                            <td style="text-align: right;">
+                                {{ $mutasi->sisa_stok }}
+                            </td>
+                            <td style="text-align: right;">
+                                @if($mutasi->tipe == 'Masuk')
+                                @php $sisaSaldo += -$mutasi->jumlah * $mutasi->harga @endphp
+                                @else
+                                @php $sisaSaldo += $mutasi->jumlah * $mutasi->harga @endphp
+                                @endif
 
-                </div>
+                                {{ number_format($sisaSaldo, 0) }}
+                            </td>
+                            <td>
+                                {{ $mutasi->keterangan }}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="font-weight: bold; text-align: right;">Saldo Akhir</td>
+                            <td style="font-weight: bold;text-align: right;">{{ number_format($barang->stok, 0) }}</td>
+                            <td style="font-weight: bold;text-align: right;">{{ number_format($sisaSaldo, 0)
+                                }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </div>
