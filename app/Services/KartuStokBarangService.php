@@ -26,4 +26,20 @@ class KartuStokBarangService
             'keterangan' => strtoupper($keterangan)
         ]);
     }
+
+    function barangKeluarStok($barangKeluarDetail, $posisi = 'Keluar', $koreksi = false) 
+    {
+        $keterangan = $koreksi ? "Koreksi Stok " : $posisi . " Stok ";
+        $keterangan .= 'Invoice ' . $barangKeluarDetail->barangKeluar->kode;
+
+        return KartuStokBarang::create([
+            'id_barang' => $barangKeluarDetail->barang->id,
+            'tanggal' => $barangKeluarDetail->barangKeluar->tanggal_keluar,
+            'tipe' => $posisi,
+            'jumlah' => $barangKeluarDetail->quantity,
+            'harga' => $barangKeluarDetail->harga,
+            'sisa_stok' => $barangKeluarDetail->barang->stok,
+            'keterangan' => strtoupper($keterangan)
+        ]);
+    }
 }
