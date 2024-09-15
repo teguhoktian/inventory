@@ -28,7 +28,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Request::route()->getName() == 'user.index') active @endif">
+                    <li class="@if(Route::is('user.*')) active @endif">
                         <a href="{{ route('user.index') }}">
                             <i class="fa fa-circle-o"></i> <span>{{ __('Pengguna') }}</span>
                         </a>
