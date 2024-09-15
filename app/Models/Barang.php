@@ -64,4 +64,14 @@ class Barang extends Model
     {
         return $this->hasMany(BarangKeluarDetail::class, 'id_barang');
     }
+
+    /**
+     * Get all of the stoks for the Barang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stoks(): HasMany
+    {
+        return $this->hasMany(KartuStokBarang::class, 'id_barang');
+    }
 }

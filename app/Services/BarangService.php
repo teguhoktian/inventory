@@ -11,11 +11,11 @@ class BarangService
     public function getDT()
     {
         return DataTables::of(Barang::withCount([
-            'barangMasuk as harga_masuk' => function ($query) {
-                $query->select(DB::raw('SUM(quantity * harga)'));
+            'stoks as saldo_masuk' => function ($query) {
+                $query->select(DB::raw('SUM(jumlah * harga)'))->where('tipe', 'Masuk');
             },
-            'barangKeluar as harga_keluar' => function ($query) {
-                $query->select(DB::raw('SUM(quantity * harga)'));
+            'stoks as saldo_keluar' => function ($query) {
+                $query->select(DB::raw('SUM(jumlah * harga)'))->where('tipe', 'Keluar');
             }
         ])
             ->latest()->get())
@@ -23,7 +23,7 @@ class BarangService
                 return $row->jenis?->nama;
             })
             ->addColumn('posisi_kas', function ($row) {
-                return number_format($row->harga_masuk - $row->harga_keluar, 0, '.', ',');
+                return number_format(-$row->saldo_masuk + $row->saldo_keluar, 0);
             })
             ->addColumn('satuan', function ($row) {
                 return $row->satuan?->nama;

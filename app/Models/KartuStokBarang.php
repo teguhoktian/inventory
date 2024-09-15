@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class KartuStokBarang extends Model
 {
@@ -22,4 +23,14 @@ class KartuStokBarang extends Model
      * @var string
      */
     protected $table = 'kartu_stok_barang';
+
+    /**
+     * Get the barang that owns the KartuStokBarang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function barang(): BelongsTo
+    {
+        return $this->belongsTo(Barang::class, 'id_barang');
+    }
 }
