@@ -11,9 +11,17 @@ class BarangMasukService
     public function getDT()
     {
         return DataTables::of(BarangMasuk::withCount('detail')
-            ->with(['supplier'])->latest()->get())
+            ->with(['supplier', 'detail'])->latest()->get())
             ->addColumn('supplier', function ($row) {
                 return $row->supplier?->nama;
+            })
+            ->addColumn('total_harga', function ($row) {
+                
+                $total = $row->detail->sum(function($data) {
+                    return $data->quantity * $data->harga;
+                });
+
+                return number_format($total, 2);
             })
             ->addColumn('action', 'barangmasuk.action')
             ->addIndexColumn()

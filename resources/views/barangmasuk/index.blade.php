@@ -25,6 +25,8 @@
                             <th>{{ __('Tanggal') }}</th>
                             <th>{{ __('No. Faktur') }}</th>
                             <th>{{ __('Supplier') }}</th>
+                            <th>{{ __('Items') }}</th>
+                            <th>{{ __('Total Harga') }}</th>
                             <th>{{ __('Aksi') }}</th>
                         </tr>
                     </thead>
@@ -75,6 +77,16 @@
 
         {
             data: 'supplier'
+        },
+        {
+            data: 'detail_count',
+            sortable: false,
+            searchable: false
+        },
+        {
+            data: 'total_harga',
+            sortable: false,
+            searchable: false
         },
         {
             data: 'action',
