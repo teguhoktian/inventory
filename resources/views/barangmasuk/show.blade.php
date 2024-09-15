@@ -17,42 +17,42 @@
             <!-- Atas -->
             <div class="box-body">
                 <div class="row">
-                    <!-- Kode Transaksi -->
-                    <div class="col-lg-6">
-                        <label class="col-sm-4 control-label" for="">{{ __('Kode Transaksi') }}</label>
-                        <div class="col-sm-8">
-                            {{ $barangMasuk->kode }}
-                        </div>
-                    </div>
-
-                    <!-- Tanggal Transaksi -->
-                    <div class="col-lg-6">
-                        <label class="col-sm-4 control-label" for="">{{ __('Tanggal Masuk') }}</label>
-                        <div class="col-sm-8">
-                            {{ $barangMasuk->tanggal_masuk }}
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <!-- Supplier -->
-                    <div class="col-lg-6">
+                    <div class="col-md-3">
+                        <!-- Kode Transaksi -->
                         <div class="form-group">
-                            <label class="col-sm-4 control-label" for="">{{ __('Supplier') }}</label>
-                            <div class="col-sm-8">
+                            <label class="control-label" for="">{{ __('Kode Transaksi') }}</label>
+                            <div class="">
+                                {{ $barangMasuk->kode }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- Tanggal Transaksi -->
+                        <div class="form-group">
+                            <label class="control-label" for="">{{ __('Tanggal Masuk') }}</label>
+                            <div class="">
+                                {{ $barangMasuk->tanggal_masuk }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- Supplier -->
+                        <div class="form-group">
+                            <label class="control-label" for="">{{ __('Supplier') }}</label>
+                            <div class="">
                                 {{ $barangMasuk->supplier->nama }}
                             </div>
                         </div>
                     </div>
-
-                    <!-- Kode Nota -->
-                    <div class="col-lg-6">
-                        <label class="col-sm-4 control-label" for="">{{ __('No. Faktur') }}</label>
-                        <div class="col-sm-8">
-                            {{ $barangMasuk->no_faktur }}
+                    <div class="col-md-3">
+                        <!-- Kode Nota -->
+                        <div class="form-group">
+                            <label class="control-label" for="">{{ __('No. Faktur') }}</label>
+                            <div class="">
+                                {{ $barangMasuk->no_faktur }}
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 

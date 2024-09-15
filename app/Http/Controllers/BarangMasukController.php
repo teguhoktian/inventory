@@ -7,6 +7,7 @@ use App\Models\BarangMasuk;
 use App\Models\Supplier;
 use App\Services\BarangMasukService;
 use App\Traits\AutoGenerateCodeTrait;
+use PDF;
 use Illuminate\Http\Request;
 
 class BarangMasukController extends Controller
@@ -184,7 +185,7 @@ class BarangMasukController extends Controller
 
     public function print(BarangMasuk $barangMasuk)
     {
-
+        // Tampilan view HTML
         return view(
             'barangmasuk.print',
             [
@@ -192,5 +193,12 @@ class BarangMasukController extends Controller
                 'cart' => $barangMasuk->detail
             ]
         );
+
+        // $pdf = PDF::loadView('barangmasuk.print', [
+        //             'barangMasuk' => $barangMasuk,
+        //             'cart' => $barangMasuk->detail
+        // ]);
+        
+        // return $pdf->download($barangMasuk->kode . ' Invoice Barang Masuk.pdf');    
     }
 }
