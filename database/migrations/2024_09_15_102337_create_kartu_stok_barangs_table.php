@@ -23,6 +23,7 @@ class CreateKartuStokBarangsTable extends Migration
             $table->integer('jumlah')->nullable();
             $table->bigInteger('harga')->nullable();
             $table->integer('sisa_stok')->unsigned()->nullable();
+            $table->text('keterangan')->nullable();
 
             $table->timestamps();
         });
