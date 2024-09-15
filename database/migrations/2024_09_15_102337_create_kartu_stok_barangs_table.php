@@ -36,6 +36,6 @@ class CreateKartuStokBarangsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kartu_stok_barangs');
+        Schema::dropIfExists('kartu_stok_barang');
     }
 }
