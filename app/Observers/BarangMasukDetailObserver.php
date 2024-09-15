@@ -3,9 +3,18 @@
 namespace App\Observers;
 
 use App\Models\BarangMasukDetail;
+use App\Models\KartuStokBarang;
+use App\Services\KartuStokBarangService;
 
 class BarangMasukDetailObserver
 {
+    
+    public $service = null;
+
+    public function __construct(KartuStokBarangService $kartuStokBarang)
+    {
+        $this->service = $kartuStokBarang;
+    }
     /**
      * Handle the BarangMasukDetail "created" event.
      *
@@ -15,8 +24,16 @@ class BarangMasukDetailObserver
     public function created(BarangMasukDetail $barangMasukDetail)
     {
         $barang = $barangMasukDetail->barang;
-        $barang->stok += $barangMasukDetail->quantity;
-        $barang->save();
+
+        if($barang){
+
+            //Upadate Stok Barang
+            $barang->stok += $barangMasukDetail->quantity;
+            $barang->save();
+
+            //Cetak kartu Stok
+            $this->service->barangMasukStok($barangMasukDetail, 'Masuk');
+        }
     }
 
     /**
@@ -40,8 +57,14 @@ class BarangMasukDetailObserver
     {
         //
         $barang = \App\Models\Barang::find($barangMasukDetail->id_barang);
-        $barang->stok -= $barangMasukDetail->quantity;
-        $barang->save();
+        
+        if($barang)
+        {
+            $barang->stok -= $barangMasukDetail->quantity;
+            $barang->save();
+            
+            $this->service->barangMasukStok($barangMasukDetail, 'Keluar', true);
+        }
     }
 
     /**
