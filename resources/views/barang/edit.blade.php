@@ -3,29 +3,16 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-body">
-                <div class="col-md-6">
-                    <h4><i class="fa fa-user"></i> {{ __('Ubah Data') }}</h4>
-                </div>
-                <!-- /.com-md-6 -->
 
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('barang.index') }}" class="btn-flat btn btn-success">
-                        <i class="fa fa-list"></i> {{ __('Daftar') }}
-                    </a>
-                </div>
-                <!-- /.com-md-6 -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.com-md-12 -->
-    </div>
-    <!-- /.row -->
+    <x-content-header :title="__('Edit')" :subtitle="__('Ubah Data Barang')" />
 
     <div class="content">
         <div class="box border-top-solid">
+            <div class="box-header with-border">
+                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
+                    &laquo; {{ __('Kembali') }}
+                </a>
+            </div>
             <div class="box-body my-form-body">
                 {{ Form::model($barang,
                 [

@@ -3,29 +3,16 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box box-body">
-                <div class="col-md-6">
-                    <h4><i class="fa fa-user"></i> {{ __('Barang') }}</h4>
-                </div>
-                <!-- /.com-md-6 -->
 
-                <div class="col-md-6 text-right">
-                    <a href="{{ route('barang.create') }}" class="btn-flat btn btn-success">
-                        <i class="fa fa-plus"></i> {{ __('Tambah') }}
-                    </a>
-                </div>
-                <!-- /.com-md-6 -->
-            </div>
-            <!-- /.box -->
-        </div>
-        <!-- /.com-md-12 -->
-    </div>
-    <!-- /.row -->
+    <x-content-header :title="__('Data Barang')" :subtitle="__('Halaman Daftar Barang')" />
 
     <div class="content">
         <div class="box border-top-solid">
+            <div class="box-header with-border">
+                <a href="{{ route('barang.create') }}" class="btn-flat btn btn-success pull-right">
+                    <i class="fa fa-plus"></i> {{ __('Tambah') }}
+                </a>
+            </div>
             <div class="box-body table-responsive">
                 <table id="dataTable" class="table table-bordered table-striped">
                     <thead>
