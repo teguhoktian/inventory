@@ -21,6 +21,8 @@
                             <th>{{ __('Tanggal') }}</th>
                             <th>{{ __('Kantor') }}</th>
                             <th>{{ __('PIC') }}</th>
+                            <th>{{ __('Items') }}</th>
+                            <th>{{ __('Total Harga') }}</th>
                             <th>{{ __('Aksi') }}</th>
                         </tr>
                     </thead>
@@ -71,6 +73,16 @@
 
         {
             data: 'pic'
+        },
+        {
+            data: 'detail_count',
+            sortable: false,
+            searchable: false
+        },
+        {
+            data: 'total_harga',
+            sortable: false,
+            searchable: false
         },
         {
             data: 'action',

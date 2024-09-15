@@ -10,9 +10,17 @@ class BarangKeluarService
 {
     public function getDT()
     {
-        return DataTables::of(BarangKeluar::with(['kantor'])->latest()->get())
+        return DataTables::of(BarangKeluar::withCount('detail')->with(['kantor'])->latest()->get())
             ->addColumn('kantor', function ($row) {
                 return $row->kantor?->nama;
+            })
+            ->addColumn('total_harga', function ($row) {
+                
+                $total = $row->detail->sum(function($data) {
+                    return $data->quantity * $data->harga;
+                });
+
+                return number_format($total, 2);
             })
             ->addColumn('action', 'barangkeluar.action')
             ->addIndexColumn()

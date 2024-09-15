@@ -8,11 +8,9 @@
     <div class="content">
         <div class="box border-top-solid">
 
-            <div class="box-header with-border">
-                <a href="{{ route('barang-keluar.index') }}" class="btn-sm btn btn-success">
-                    <i class="fa fa-angle-double-left"></i> {{ __('Daftar') }}
-                </a>
-            </div>
+            <!-- <div class="box-header with-border">
+                
+            </div> -->
 
             <div class="box-body">
                 @include('barangkeluar.form2')
@@ -27,6 +25,9 @@
 
             @if($cart_count>0)
             <div class="box-footer">
+                <a href="{{ route('barang-keluar.index') }}" class="btn-flat btn btn-default">
+                    <i class="fa fa-angle-double-left"></i> {{ __('Cancel') }}
+                </a>
                 <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
                     {{ __('Simpan') }}
                 </button>

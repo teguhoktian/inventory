@@ -51,22 +51,26 @@
                 <input class="form-control" id="totalHarga" value="0" disabled />
             </td>
             <td width="1">
-                <button id="addtocart" class="btn btn-success">Add</button>
+                <button id="addtocart" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                </button>
             </td>
         </tr>
         {{Form::close()}}
     </tbody>
     <tbody>
         @php
-        $total_harga = 0
+        $total_harga = 0;
+        $counter =0;
         @endphp
         @foreach($cart as $key => $product)
         @php
+        $counter++;
         $total_harga += $product['harga'] * $product['quantity'];
         @endphp
         <tr>
             <td>
-                #
+                {{ $counter; }}
             </td>
             <td>
                 {{$product['nama']}}
@@ -84,7 +88,7 @@
                 }}</td>
             <td>
                 <button class="btn btn-danger" onclick="document.getElementById('delete-form-{{$key}}').submit();">
-                    {{ __('Delete') }}
+                    <i class="fa fa-times"></i>
                 </button>
                 {!! Form::open([
                 'id' => 'delete-form-'.$key,
