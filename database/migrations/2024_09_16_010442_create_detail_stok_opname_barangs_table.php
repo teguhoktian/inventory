@@ -23,7 +23,7 @@ class CreateDetailStokOpnameBarangsTable extends Migration
 
             $table->integer('stok_aplikasi')->unsigned()->nullable();
             $table->integer('stok_fisik')->unsigned()->nullable();
-            $table->integer('selisih')->unsigned()->nullable();
+            $table->integer('selisih')->nullable();
 
             $table->timestamps();
         });
