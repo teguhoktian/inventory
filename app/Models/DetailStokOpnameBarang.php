@@ -18,6 +18,13 @@ class DetailStokOpnameBarang extends Model
     protected $table = 'stok_opname_barang_detail';
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * Get the stokOpname that owns the DetailStokOpnameBarang
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

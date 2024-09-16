@@ -7,6 +7,7 @@ use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\StokOpnameBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
                 Route::resource('kantor-cabang', KantorCabangController::class)->except(['show']);
+            
+                Route::patch('stok-opname-barang/{detailStokOpnameBarang}/update-stok-fisik', [StokOpnameBarangController::class, 'updateStokFisik'])->name('stok-opname-barang.updateStokFisik');
+                Route::patch('stok-opname-barang/{stokOpnameBarang}/cancel-stok-opname', [StokOpnameBarangController::class, 'batalSOBarang'])->name('stok-opname-barang.cancelStokOpname');
+                Route::resource('stok-opname-barang', StokOpnameBarangController::class);
+
             });
 
             // URL /auth/transaksi

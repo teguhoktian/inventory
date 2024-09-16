@@ -159,6 +159,51 @@
             $("#loading").hide();
             $("#btbSubmit").attr("disabled", false);
         });
+
+
+        //Fungsi AJAXForm Submit
+        function submitForm(formId, submitButtonId) {
+            $("#" + formId).submit(function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var _url = form.attr('action');
+                var _method = form.attr('method');
+                var data = form.serialize();
+
+                $.ajax({
+                    url: _url,
+                    type: _method,
+                    data: data,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('div').removeClass('has-error');
+                        $('.help-block').remove();
+                        $("#" + submitButtonId).attr("disabled", true);
+                    },
+                    error: function (response) {
+                        if (response.status == '422') {
+                            $.each(response.responseJSON.errors, function (i, error) {
+                                var el = $(document).find('[name="' + i + '"]');
+                                el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
+                            });
+                        }
+                    },
+                    success: function (response) {
+                        swal({
+                            title: "Simpan Data",
+                            type: "success",
+                            text: "Data Berhasil Disimpan"
+                        }, function () {
+                            window.location = response.redirectTo;
+                        });
+                    }
+                });
+
+                $("#" + submitButtonId).attr("disabled", false);
+            });
+        }
+
     </script>
 
     @yield('javascript')
