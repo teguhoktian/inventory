@@ -9,9 +9,15 @@
         <div class="box border-top-solid">
 
             <div class="box-header with-border">
-                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
-                    <i class="fa  fa-chevron-left"></i> {{ __('Kembali') }}
-                </a>
+                <h3></h3>
+                <div class="box-tools pull-right">
+                    <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
+                        <i class="fa fa-chevron-left"></i> {{ __('Kembali') }}
+                    </a>
+                    <a href="{{ route('barang.adjust-stok', $barang->id) }}" class="btn-flat btn btn-primary">
+                        <i class="fa fa-compress"></i> {{ __('Adjusment Stok') }}
+                    </a>
+                </div>
             </div>
 
             <div class="box-body">

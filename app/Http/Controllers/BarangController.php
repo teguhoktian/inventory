@@ -178,4 +178,47 @@ class BarangController extends Controller
             'message' => __('Data telah berhasil dihapus.')
         ], 200);
     }
+
+    function adjustmentStok(Barang $barang)
+    {
+        return view('barang.adjust', [
+            'barang' => $barang,
+        ]);
+    }
+
+    function adjustmentStokStore(Request $request, Barang $barang) 
+    {
+        $request->validate([
+            'keterangan' => 'required',
+            'tipe_penyesuaian' =>'required',
+            'stok_penyesuaian' => 'required'
+        ]);
+
+        $stok_penyesuaian = ($request->tipe_penyesuaian === 'Masuk') ? $request->stok_penyesuaian : -$request->stok_penyesuaian;
+
+        //Update Stok barang
+        $barang->stok += $stok_penyesuaian;
+        $barang->save();
+
+        $detailBarang = \App\Models\BarangMasukDetail::where('id_barang', $barang->id)->latest()->first();
+
+
+        //Masukkan ke Kartu Stok
+        KartuStokBarang::create([
+            'id_barang' => $barang->id,
+            'tanggal' => now(),
+            'tipe' => $request->tipe_penyesuaian,
+            'jumlah' => $request->stok_penyesuaian,
+            'harga' => $detailBarang->harga,
+            'sisa_stok' => $barang->stok,
+            'keterangan' => strtoupper($request->keterangan)
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'redirectTo' => route('barang.show', $barang->id),
+            'message' => __('Data telah berhasil dihapus.')
+        ], 200);
+        
+    }
 }

@@ -52,6 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {
+                Route::get('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStok'])->name('barang.adjust-stok');
+                Route::post('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStokStore'])->name('barang.adjust-stok-store');
                 Route::resource('barang', BarangController::class);
                 Route::resource('jenis-barang', JenisBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
