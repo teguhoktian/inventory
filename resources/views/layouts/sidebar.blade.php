@@ -57,6 +57,11 @@
                             <i class="fa fa-circle-o"></i> {{ __('Barang') }}
                         </a>
                     </li>
+                    <li class="@if(Route::is('stok-opname-barang.*')) active @endif">
+                        <a href="{{ route('stok-opname-barang.index') }}">
+                            <i class="fa fa-circle-o"></i> {{ __('Stok Opname') }}
+                        </a>
+                    </li>
                     <li class="@if(Route::is('jenis-barang.*')) active @endif">
                         <a href="{{ route('jenis-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Jenis Barang') }}
