@@ -24,6 +24,10 @@
                         <a href="{{ route('stok-opname-barang.index') }}" class="btn-flat btn btn-default">
                             <i class="fa fa-fast-backward"></i> {{ __('Kembali') }}
                         </a>
+                        <a href="{{ route('stok-opname-barang.cetakStok', $stokOpnameBarang->id) }}"
+                            class="btn-flat btn btn-warning">
+                            <i class="fa fa-print"></i> {{ __('Cetak Kartu') }}
+                        </a>
                     </div>
                 </div>
             </div>

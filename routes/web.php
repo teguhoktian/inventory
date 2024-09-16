@@ -60,7 +60,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
                 Route::resource('kantor-cabang', KantorCabangController::class)->except(['show']);
-            
+                
+                // Stok Opname Barang
+                Route::get('stok-opname-barang/{stokOpnameBarang}/cetak-kartu', [StokOpnameBarangController::class, 'printKartuStokOpname'])->name('stok-opname-barang.cetakStok');
                 Route::patch('stok-opname-barang/{detailStokOpnameBarang}/update-stok-fisik', [StokOpnameBarangController::class, 'updateStokFisik'])->name('stok-opname-barang.updateStokFisik');
                 Route::patch('stok-opname-barang/{stokOpnameBarang}/cancel-stok-opname', [StokOpnameBarangController::class, 'batalSOBarang'])->name('stok-opname-barang.cancelStokOpname');
                 Route::resource('stok-opname-barang', StokOpnameBarangController::class);

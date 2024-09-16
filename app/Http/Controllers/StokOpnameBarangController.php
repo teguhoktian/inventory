@@ -8,6 +8,7 @@ use App\Models\DetailStokOpnameBarang;
 use App\Models\StokOpnameBarang;
 use App\Services\BarangService;
 use Illuminate\Http\Request;
+use PDF;
 
 class StokOpnameBarangController extends Controller
 {
@@ -159,5 +160,21 @@ class StokOpnameBarangController extends Controller
     public function destroy(StokOpnameBarang $stokOpnameBarang)
     {
         //
+    }
+
+    public function printKartuStokOpname(StokOpnameBarang $stokOpnameBarang)
+    {
+
+        $pdf = PDF::loadView('stokOpnameBarang.print', [
+            'stokOpnameBarang' => $stokOpnameBarang,
+            'listBarang' => $stokOpnameBarang->details
+        ]);
+
+        return $pdf->download('SO-Card.pdf');
+
+        // return view('stokOpnameBarang.print',[
+        //     'stokOpnameBarang' => $stokOpnameBarang,
+        //     'listBarang' => $stokOpnameBarang->details
+        // ]);
     }
 }
