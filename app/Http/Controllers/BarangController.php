@@ -98,7 +98,7 @@ class BarangController extends Controller
 
         // $timeLineBarang = $barang->barangMasuk->merge($barang->barangKeluar)->sortBy('created_at'); 
 
-        $timeLineBarang = KartuStokBarang::where('id_barang', $barang->id)->orderBy('created_at', 'ASC')->get();
+        $timeLineBarang = KartuStokBarang::where('id_barang', $barang->id)->orderBy('tanggal', 'ASC')->get();
         
         // dd($timeLineBarang->toArray());
 

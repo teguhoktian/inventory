@@ -85,11 +85,11 @@
                         <tr>
                             <td>
                                 @if($mutasi->tipe == 'Masuk')
-                                <span class="btn btn-xs btn-primary">
+                                <span class="label label-primary">
                                     {{ $mutasi->tipe }}
                                 </span>
                                 @else
-                                <span class="btn btn-xs btn-danger">
+                                <span class="label label-danger">
                                     {{ $mutasi->tipe }}
                                 </span>
                                 @endif
