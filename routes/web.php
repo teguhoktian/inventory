@@ -6,6 +6,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LaporanStokBarangController;
 use App\Http\Controllers\SatuanBarangController;
 use App\Http\Controllers\StokOpnameBarangController;
 use App\Http\Controllers\SupplierController;
@@ -88,8 +89,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             //URL 
             Route::prefix('laporan')->group(function () {
-                Route::get('barang-masuk', [LaporanController::class, 'barangMasuk'])->name('laporan.barang-masuk');
-                Route::get('barang-keluar', [LaporanController::class, 'barangKeluar'])->name('laporan.barang-keluar');
+                Route::get('stok-barang', [LaporanStokBarangController::class, 'index'])->name('laporan.stok-barang.index');
+                Route::get('barang-masuk', [LaporanStokBarangController::class, 'index'])->name('laporan.barang-masuk');
+                Route::get('barang-keluar', [LaporanStokBarangController::class, 'index'])->name('laporan.barang-keluar');
             });
         });
     });

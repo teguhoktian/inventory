@@ -108,6 +108,13 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+
+                    <li class="@if(Request::route()->getName() == 'laporan.stok-barang.index') active @endif">
+                        <a href="{{ route('laporan.stok-barang.index') }}">
+                            <i class="fa fa-circle-o"></i> {{ __('Stok Barang') }}
+                        </a>
+                    </li>
+
                     <li class="@if(Request::route()->getName() == 'laporan.barang-masuk') active @endif">
                         <a href="{{ route('laporan.barang-masuk') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Barang Masuk') }}
