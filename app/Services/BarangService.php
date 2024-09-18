@@ -48,4 +48,32 @@ class BarangService
     {
         return $collection->update($request->all());
     }
+
+    public function getKartuStok($startDate, $endDate)
+    {
+        return Barang::withCount([
+
+            // Hitung stok awal sebelum tanggal $startDate
+            'stoks as stok_awal' => function ($query) use ($startDate) {
+                $query->select(DB::raw('COALESCE(SUM(CASE WHEN tipe = "Masuk" THEN jumlah ELSE -jumlah END), 0)'))
+                      ->where('tanggal', '<', $startDate);
+            },
+        
+            // Hitung stok masuk dalam rentang tanggal
+            'stoks as stok_masuk' => function ($query) use ($startDate, $endDate) {
+                $query->select(DB::raw('COALESCE(SUM(jumlah), 0)'))
+                      ->where('tipe', 'Masuk')
+                      ->whereBetween('tanggal', [$startDate, $endDate]);
+            },
+        
+            // Hitung stok keluar dalam rentang tanggal
+            'stoks as stok_keluar' => function ($query) use ($startDate, $endDate) {
+                $query->select(DB::raw('COALESCE(SUM(jumlah), 0)'))
+                      ->where('tipe', 'Keluar')
+                      ->whereBetween('tanggal', [$startDate, $endDate]);
+            }
+        ])->latest()->get();
+        
+        // return $result;
+    }
 }
