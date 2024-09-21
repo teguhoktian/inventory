@@ -100,6 +100,9 @@
                     </li>
                 </ul>
             </li>
+            @endhasrole
+
+            @hasrole('Administrator|Admin ATK|Manager|Kontrol Internal')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-archive"></i> <span>{{ __('Laporan') }}</span>

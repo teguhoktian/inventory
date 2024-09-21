@@ -88,6 +88,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('barang-keluar/{id}/getLastPrice', [BarangKeluarController::class, 'getLastPrice'])->name('barang-keluar.getLastPrice');
                 Route::resource('barang-keluar', BarangKeluarController::class)->except(['update', 'edit']);
             });
+        });
+    });
+
+    Route::group(['middleware' => ['role:Administrator|Admin ATK|Manager|Kontrol Internal']], function () {
+        Route::prefix('auth')->group(function () {
 
             //URL 
             Route::prefix('laporan')->group(function () {
@@ -100,6 +105,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('barang-keluar', [LaporanBarangKeluarController::class, 'index'])->name('laporan.barang-keluar.index');
                 Route::post('barang-keluar', [LaporanBarangKeluarController::class, 'printPDF'])->name('laporan.barang-keluar.print');
             });
+
         });
     });
+
+    
 });
