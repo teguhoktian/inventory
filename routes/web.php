@@ -90,6 +90,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             //URL 
             Route::prefix('laporan')->group(function () {
                 Route::get('stok-barang', [LaporanStokBarangController::class, 'index'])->name('laporan.stok-barang.index');
+                Route::post('stok-barang', [LaporanStokBarangController::class, 'printPDF'])->name('laporan.stok-barang.print');
+                
                 Route::get('barang-masuk', [LaporanStokBarangController::class, 'index'])->name('laporan.barang-masuk');
                 Route::get('barang-keluar', [LaporanStokBarangController::class, 'index'])->name('laporan.barang-keluar');
             });

@@ -76,10 +76,19 @@
                         <a href="{{ route('laporan.stok-barang.index') }}" class="btn btn-danger">
                             <i class="fa fa-close"></i> {{ __('Close') }}
                         </a>
-                        <button type="button" class="btn btn-primary" data-widget="collapse">
+                        <button onclick="submitForm('printPDF')" class="btn btn-primary">
                             <i class="fa fa-print"></i> {{__('Print')}}
                         </button>
+
                     </div>
+                    <!-- Form Print PDF -->
+                    {!! Form::open(['route' => 'laporan.stok-barang.print', 'method' => 'POST', 'id' => 'printPDF']) !!}
+                    <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
+                        value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
+                    <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
+                        value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
+                    {!! Form::close() !!}
+                    <!-- /.Form Print PDF -->
                 </div>
             </div>
 
