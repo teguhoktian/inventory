@@ -8,9 +8,12 @@
     <div class="content">
         <div class="box border-top-solid">
             <div class="box-header with-border">
-                <a href="{{ route('stok-opname-barang.create') }}" class="pull-right btn btn-primary">
-                    <i class="fa fa-plus"></i> {{ __('Stok Opname Baru') }}
-                </a>
+                <h3 class="box-title">{{ __('Daftar Stok Opname') }}</h3>
+                <div class="box-tools">
+                    <a href="{{ route('stok-opname-barang.create') }}" class="pull-right btn btn-primary">
+                        <i class="fa fa-plus"></i> {{ __('Lakukan SO') }}
+                    </a>
+                </div>
             </div>
             <div class="box-body table-responsive">
                 {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
