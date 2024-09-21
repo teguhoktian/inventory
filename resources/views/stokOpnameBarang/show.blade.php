@@ -14,7 +14,7 @@
                 <!-- Box Title -->
                 <h3 class="box-title">
                     <i class="fa fa-list"></i>
-                    {{__('Kartu Stok Opname')}} {{ $stokOpnameBarang->nama }}
+                    {{__('Kartu Stok Opname')}} {{ $stokOpnameBarang->kode }}
                 </h3>
 
 

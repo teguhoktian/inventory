@@ -9,10 +9,16 @@
     <div class="body">
         <div class="header-section">
             <p>
+                <strong>Kode</strong> : {{ $stokOpnameBarang->kode }}
+            </p>
+            <p>
                 <strong>Tanggal</strong>: {{ $stokOpnameBarang->tanggal }}
             </p>
             <p>
                 <strong>Keterangan</strong>: {{ $stokOpnameBarang->keterangan }}
+            </p>
+            <p>
+                <strong>Tanggal Cetak</strong>: {{ now()->format('Y-m-d') }}
             </p>
         </div>
 

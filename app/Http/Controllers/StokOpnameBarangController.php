@@ -7,17 +7,22 @@ use App\Http\Requests\StokOpnameBarangRequest;
 use App\Models\DetailStokOpnameBarang;
 use App\Models\StokOpnameBarang;
 use App\Services\BarangService;
+use App\Traits\AutoGenerateCodeTrait;
 use Illuminate\Http\Request;
 use PDF;
 
 class StokOpnameBarangController extends Controller
 {
+    use AutoGenerateCodeTrait;
+
     private $listBarang = null;
+    protected $kode;
 
     //make construct
     public function __construct()
     {
         $this->listBarang = \App\Models\Barang::get();
+        $this->kode = $this->generateCode(StokOpnameBarang::class, 'TSO-');
     }
 
     /**
@@ -54,6 +59,7 @@ class StokOpnameBarangController extends Controller
      */
     public function store(StokOpnameBarangRequest $request)
     {
+        $request['kode'] = $this->kode;
         $stokOpnameBarang = StokOpnameBarang::create($request->all());
         
         if($stokOpnameBarang){
@@ -170,7 +176,7 @@ class StokOpnameBarangController extends Controller
             'listBarang' => $stokOpnameBarang->details
         ]);
 
-        return $pdf->download('SO-Card.pdf');
+        return $pdf->download('SO-CARD_' . now()->format('YmdHis') . '.pdf');
 
         // return view('stokOpnameBarang.print',[
         //     'stokOpnameBarang' => $stokOpnameBarang,

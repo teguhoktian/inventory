@@ -79,6 +79,7 @@ class StokOpnameBarangDataTable extends DataTable
     {
         return [
             Column::make('tanggal'),
+            Column::make('kode'),
             Column::make('nama'),
             Column::make('status')
             ->exportable(false)
