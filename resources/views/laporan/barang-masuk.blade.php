@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 
-    <x-content-header :title="__('Laporan Stok Barang')" :subtitle="__('')" />
+    <x-content-header :title="__('Laporan Barang Masuk')" :subtitle="__('')" />
 
     <div class="content">
         <div class="box border-top-solid">
