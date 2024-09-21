@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
+use App\Http\Controllers\LaporanBarangKeluarController;
 use App\Http\Controllers\LaporanBarangMasukController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporanStokBarangController;
@@ -96,7 +97,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::get('barang-masuk', [LaporanBarangMasukController::class, 'index'])->name('laporan.barang-masuk.index');
                 Route::post('barang-masuk', [LaporanBarangMasukController::class, 'printPDF'])->name('laporan.barang-masuk.print');
                                 
-                Route::get('barang-keluar', [LaporanStokBarangController::class, 'index'])->name('laporan.barang-keluar');
+                Route::get('barang-keluar', [LaporanBarangKeluarController::class, 'index'])->name('laporan.barang-keluar.index');
+                Route::post('barang-keluar', [LaporanBarangKeluarController::class, 'printPDF'])->name('laporan.barang-keluar.print');
             });
         });
     });

@@ -59,4 +59,12 @@ class BarangKeluarService
 
         request()->session()->put('cart_out', []);
     }
+
+    function getBarangKeluarReport($startDate, $endDate)
+    {
+        return BarangKeluarDetail::join('barang_keluar', 'barang_keluar_detail.id_barang_keluar', '=', 'barang_keluar.id')
+        ->whereBetween('barang_keluar.tanggal_keluar', [$startDate, $endDate])
+        ->orderBy('barang_keluar.tanggal_keluar', 'asc') // Urutkan berdasarkan tanggal masuk
+        ->get();
+    }
 }
