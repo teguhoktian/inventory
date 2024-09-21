@@ -193,7 +193,7 @@
                         swal({
                             title: "Simpan Data",
                             type: "success",
-                            text: "Data Berhasil Disimpan"
+                            text: response.message
                         }, function () {
                             window.location = response.redirectTo;
                         });
