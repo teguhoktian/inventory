@@ -60,4 +60,12 @@ class BarangMasukService
 
         request()->session()->put('cart', []);
     }
+
+    function getBarangMasukReport($startDate, $endDate)
+    {
+        return BarangMasukDetail::join('barang_masuk', 'barang_masuk_detail.id_barang_masuk', '=', 'barang_masuk.id')
+        ->whereBetween('barang_masuk.tanggal_masuk', [$startDate, $endDate])
+        ->orderBy('barang_masuk.tanggal_masuk', 'asc') // Urutkan berdasarkan tanggal masuk
+        ->get();
+    }
 }
