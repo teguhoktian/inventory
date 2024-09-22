@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
@@ -52,6 +53,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // settings/general-settings
             Route::get('settings/general-settings', [GeneralSettingController::class, 'index'])->name('settings.general-settings');
             Route::post('settings/general-settings', [GeneralSettingController::class, 'store'])->name('settings.general-settings.store');
+            
+            // settings/backup
+            Route::get('settings/backup', [BackupController::class, 'index'])->name('settings.backup');
+            Route::get('settings/backup/status', [BackupController::class, 'backupStatuses'])->name('settings.backup-status');
+            Route::get('settings/backup/files', [BackupController::class, 'getFiles'])->name('settings.backup-files');
+            Route::post('settings/backup', [BackupController::class, 'createBackup'])->name('settings.backup-create');
+            Route::post('settings/backup/download', [BackupController::class, 'downloadBackup'])->name('settings.backup-download');
+            Route::delete('settings/backup/delete', [BackupController::class, 'deleteFile'])->name('settings.backup-delete');
         });
     });
 
