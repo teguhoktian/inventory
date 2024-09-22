@@ -40,7 +40,6 @@
                     </li>
                 </ul>
             </li>
-
             @endhasrole
 
             @hasrole('Administrator|Admin ATK')
@@ -142,7 +141,24 @@
                     -->
                 </ul>
             </li>
+            @endhasrole
 
+            @hasrole('Administrator')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-gear"></i> <span>{{ __('Pengaturan') }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@if(Route::is('settings.*')) active @endif">
+                        <a href="{{ route('settings.general-settings') }}">
+                            <i class="fa fa-circle-o"></i> <span>{{ __('Pengaturan Situs') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endhasrole
         </ul>
         <!-- /.sidebar-menu -->

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\GeneralSettingController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\KantorCabangController;
 use App\Http\Controllers\LaporanBarangKeluarController;
@@ -47,6 +48,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth
             Route::resource('user', UserController::class);
+
+            // settings/general-settings
+            Route::get('settings/general-settings', [GeneralSettingController::class, 'index'])->name('settings.general-settings');
+            Route::post('settings/general-settings', [GeneralSettingController::class, 'store'])->name('settings.general-settings.store');
         });
     });
 
