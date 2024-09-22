@@ -41,7 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/update', [\App\Http\Controllers\HomeController::class, 'updateProfile'])->name('profile.update');
     });
 
-    Route::group(['middleware' => ['role:Administrator']], function () {
+    Route::group(['middleware' => ['role:Admin']], function () {
 
         // URL /auth/
         Route::prefix('auth')->group(function () {
@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::group(['middleware' => ['role:Administrator|Admin ATK']], function () {
+    Route::group(['middleware' => ['role:Admin|Admin ATK']], function () {
         Route::prefix('auth')->group(function () {
 
             // URL /auth/master
@@ -96,7 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::group(['middleware' => ['role:Administrator|Admin ATK|Manager|Kontrol Internal']], function () {
+    Route::group(['middleware' => ['role:Admin|Admin ATK|Manager|Kontrol Internal']], function () {
         Route::prefix('auth')->group(function () {
 
             //URL 

@@ -19,7 +19,7 @@
                 </a>
             </li>
 
-            @hasrole('Administrator')
+            @hasrole('Admin')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-database"></i> <span>{{ __('Database') }}</span>
@@ -42,7 +42,7 @@
             </li>
             @endhasrole
 
-            @hasrole('Administrator|Admin ATK')
+            @hasrole('Admin|Admin ATK')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-cubes"></i> <span>{{ __('Master Inventory') }}</span>
@@ -101,7 +101,7 @@
             </li>
             @endhasrole
 
-            @hasrole('Administrator|Admin ATK|Manager|Kontrol Internal')
+            @hasrole('Admin|Admin ATK|Manager|Kontrol Internal')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-archive"></i> <span>{{ __('Laporan') }}</span>
@@ -143,7 +143,7 @@
             </li>
             @endhasrole
 
-            @hasrole('Administrator')
+            @hasrole('Admin')
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-gear"></i> <span>{{ __('Pengaturan') }}</span>
