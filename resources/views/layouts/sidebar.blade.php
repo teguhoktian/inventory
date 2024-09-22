@@ -143,6 +143,10 @@
             </li>
             @endhasrole
 
+            <li class="header">
+                {{ __('SITE CONFIGURATION') }}
+            </li>
+
             @hasrole('Admin')
             <li class="treeview">
                 <a href="#">
@@ -152,9 +156,14 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Route::is('settings.*')) active @endif">
+                    <li class="@if(Route::is('settings.general-settings')) active @endif">
                         <a href="{{ route('settings.general-settings') }}">
                             <i class="fa fa-circle-o"></i> <span>{{ __('Pengaturan Situs') }}</span>
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('settings.backup')) active @endif">
+                        <a href="{{ route('settings.backup') }}">
+                            <i class="fa fa-circle-o"></i> <span>{{ __('Backup Panel') }}</span>
                         </a>
                     </li>
                 </ul>
