@@ -4,7 +4,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">INV</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg" style="font-size: normal;">Inventory</span>
+        <span class="logo-lg" style="font-size: normal;">{{ config('app.name', 'Laravel') }}</span>
     </a>
 
     <!-- Header Navbar -->
