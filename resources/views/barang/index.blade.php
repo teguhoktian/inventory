@@ -9,9 +9,19 @@
     <div class="content">
         <div class="box border-top-solid">
             <div class="box-header with-border">
-                <a href="{{ route('barang.create') }}" class="btn-flat btn btn-success pull-right">
-                    <i class="fa fa-plus"></i> {{ __('Tambah') }}
-                </a>
+                <h2 class="box-title">
+                    Daftar Barang
+                </h2>
+                <div class="box-tools">
+                    <div class="btn-group">
+                        <a href="{{ route('barang.create') }}" class="btn btn-success">
+                            <i class="fa fa-plus"></i> {{ __('Tambah Barang') }}
+                        </a>
+                        <a href="{{ route('stok-awal.add') }}" class="btn btn-danger">
+                            <i class="fa fa-plus"></i> {{ __('Input Stok Awal') }}
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="box-body table-responsive">
                 <table id="dataTable" class="table table-bordered table-striped">

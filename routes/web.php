@@ -12,6 +12,7 @@ use App\Http\Controllers\LaporanBarangMasukController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LaporanStokBarangController;
 use App\Http\Controllers\SatuanBarangController;
+use App\Http\Controllers\StokBarangAwalController;
 use App\Http\Controllers\StokOpnameBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -83,6 +84,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::patch('stok-opname-barang/{detailStokOpnameBarang}/update-stok-fisik', [StokOpnameBarangController::class, 'updateStokFisik'])->name('stok-opname-barang.updateStokFisik');
                 Route::patch('stok-opname-barang/{stokOpnameBarang}/cancel-stok-opname', [StokOpnameBarangController::class, 'batalSOBarang'])->name('stok-opname-barang.cancelStokOpname');
                 Route::resource('stok-opname-barang', StokOpnameBarangController::class);
+
+                // Stok Awal
+                Route::post('stok-awal/addtocart', [StokBarangAwalController::class, 'addtocart'])->name('stok-awal.addtocart');
+                Route::delete('stok-awal/{key}/removecartitem', [StokBarangAwalController::class, 'removecartitem'])->name('stok-awal.removecartitem');
+                Route::post('stok-awal', [StokBarangAwalController::class, 'store'])->name('stok-awal.store');
+                Route::get('stok-awal', [StokBarangAwalController::class, 'create'])->name('stok-awal.add');
+
 
             });
 
