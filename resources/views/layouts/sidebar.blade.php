@@ -43,13 +43,7 @@
                     <li>
                         <a href="">
                             <i class="fa fa-lock"></i>
-                            <span>{{ __('Role') }}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fa fa-lock"></i>
-                            <span>{{ __('Permission') }}</span>
+                            <span>{{ __('Role & Permission') }}</span>
                         </a>
                     </li>
                 </ul>
