@@ -21,6 +21,40 @@
 
             @hasrole('Admin')
             <li class="treeview">
+                <a href="#" onchange="javasctipt:void(0);">
+                    <i class="fa fa-users"></i> <span>{{ __('Pengguna') }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@if(Route::is('user.create')) active @endif">
+                        <a href="{{ route('user.create') }}">
+                            <i class="fa fa-plus"></i>
+                            <span>{{ __('Tambah Pengguna') }}</span>
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('user.index')) active @endif">
+                        <a href="{{ route('user.index') }}">
+                            <i class="fa fa-list"></i>
+                            <span>{{ __('Daftar Pengguna') }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-lock"></i>
+                            <span>{{ __('Role') }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-lock"></i>
+                            <span>{{ __('Permission') }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-database"></i> <span>{{ __('Database') }}</span>
                     <span class="pull-right-container">
@@ -28,11 +62,6 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Route::is('user.*')) active @endif">
-                        <a href="{{ route('user.index') }}">
-                            <i class="fa fa-circle-o"></i> <span>{{ __('Pengguna') }}</span>
-                        </a>
-                    </li>
                     <li class="@if(Route::is('kantor-cabang.*')) active @endif">
                         <a href="{{ route('kantor-cabang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Cabang') }}
