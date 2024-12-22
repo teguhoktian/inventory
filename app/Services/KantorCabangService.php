@@ -9,7 +9,10 @@ class KantorCabangService
 {
     public function getDT()
     {
-        return DataTables::of(KantorCabang::latest()->get())
+        // $kantorCabang = KantorCabang::latest()->get();
+        $kantorCabang = KantorCabang::buildKategoriTree();
+
+        return DataTables::of($kantorCabang)
             ->addColumn('action', 'kantorcabang.action')
             ->addIndexColumn()
             ->make(true);

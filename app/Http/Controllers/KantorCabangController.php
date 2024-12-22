@@ -33,7 +33,8 @@ class KantorCabangController extends Controller
      */
     public function create()
     {
-        return view('kantorcabang.add');
+        $branches = KantorCabang::buildKategoriTree();
+        return view('kantorcabang.add', ['branches' => $branches, 'kantorCabang' => null]);
     }
 
     /**
@@ -45,7 +46,10 @@ class KantorCabangController extends Controller
     public function store(Request $request)
     {
         $request->validate(
-            ['nama' => 'required', 'kode' => 'required|unique:kantor_cabang,kode']
+            [
+                'nama' => 'required', 'kode' => 'required|unique:kantor_cabang,kode',
+                'parent_id' => 'nullable|exists:kantor_cabang,id'
+            ]
         );
 
         $this->services->create($request);
@@ -74,7 +78,8 @@ class KantorCabangController extends Controller
      */
     public function edit(KantorCabang $kantorCabang)
     {
-        return view('kantorcabang.edit', ['kantorCabang' => $kantorCabang]);
+        $branches = KantorCabang::buildKategoriTree();
+        return view('kantorcabang.edit', ['kantorCabang' => $kantorCabang, 'branches' => $branches]);
     }
 
     /**
@@ -87,7 +92,11 @@ class KantorCabangController extends Controller
     public function update(Request $request, KantorCabang $kantorCabang)
     {
         $request->validate(
-            ['nama' => 'required', 'kode' => 'required|unique:kantor_cabang,kode,' . $kantorCabang->id]
+            [
+                'nama' => 'required', 
+                'kode' => 'required|unique:kantor_cabang,kode,' . $kantorCabang->id,
+                'parent_id' => 'nullable|exists:kantor_cabang,id|not_in:' . $kantorCabang->id,
+                ]
         );
 
         $this->services->update($request, $kantorCabang);

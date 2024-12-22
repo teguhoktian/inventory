@@ -45,4 +45,34 @@ class KantorCabang extends Model
     {
         return $this->hasMany(KantorCabang::class, 'parent_id');
     }
+
+    /**
+     * buildKategoriTree
+     *
+     * @param [type] $categories
+     * @param [type] $parentId
+     * @param string $prefix
+     * @return void
+     */
+    public static function buildKategoriTree($categories = null, $parentId = null, $prefix = '')
+    {
+        $categories = $categories ?: self::all(); // Ambil semua kategori jika belum ada
+        $tree = [];
+
+        foreach ($categories as $category) {
+            if ($category->parent_id == $parentId) {
+                // Tambahkan prefix ke nama, dan simpan id serta kode
+                $tree[] = [
+                    'id' => $category->id,
+                    'kode' => $category->kode,
+                    'nama' => $prefix . $category->nama,
+                ];
+
+                // Rekursif untuk children
+                $tree = array_merge($tree, self::buildKategoriTree($categories, $category->id, $prefix . ' --- '));
+            }
+        }
+
+        return $tree;
+    }
 }
