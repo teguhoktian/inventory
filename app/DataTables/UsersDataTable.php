@@ -21,11 +21,18 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addColumn('status', function(User $user){
+                if($user->status == 'active'){
+                    return '<span class="label label-success">'. __('Aktif') .'</span>';
+                }else{
+                    return '<span class="label label-warning">'. __('Non-Aktif') .'</span>';
+                }
+            })
             ->addColumn('action', 'user.action')
             ->addColumn('role', function(User $user){
-                return '<span class="btn btn-xs btn-success">' . $user->roles->pluck('name')->implode(', ') . '</span>';
+                return '<span class="btn btn-xs btn-info">' . $user->roles->pluck('name')->implode(', ') . '</span>';
             })
-            ->rawColumns(['action', 'role'])
+            ->rawColumns(['action', 'role', 'status'])
             ->setRowId('id');
     }
 
@@ -78,6 +85,7 @@ class UsersDataTable extends DataTable
             Column::make('name'),
             Column::make('email'),
             Column::make('username'),
+            Column::computed('status'),
             Column::computed('role'),
             Column::computed('action')
             ->exportable(false)

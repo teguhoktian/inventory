@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'username',
+        'status'
     ];
 
     /**
@@ -43,4 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Active Scope
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }

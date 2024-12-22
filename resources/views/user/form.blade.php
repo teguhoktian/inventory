@@ -45,6 +45,16 @@
 </div>
 
 <div class="form-group">
+    <label class="col-sm-2 control-label" for="inputName">{{ __('Status') }}</label>
+    <div class="col-sm-10">
+        {{ Form::select('status', ['active' => __('Aktif'), 'inactive' => __('Nonaktif')], null, ['placeholder' =>
+        'Pilih', 'id' => '',
+        'class' => 'form-control'
+        ]) }}
+    </div>
+</div>
+
+<div class="form-group">
     <label class="col-sm-2 control-label" for="inputName">{{ __('Hak Akses') }}</label>
     <div class="col-sm-10">
         {{ Form::select('roles', $roles, null, ['placeholder' => 'Pilih ', 'id' => 'select2', 'class' => 'form-control'

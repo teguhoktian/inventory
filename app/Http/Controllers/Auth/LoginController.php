@@ -73,4 +73,21 @@ class LoginController extends Controller
     {
         return $this->username;
     }
+
+    /**
+     * Override the authenticated method to add custom logic after login.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->status !== 'active') {
+            auth()->logout();
+            return redirect()->route('login')->withErrors([
+                'username' => __('Akun Anda tidak aktif. Silakan hubungi administrator.'),
+            ]);
+        }
+    }
 }
