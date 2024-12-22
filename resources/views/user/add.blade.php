@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header">
                 <h3 class="box-title">{{ __('Tambah Pengguna') }}</h3>
             </div>
