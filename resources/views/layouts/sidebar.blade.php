@@ -50,15 +50,20 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-database"></i> <span>{{ __('Database') }}</span>
+                    <i class="fa fa-building"></i> <span>{{ __('Cabang') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Route::is('kantor-cabang.*')) active @endif">
+                    <li class="@if(Route::is('kantor-cabang.create')) active @endif">
+                        <a href="{{ route('kantor-cabang.create') }}">
+                            <i class="fa fa-plus"></i> {{ __('Tambah Cabang') }}
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('kantor-cabang.index')) active @endif">
                         <a href="{{ route('kantor-cabang.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Cabang') }}
+                            <i class="fa fa-list"></i> {{ __('Daftar Cabang') }}
                         </a>
                     </li>
                 </ul>
