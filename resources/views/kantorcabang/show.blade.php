@@ -63,6 +63,89 @@
                 </div>
             </form>
         </div>
+        <!-- ./ Box Detail Kantor -->
+
+        <div class="box box-solid box-success box-flat box-shadow">
+            <div class="box-header">
+                <h2 class="box-title">
+                    <i class="fa fa-users"></i> {{ __('Attach User') }}
+                </h2>
+            </div>
+
+            <div class="box-body">
+
+                <div style="margin-bottom: 1rem;">
+                    {{ Form::open(['route' => ['kantor-cabang.addUser', $kantorCabang->id], 'files' => true, 'id' =>
+                    'moduleForm', 'class' => 'form-inline']) }}
+
+                    <div class="form-group">
+                        <label for="" class="sr-only">
+                            {{ __('Pilih User') }}
+                        </label>
+                        <select class="form-control" name="user_id" id="select2">
+                            <option value="">-- Pilih User --</option>
+                            @foreach ($users as $id => $nama)
+                            <option value="{{ $id }}">{{ $nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <button class="btn btn-flat btn-primary" id="btnSubmit">
+                        <i class="fa fa-plus"></i> {{ __('Attach') }}
+                    </button>
+                    </form>
+                </div>
+
+                <!-- Table Form -->
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr style="background-color: #EEE;">
+                            <th>
+                                {{ __('Username') }}
+                            </th>
+                            <th>
+                                {{ __('Name') }}
+                            </th>
+                            <th>
+                                {{ __('Email') }}
+                            </th>
+                            <th>
+                                {{ __('Action') }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($kantorCabang->users as $user)
+                        <tr>
+                            <td>
+                                {{ $user->username }}
+                            </td>
+                            <td>
+                                {{ $user->name }}
+                            </td>
+                            <td>
+                                {{ $user->email }}
+                            </td>
+                            <td width="1px">
+                                <button class="btn btn-sm btn-danger text-muted"
+                                    onclick="submitDelete('delete-form-{{ $user->id }}')">
+                                    <i class="fa fa-unlink"></i>
+                                    Delete
+                                </button>
+                                {!! Form::open([
+                                'id' => 'delete-form-'.$user->id,
+                                'method' => 'DELETE',
+                                'route' => ['kantor-cabang.deleteUser', $kantorCabang->id],'style'=>'display:inline'])
+                                !!}
+                                {!! Form::hidden('user_id', $user->id) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <!-- /.content-wrapper -->
@@ -76,6 +159,18 @@
 @section('javascript')
 <script type="text/javascript">
     var routeIndex = "{{ route('kantor-cabang.index') }}";
-    $(function () { });
+    $(function () {
+
+        $('#select2').select2({
+
+        });
+
+        submitForm("moduleForm", "btbSubmit");
+
+    });
+
+    function submitDelete(formId) {
+        document.getElementById(formId).submit();
+    }
 </script>
 @stop

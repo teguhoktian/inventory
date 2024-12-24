@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\KantorCabang;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
 use App\Notifications\UserEmailVerification;
@@ -35,6 +36,7 @@ class UserServices
         $request['kode_desa'] = env('APP_KODE_DESA');
         $user = User::create($request->all());
         $user->syncRoles([$request->roles]);
+        $user->kantorCabangs()->sync($request->cabangs);
         //$user->notify(new UserEmailVerification());
         return $user;
     }
@@ -46,7 +48,10 @@ class UserServices
         } else {
             $request['password'] = Hash::make($request['password']);
         }
+
         $user->roles()->sync([$request->roles]);
+
+        $user->kantorCabangs()->sync($request->cabangs);
 
         return $user->update($request->all());
     }
@@ -55,6 +60,7 @@ class UserServices
     {
         return [
             'roles' => Role::pluck('name', 'id'),
+            'cabangs' => KantorCabang::orderby('nama', 'ASC')->pluck('nama', 'id'),
         ];
     }
 }

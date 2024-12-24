@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class KantorCabang extends Model
@@ -79,10 +80,21 @@ class KantorCabang extends Model
     /**
      * Interact with the getParentTextAttribute attribute.
      *
-     * return \Illuminate\Database\Eloquent\Casts\Attribute
+     * return void
      */
     public function getParentTextAttribute()
     {
         return $this->parent ? $this->parent->kode . " - " . $this->parent->nama : null;
+    }
+
+    /**
+     * The users that belong to the KantorCabang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'kantor_cabang_user', 'kantor_cabang_id', 'user_id')
+        ->withTimestamps();
     }
 }

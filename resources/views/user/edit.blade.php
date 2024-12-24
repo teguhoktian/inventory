@@ -8,26 +8,39 @@
             <div class="box-header">
                 <h2 class="box-title">{{ __('Edit Pengguna') }}</h2>
             </div>
-            <div class="box-body">
-                {{ Form::model($user,
-                [
-                'route' => ['user.update', $user->id],
-                'files' => true,
-                'id' => 'moduleForm',
-                'class' => 'form-horizontal',
-                'method' => 'PATCH'
-                ])
-                }}
-                @include('user.form')
 
+            {{ Form::model($user,
+            [
+            'route' => ['user.update', $user->id],
+            'files' => true,
+            'id' => 'moduleForm',
+            'class' => 'form-horizontal',
+            'method' => 'PATCH'
+            ])
+            }}
+
+            <div class="box-body">
+                @include('user.form')
             </div>
+
             <div class="box-footer with-border">
-                <a href="{{ route('user.index') }}" class="btn-flat btn-default btn btn-default">
-                    <i class="fa fa-arrow-left"></i> {{ __('Cancel') }}
-                </a>
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                    <i class="fa-save fa"></i> {{ __('Update') }}
-                </button>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary ">
+                            <i class="fa-save fa"></i> {{ __('Update') }}
+                        </button>
+
+                        <a href="{{ route('user.create') }}" class="btn-flat btn-warning btn">
+                            <i class="fa fa-plus"></i> {{ __('Tambah user baru') }}
+                        </a>
+
+                        <a href="{{ route('user.index') }}" class="btn-flat btn-danger btn">
+                            <i class="fa fa-times"></i> {{ __('Cancel') }}
+                        </a>
+
+                    </div>
+                </div>
             </div>
             {{ Form::close() }}
         </div>
@@ -45,45 +58,11 @@
 <script type="text/javascript">
     var routeIndex = "{{ route('user.index') }}";
     $(function () {
-        $("#moduleForm").submit(function (e) {
-            e.preventDefault();
 
-            var form = $(this);
-            var _url = form.attr('action');
-            var _method = form.attr('method');
-            var data = form.serialize();
+        submitForm("moduleForm", "btbSubmit");
 
-            $.ajax({
-                url: _url,
-                type: _method,
-                data: data,
-                dataType: 'json',
-                beforeSend: function () {
-                    $('div').removeClass('has-error');
-                    $('.help-block').remove();
-                    $("#btbSubmit").attr("disabled", true);
-                },
-                error: function (response) {
-                    if (response.status == '422') {
-                        $.each(response.responseJSON.errors, function (i, error) {
-                            var el = $(document).find('[name="' + i + '"]');
-                            el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
-                        });
-                    }
-                },
-                success: function (response) {
-                    swal({
-                        title: "{{ __('Simpan Data') }}",
-                        type: "success",
-                        text: "{{ __('Data Berhasil Disimpan') }}"
-                    }, function () {
-                        window.location = "{{ route('user.index') }}";
-                    });
-                }
-            })
-
-            $("#btbSubmit").attr("disabled", false);
-
+        $('#select2, #select21').select2({
+            with: '100%'
         });
     });
 </script>

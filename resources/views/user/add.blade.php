@@ -8,18 +8,26 @@
             <div class="box-header">
                 <h3 class="box-title">{{ __('Tambah Pengguna') }}</h3>
             </div>
+            {{ Form::open([ 'route' => 'user.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
+            'form-horizontal' ]) }}
             <div class="box-body">
-                {{ Form::open([ 'route' => 'user.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-                'form-horizontal' ]) }}
                 @include('user.form')
             </div>
             <div class="box-footer with-border">
-                <a href="{{ route('user.index') }}" class="btn-flat btn-default btn btn-default">
-                    <i class="fa fa-arrow-left"></i> {{ __('Cancel') }}
-                </a>
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary pull-right">
-                    <i class="fa fa-save"></i> {{ __('Simpan') }}
-                </button>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary">
+                            <i class="fa fa-save"></i> {{ __('Simpan') }}
+                        </button>
+
+                        <a href="{{ route('user.index') }}" class="btn-flat btn-danger btn">
+                            <i class="fa fa-time"></i> {{ __('Cancel') }}
+                        </a>
+                    </div>
+
+                </div>
             </div>
             {{ Form::close() }}
         </div>
@@ -38,49 +46,10 @@
     var routeIndex = "{{ route('user.index') }}";
     $(function () {
 
-        $('#select2').select2({
-            width: "100%",
-        });
+        submitForm("moduleForm", "btbSubmit");
 
-        $("#moduleForm").submit(function (e) {
-            e.preventDefault();
-
-            var form = $(this);
-            var _url = form.attr('action');
-            var _method = form.attr('method');
-            var data = form.serialize();
-
-            $.ajax({
-                url: _url,
-                type: _method,
-                data: data,
-                dataType: 'json',
-                beforeSend: function () {
-                    $('div').removeClass('has-error');
-                    $('.help-block').remove();
-                    $("#btbSubmit").attr("disabled", true);
-                },
-                error: function (response) {
-                    if (response.status == '422') {
-                        $.each(response.responseJSON.errors, function (i, error) {
-                            var el = $(document).find('[name="' + i + '"]');
-                            el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
-                        });
-                    }
-                },
-                success: function (response) {
-                    swal({
-                        title: "{{ __('Simpan Data') }}",
-                        type: "success",
-                        text: "{{ __('Data Berhasil Disimpan') }}"
-                    }, function () {
-                        window.location = "{{ route('user.index') }}";
-                    });
-                }
-            })
-
-            $("#btbSubmit").attr("disabled", false);
-
+        $('#select2, #select21').select2({
+            with: '100%'
         });
     });
 </script>

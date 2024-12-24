@@ -32,6 +32,7 @@ class UserController extends Controller
         $options = $services->options();
         return view('user.add', [
             'roles' => $options['roles'],
+            'cabangs' => $options['cabangs'],
         ]);
     }
 
@@ -43,10 +44,11 @@ class UserController extends Controller
      */
     public function store(UserRequest $request, UserServices $services)
     {
-        $services->create($request);
+        $user = $services->create($request);
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('user.edit', $user->id)
         ], 200);
     }
 
@@ -70,9 +72,12 @@ class UserController extends Controller
     {
         $options = $services->options();
         $user->roles = $user->roles->pluck('id', 'id');
+        $user->cabangs = $user->kantorCabangs()->pluck('kantor_cabang_id', 'kantor_cabang_id');
+      
         return view('user.edit', [
             'user' => $user,
             'roles' => $options['roles'],
+            'cabangs' => $options['cabangs'],
         ]);
     }
 
@@ -85,11 +90,12 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user, UserServices $services)
     {
-        if ($user->kode_desa !== env('APP_KODE_DESA')) abort('403');
-        $user = $services->update($request, $user);
+        // if ($user->kode_desa !== env('APP_KODE_DESA')) abort('403');
+        $services->update($request, $user);
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('user.edit', $user->id)
         ], 200);
     }
 

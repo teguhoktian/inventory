@@ -77,6 +77,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
+                Route::post('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'addUser'])->name('kantor-cabang.addUser');
+                Route::delete('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'deleteUser'])->name('kantor-cabang.deleteUser');
                 Route::resource('kantor-cabang', KantorCabangController::class);
                 
                 // Stok Opname Barang

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KantorCabang;
+use App\Models\User;
 use App\Services\KantorCabangService;
 use Illuminate\Http\Request;
 
@@ -68,7 +69,10 @@ class KantorCabangController extends Controller
      */
     public function show(KantorCabang $kantorCabang)
     {
-        return view('kantorcabang.show', ['kantorCabang' => $kantorCabang]);
+        $users = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Admin');
+        })->orderBy('name', 'asc')->pluck('name', 'id');
+        return view('kantorcabang.show', ['kantorCabang' => $kantorCabang, 'users' => $users]);
     }
 
     /**
@@ -122,5 +126,21 @@ class KantorCabangController extends Controller
             'status' => 'success',
             'message' => __('Data telah berhasil dihapus.')
         ], 200);
+    }
+
+    public function addUser(Request $request, KantorCabang $kantorCabang) 
+    {   
+        $kantorCabang->users()->syncWithoutDetaching($request->user_id);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('User berhasil ditambahkan.'),
+            'redirectTo' => route('kantor-cabang.show', $kantorCabang->id)
+        ], 200);
+    }
+
+    public function deleteUser(Request $request, KantorCabang $kantorCabang)
+    {
+        $kantorCabang->users()->detach($request->user_id);
+        return redirect()->back();
     }
 }

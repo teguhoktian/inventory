@@ -61,3 +61,13 @@
         ]) }}
     </div>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="inputName">{{ __('Kantor Cabang') }}</label>
+    <div class="col-sm-10">
+        {{ Form::select('cabangs[]', $cabangs, null, ['multiple' => 'multiple', 'id' =>
+        'select21', 'class' =>
+        'form-control'
+        ]) }}
+    </div>
+</div>
