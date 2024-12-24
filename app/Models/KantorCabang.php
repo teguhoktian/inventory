@@ -75,4 +75,14 @@ class KantorCabang extends Model
 
         return $tree;
     }
+
+    /**
+     * Interact with the getParentTextAttribute attribute.
+     *
+     * return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function getParentTextAttribute()
+    {
+        return $this->parent ? $this->parent->kode . " - " . $this->parent->nama : null;
+    }
 }

@@ -77,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
-                Route::resource('kantor-cabang', KantorCabangController::class)->except(['show']);
+                Route::resource('kantor-cabang', KantorCabangController::class);
                 
                 // Stok Opname Barang
                 Route::get('stok-opname-barang/{stokOpnameBarang}/cetak-kartu', [StokOpnameBarangController::class, 'printKartuStokOpname'])->name('stok-opname-barang.cetakStok');

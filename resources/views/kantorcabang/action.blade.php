@@ -1,4 +1,8 @@
 <div class="text-right">
+    <a href="{{ route('kantor-cabang.show', ['kantor_cabang' => $id]) }}"
+        class="btn btn-sm btn-success text-muted mr-2">
+        <i class="fa fa-eye"></i>
+    </a>
     <a href="{{ route('kantor-cabang.edit', ['kantor_cabang' => $id]) }}"
         class="btn btn-sm btn-primary text-muted mr-2">
         <i class="fa fa-edit"></i>

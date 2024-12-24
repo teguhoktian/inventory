@@ -57,46 +57,7 @@
 <script type="text/javascript">
     var routeIndex = "{{ route('kantor-cabang.index') }}";
     $(function () {
-        $("#moduleForm").submit(function (e) {
-            e.preventDefault();
-
-            var form = $(this);
-            var _url = form.attr('action');
-            var _method = form.attr('method');
-            var data = form.serialize();
-
-            $.ajax({
-                url: _url,
-                type: _method,
-                data: data,
-                dataType: 'json',
-                beforeSend: function () {
-                    $('div').removeClass('has-error');
-                    $('.help-block').remove();
-                    $("#btbSubmit").attr("disabled", true);
-                },
-                error: function (response) {
-                    if (response.status == '422') {
-                        $.each(response.responseJSON.errors, function (i, error) {
-                            var el = $(document).find('[name="' + i + '"]');
-                            el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
-                        });
-                    }
-                },
-                success: function (response) {
-                    swal({
-                        title: "{{ __('Simpan Data') }}",
-                        type: "success",
-                        text: "{{ __('Data Berhasil Disimpan') }}"
-                    }, function () {
-                        window.location = routeIndex;
-                    });
-                }
-            })
-
-            $("#btbSubmit").attr("disabled", false);
-
-        });
+        submitForm("moduleForm", "btbSubmit");
     });
 </script>
 @stop

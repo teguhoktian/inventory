@@ -52,10 +52,11 @@ class KantorCabangController extends Controller
             ]
         );
 
-        $this->services->create($request);
+        $data = $this->services->create($request);
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('kantor-cabang.show', $data->id)
         ], 200);
     }
 
@@ -67,7 +68,7 @@ class KantorCabangController extends Controller
      */
     public function show(KantorCabang $kantorCabang)
     {
-        //
+        return view('kantorcabang.show', ['kantorCabang' => $kantorCabang]);
     }
 
     /**
@@ -103,7 +104,8 @@ class KantorCabangController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil diupdate.')
+            'message' => __('Data telah berhasil diupdate.'),
+            'redirectTo' => route('kantor-cabang.show', $kantorCabang->id)
         ], 200);
     }
 
