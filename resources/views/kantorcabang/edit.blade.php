@@ -26,12 +26,19 @@
             </div>
 
             <div class="box-footer with-border">
-                <a href="{{ route('kantor-cabang.index') }}" class="btn-flat btn btn-default">
-                    <i class="fa fa-arrow-left"></i> {{ __('Daftar') }}
-                </a>
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-default pull-right">
-                    <i class="fa fa-save"></i> {{ __('Update') }}
-                </button>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary">
+                            <i class="fa fa-save"></i> {{ __('Update') }}
+                        </button>
+
+                        <a href="{{ route('kantor-cabang.index') }}" class="btn-flat btn btn-warning">
+                            <i class="fa fa-times"></i> {{ __('Cancel') }}
+                        </a>
+
+                    </div>
+                </div>
+
             </div>
 
             {{ Form::close() }}
