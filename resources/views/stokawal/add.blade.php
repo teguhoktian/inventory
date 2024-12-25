@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
 
             <div class="box-header">
                 <h2 class="box-title">
@@ -20,7 +20,7 @@
             {{ Form::open([ 'route' => 'stok-awal.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
             'form-horizontal' ]) }}
             <div class="box-footer">
-                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
+                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-danger">
                     <i class="fa fa-angle-double-left"></i> {{ __('Cancel') }}
                 </a>
                 <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
