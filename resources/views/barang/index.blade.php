@@ -23,7 +23,12 @@
                     </div>
                 </div>
 
-                <table id="dataTable" class="table table-bordered table-striped table-responsive">
+                <div class="table-responsive">
+                    {{ $dataTable->table(['class' => 'table table-striped table-bordered']) }}
+                </div>
+                <!-- table -->
+
+                <!-- <table id="dataTable" class="table table-bordered table-striped table-responsive">
                     <thead>
                         <tr>
                             <th width="1">{{ __('No.') }}</th>
@@ -37,8 +42,7 @@
                             <th width="1px">{{ __('Aksi') }}</th>
                         </tr>
                     </thead>
-                </table>
-                <!-- table -->
+                </table> -->
             </div>
             <!-- /.box-body -->
         </div>
@@ -57,51 +61,6 @@
 <script src="adminLTE/plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="adminLTE/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script>
-    var table = '';
-    var ajaxRoute = '{{ route("barang.index") }}';
-    table = $('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        autoWidth: false,
-        responsive: true,
-        ajax: ajaxRoute,
-        columns: [{
-            data: 'DT_RowIndex',
-            sortable: false,
-            searchable: false
-        },
-        {
-            data: 'kode'
-        },
-
-        {
-            data: 'nama'
-        },
-
-        {
-            data: 'jenis_barang'
-        },
-        {
-            data: 'harga_akhir'
-        },
-        {
-            data: 'satuan'
-        },
-        {
-            data: 'stok'
-        },
-        {
-            data: 'posisi_kas',
-            sortable: false,
-            searchable: false
-        },
-        {
-            data: 'action',
-            sortable: false,
-            searchable: false
-        }
-        ]
-    });
 
     function submitDelete(ID) {
         swal({
@@ -128,7 +87,7 @@
                     dataType: "json",
                     success: function (data) {
                         swal("{{ __('Hapus Data') }}", "{{ __('Data Berhasil dihapus') }}", "info");
-                        table.ajax.reload();
+                        $("#barang-table").DataTable().ajax.reload();
                     }
                 });
             } else {
@@ -137,4 +96,5 @@
         });
     }
 </script>
+{{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @stop

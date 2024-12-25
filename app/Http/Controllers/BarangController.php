@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\BarangDataTable;
 use App\Models\Barang;
 use App\Models\BarangMasukDetail;
 use App\Models\JenisBarang;
@@ -32,11 +33,12 @@ class BarangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BarangDataTable $dataTable)
     {
-        if (request()->ajax()) return $this->services->getDT();
+        // if (request()->ajax()) return $this->services->getDT();
+        // return view('barang.index');
+        return $dataTable->render('barang.index');
 
-        return view('barang.index');
     }
 
     /**
