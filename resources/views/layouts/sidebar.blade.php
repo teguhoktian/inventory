@@ -90,6 +90,22 @@
                             <i class="fa fa-toggle-on"></i> {{ __('Input Stok Awal') }}
                         </a>
                     </li>
+
+                    <li class="@if(Route::is('jenis-barang.*')) active @endif">
+                        <a href="{{ route('jenis-barang.index') }}">
+                            <i class="fa fa-list-alt"></i> {{ __('Jenis Barang') }}
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('satuan-barang.*')) active @endif">
+                        <a href="{{ route('satuan-barang.index') }}">
+                            <i class="fa fa-object-group"></i> {{ __('Satuan Barang') }}
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('supplier.*')) active @endif">
+                        <a href="{{ route('supplier.index') }}">
+                            <i class="fa fa-industry"></i> {{ __('Supplier') }}
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">
@@ -103,21 +119,6 @@
                     <li class="@if(Route::is('stok-opname-barang.*')) active @endif">
                         <a href="{{ route('stok-opname-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Stok Opname') }}
-                        </a>
-                    </li>
-                    <li class="@if(Route::is('jenis-barang.*')) active @endif">
-                        <a href="{{ route('jenis-barang.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Jenis Barang') }}
-                        </a>
-                    </li>
-                    <li class="@if(Route::is('satuan-barang.*')) active @endif">
-                        <a href="{{ route('satuan-barang.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Satuan Barang') }}
-                        </a>
-                    </li>
-                    <li class="@if(Route::is('supplier.*')) active @endif">
-                        <a href="{{ route('supplier.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Supplier') }}
                         </a>
                     </li>
                 </ul>
