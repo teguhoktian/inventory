@@ -47,10 +47,12 @@ class SatuanBarangController extends Controller
     {
         $request->validate(['nama' => 'required']);
 
-        $this->services->create($request);
+        $data = $this->services->create($request);
+        
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('satuan-barang.edit', $data->id)
         ], 200);
     }
 
@@ -93,7 +95,8 @@ class SatuanBarangController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil diupdate.')
+            'message' => __('Data telah berhasil diupdate.'),
+            'redirectTo' => route('satuan-barang.edit', $satuanBarang->id)
         ], 200);
     }
 
