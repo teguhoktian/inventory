@@ -4,12 +4,16 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
+
             <div class="box-header with-border">
                 <h2 class="box-title">
                     {{ __('Edit Data Barang') }}
                 </h2>
+                <!-- ./ box-title -->
             </div>
+            <!-- ./ box-header box-title -->
+
             {{ Form::model($barang,
             [
             'route' => ['barang.update', $barang->id],
@@ -19,6 +23,7 @@
             'method' => 'PATCH'
             ])
             }}
+
             <div class="box-body my-form-body">
 
                 @include('barang.form')
@@ -26,12 +31,31 @@
             </div>
 
             <div class="box-footer with-header">
-                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
-                    &laquo; {{ __('Kembali') }}
-                </a>
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                    <i class="fa fa-save"></i> {{ __('Update') }}
-                </button>
+
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary">
+                            <i class="fa fa-save"></i> {{ __('Update') }}
+                        </button>
+
+                        <a href="{{ route('barang.show', ['barang' => $barang->id]) }}"
+                            class="btn-flat btn btn-warning">
+                            <i class="fa fa-sticky-note-o"></i> {{ __('Kartu Stok') }}
+                        </a>
+
+                        <a href="{{ route('barang.create') }}" class="btn-flat btn btn-success">
+                            <i class="fa fa-plus"></i> {{ __('Tambah barang') }}
+                        </a>
+
+                        <a href="{{ route('barang.index') }}" class="btn-flat btn btn-danger pull-right">
+                            &laquo; {{ __('Kembali') }}
+                        </a>
+
+
+                    </div>
+                </div>
+
             </div>
 
             {{ Form::close() }}
@@ -55,46 +79,7 @@
             width: "100%",
         });
 
-        $("#moduleForm").submit(function (e) {
-            e.preventDefault();
-
-            var form = $(this);
-            var _url = form.attr('action');
-            var _method = form.attr('method');
-            var data = form.serialize();
-
-            $.ajax({
-                url: _url,
-                type: _method,
-                data: data,
-                dataType: 'json',
-                beforeSend: function () {
-                    $('div').removeClass('has-error');
-                    $('.help-block').remove();
-                    $("#btbSubmit").attr("disabled", true);
-                },
-                error: function (response) {
-                    if (response.status == '422') {
-                        $.each(response.responseJSON.errors, function (i, error) {
-                            var el = $(document).find('[name="' + i + '"]');
-                            el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
-                        });
-                    }
-                },
-                success: function (response) {
-                    swal({
-                        title: "{{ __('Simpan Data') }}",
-                        type: "success",
-                        text: "{{ __('Data Berhasil Disimpan') }}"
-                    }, function () {
-                        window.location = routeIndex;
-                    });
-                }
-            })
-
-            $("#btbSubmit").attr("disabled", false);
-
-        });
+        submitForm("moduleForm", "btbSubmit");
     });
 </script>
 @stop

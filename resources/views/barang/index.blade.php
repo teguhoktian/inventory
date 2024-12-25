@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
                 <h2 class="box-title">
                     Daftar Barang
@@ -14,10 +14,10 @@
 
                 <div style="margin-bottom: 1rem;">
                     <div class="btn-group">
-                        <a href="{{ route('barang.create') }}" class="btn btn-primary">
+                        <a href="{{ route('barang.create') }}" class="btn btn-primary btn-flat">
                             <i class="fa fa-plus"></i> {{ __('Tambah Barang') }}
                         </a>
-                        <a href="{{ route('stok-awal.add') }}" class="btn btn-danger">
+                        <a href="{{ route('stok-awal.add') }}" class="btn btn-warning btn-flat">
                             <i class="fa fa-plus"></i> {{ __('Input Stok Awal') }}
                         </a>
                     </div>

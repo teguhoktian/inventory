@@ -23,7 +23,8 @@ class BarangService
                 return $row->jenis?->nama;
             })
             ->addColumn('harga_akhir', function ($row) {
-                return number_format($row->stoks->last()->harga ?: 0,0);
+                $lastStok = $row->stoks->last();
+                return number_format($lastStok?->harga ?? 0, 0);
             })
             ->addColumn('posisi_kas', function ($row) {
                 return number_format($row->saldo_masuk - $row->saldo_keluar, 0);
@@ -31,7 +32,13 @@ class BarangService
             ->addColumn('satuan', function ($row) {
                 return $row->satuan?->nama;
             })
-            ->addColumn('action', 'barang.action')
+            // ->addColumn('action', 'barang.action')
+            ->addColumn('action', function ($row) {
+                return view('barang.action', [
+                    'id' => $row->id,
+                    'hasLastStok' => $row->stoks->last() !== null
+                ]);
+            })
             ->addIndexColumn()
             ->make(true);
     }

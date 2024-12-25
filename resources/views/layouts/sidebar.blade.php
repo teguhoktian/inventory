@@ -73,7 +73,8 @@
             @hasrole('Admin|Admin ATK')
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-cubes"></i> <span>{{ __('Master Inventory') }}</span>
+                    <i class="fa fa-dropbox"></i>
+                    <span>{{ __('Managemen Barang') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -81,9 +82,24 @@
                 <ul class="treeview-menu">
                     <li class="@if(Route::is('barang.*')) active @endif">
                         <a href="{{ route('barang.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Barang') }}
+                            <i class="fa fa-list"></i> {{ __('Daftar Barang') }}
                         </a>
                     </li>
+                    <li class="@if(Route::is('stok-awal.add')) active @endif">
+                        <a href="{{ route('stok-awal.add') }}" class="">
+                            <i class="fa fa-toggle-on"></i> {{ __('Input Stok Awal') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cubes"></i> <span>{{ __('Master Inventory') }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
                     <li class="@if(Route::is('stok-opname-barang.*')) active @endif">
                         <a href="{{ route('stok-opname-barang.index') }}">
                             <i class="fa fa-circle-o"></i> {{ __('Stok Opname') }}

@@ -4,26 +4,27 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
                 <h2 class="box-title">
                     {{ __('Adjusment Stok') }}
                 </h2>
             </div>
-            <div class="box-body">
-                {{ Form::model($barang,
-                [
-                'route' => ['barang.adjust-stok-store', $barang->id],
-                'files' => true,
-                'id' => 'moduleForm',
-                'class' => 'form-horizontal',
-                'method' => 'POST'
-                ])
-                }}
+            {{ Form::model($barang,
+            [
+            'route' => ['barang.adjust-stok-store', $barang->id],
+            'files' => true,
+            'id' => 'moduleForm',
+            'class' => 'form-horizontal',
+            'method' => 'POST'
+            ])
+            }}
 
-                {{
-                Form::hidden('harga', $barang->harga)
-                }}
+            {{
+            Form::hidden('harga', $barang->harga)
+            }}
+            <div class="box-body">
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Kode') }}</label>
                     <div class="col-sm-10">
@@ -71,12 +72,20 @@
                 </div>
             </div>
             <div class="box-footer with-border">
-                <a href="{{ route('barang.show', $barang->id) }}" class="btn-flat btn btn-default">
-                    &laquo; {{ __('Kembali') }}
-                </a>
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                    <i class="fa fa-save"></i> {{ __('Update') }}
-                </button>
+
+                <div class="form-group" style="margin-bottom: 0px;">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <a href="{{ route('barang.show', $barang->id) }}" class="btn-flat btn btn-danger pull-right">
+                            &laquo; {{ __('Kembali') }}
+                        </a>
+
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary">
+                            <i class="fa fa-save"></i> {{ __('Update') }}
+                        </button>
+                    </div>
+                </div>
+
+
             </div>
             {{ Form::close() }}
         </div>

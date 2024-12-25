@@ -80,11 +80,12 @@ class BarangController extends Controller
             ]
         );
 
-        $this->services->create($request);
+        $data = $this->services->create($request);
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('barang.edit', $data->id)
         ], 200);
     }
 
@@ -181,7 +182,8 @@ class BarangController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil diupdate.')
+            'message' => __('Data telah berhasil diupdate.'),
+            'redirectTo' => route('barang.edit', $barang->id)
         ], 200);
     }
 
@@ -203,7 +205,10 @@ class BarangController extends Controller
 
     function adjustmentStok(Barang $barang)
     {
-        $barang->harga = $barang->stoks->last()->harga ?: 0;
+        abort_if($barang->stoks->last() === null, 404, __('Halaman tidak ditemukan.'), []);
+        
+        $barang->harga = $barang->stoks->last()?->harga ?: 0;
+        
         return view('barang.adjust', [
             'barang' => $barang,
         ]);

@@ -4,7 +4,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
 
             <div class="box-header with-border">
                 <h3 class="box-title">{{ __('Detail Barang') }}</h3>
@@ -44,9 +44,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="box-footer with-border">
+
+                <a href="{{ route('barang.edit', ['barang' => $barang->id]) }}" class="btn-flat btn btn-success">
+                    <i class="fa fa-edit"></i> {{ __('Edit') }}
+                </a>
+
+                <a href="{{ route('barang.index') }}" class="btn-flat btn btn-danger pull-right">
+                    <i class="fa fa-backward"></i> {{ __('Kembali') }}
+                </a>
+            </div>
         </div>
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
                 <h4 class="box-title"><i class="fa fa-list"></i> {{ __('Kartu Stok') }} -
                     {{ __('Mutasi Stok') }} {{ $barang->nama }}
@@ -60,28 +71,31 @@
                     <form action="{{ route('barang.show', ['barang' => $barang->id]) }}" method="GET"
                         class="form-inline form">
                         <div class="form-group">
-                            <a href="{{ route('barang.index') }}" class="btn-flat btn btn-default">
-                                <i class="fa fa-backward"></i> {{ __('Kembali') }}
-                            </a>
-                            <a href="{{ route('barang.adjust-stok', $barang->id) }}" class="btn-flat btn btn-primary">
-                                <i class="fa fa-compress"></i> {{ __('Adjusment Stok') }}
-                            </a>
-                        </div>
-                        <div class="form-group">
                             <input type="date" class="form-control" value="{{ $startDate }}" name="start_date">
                         </div>
+
                         <div class="form-group">
                             <input type="date" class="form-control" value="{{ $endDate }}" name="end_date">
                         </div>
+
                         <button type="submit" class="btn btn-warning btn-flat">
                             <i class="fa fa-search"></i> {{ __('Tampilkan') }}
                         </button>
+
                         <button type="button" class="btn btn-danger btn-flat" onclick="reloadKartuStok()">
                             <i class="fa fa-rotate-right"></i>
                         </button>
+
                         <button type="button" class="btn btn-default btn-flat" onclick="printKartuStok()">
                             <i class="fa fa-print"></i> {{ __('Cetak') }}
                         </button>
+
+                        @if($barang->stoks->last() !== null)
+                        <a href="{{ route('barang.adjust-stok', $barang->id) }}"
+                            class="btn-flat btn btn-primary pull-right">
+                            <i class="fa fa-compress"></i> {{ __('Adjusment Stok') }}
+                        </a>
+                        @endif
                     </form>
                 </div>
 
