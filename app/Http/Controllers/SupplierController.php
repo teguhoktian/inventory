@@ -60,11 +60,12 @@ class SupplierController extends Controller
             ]
         );
 
-        $this->services->create($request);
+        $data = $this->services->create($request);
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('supplier.edit', $data->id)
         ], 200);
     }
 
@@ -114,7 +115,8 @@ class SupplierController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil diupdate.')
+            'message' => __('Data telah berhasil diupdate.'),
+            'redirectTo' => route('supplier.edit', $supplier->id)
         ], 200);
     }
 
