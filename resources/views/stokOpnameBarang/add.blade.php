@@ -22,17 +22,15 @@
 
             <!-- Form Atas -->
             <div class="box-body">
-                <div style="margin-bottom: 1.5rem;">
-                    <div class="btn-group">
-                        <a href="{{ route('stok-opname-barang.index') }}" class="btn-flat btn btn-danger">
-                            &laquo; {{ __('Kembali') }}
-                        </a>
-                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary ">
-                            <i class="fa fa-save"></i> {{ __('Simpan') }}
-                        </button>
-                    </div>
-                </div>
                 @include('stokOpnameBarang.formSatu')
+                <div class="">
+                    <a href="{{ route('stok-opname-barang.index') }}" class="btn-flat pull-right btn btn-danger">
+                        &laquo; {{ __('Kembali') }}
+                    </a>
+                    <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary ">
+                        <i class="fa fa-save"></i> {{ __('Simpan') }}
+                    </button>
+                </div>
             </div>
         </div>
 

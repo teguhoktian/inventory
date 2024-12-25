@@ -29,22 +29,23 @@
 
             <!-- Form Atas -->
             <div class="box-body">
-                <div style="margin-bottom: 1.5rem;">
-                    <div class="btn-group">
-                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary ">
-                            <i class="fa fa-save"></i> {{ __('Selesai') }}
-                        </button>
-                        <button type="button" onclick="batalCOAction()" href="{{ route('stok-opname-barang.index') }}"
-                            class="btn-flat btn btn-danger">
-                            <i class="fa fa-exclamation-triangle"></i> {{ __('Batal') }}
-                        </button>
-                        <a href="{{ route('stok-opname-barang.index') }}" class="btn-flat btn btn-default">
-                            <i class="fa fa-fast-backward"></i> {{ __('Kembali') }}
-                        </a>
-                    </div>
-                </div>
-
                 @include('stokOpnameBarang.formSatu')
+
+                <div class="">
+
+                    <a href="{{ route('stok-opname-barang.index') }}" class="btn-flat btn btn-default">
+                        <i class="fa fa-fast-backward"></i> {{ __('Kembali') }}
+                    </a>
+
+                    <button type="submit" id="btbSubmit" class="btn-flat btn btn-primary ">
+                        <i class="fa fa-save"></i> {{ __('Selesai') }}
+                    </button>
+
+                    <button type="button" onclick="batalCOAction()" href="{{ route('stok-opname-barang.index') }}"
+                        class="btn-flat btn btn-danger pull-right">
+                        <i class="fa fa-exclamation-triangle"></i> {{ __('Batal') }}
+                    </button>
+                </div>
             </div>
             {{ Form::close() }}
         </div>

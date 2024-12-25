@@ -110,15 +110,20 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-cubes"></i> <span>{{ __('Master Inventory') }}</span>
+                    <i class="fa fa-stack-exchange"></i> <span>{{ __('Stock Opname') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Route::is('stok-opname-barang.*')) active @endif">
+                    <li class="@if(Route::is('stok-opname-barang.create')) active @endif">
+                        <a href="{{ route('stok-opname-barang.create') }}">
+                            <i class="fa fa-plus"></i> {{ __('Buat Stok Opname') }}
+                        </a>
+                    </li>
+                    <li class="@if(Route::is('stok-opname-barang.index')) active @endif">
                         <a href="{{ route('stok-opname-barang.index') }}">
-                            <i class="fa fa-circle-o"></i> {{ __('Stok Opname') }}
+                            <i class="fa fa-list"></i> {{ __('Daftar Stok Opname') }}
                         </a>
                     </li>
                 </ul>
