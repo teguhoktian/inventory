@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class StokOpnameBarang extends Model
@@ -32,5 +33,15 @@ class StokOpnameBarang extends Model
     public function details(): HasMany
     {
         return $this->hasMany(DetailStokOpnameBarang::class, 'id_stok_opname');
+    }
+
+    /**
+     * Get the user that owns the StokOpnameBarang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

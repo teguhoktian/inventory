@@ -9,6 +9,7 @@ use App\Models\StokOpnameBarang;
 use App\Services\BarangService;
 use App\Traits\AutoGenerateCodeTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 class StokOpnameBarangController extends Controller
@@ -60,7 +61,7 @@ class StokOpnameBarangController extends Controller
     public function store(StokOpnameBarangRequest $request)
     {
         $request['kode'] = $this->kode;
-        $stokOpnameBarang = StokOpnameBarang::create($request->all());
+        $stokOpnameBarang = StokOpnameBarang::create([...$request->all(), 'user_id' => Auth::id()]);
         
         if($stokOpnameBarang){
             
@@ -111,7 +112,7 @@ class StokOpnameBarangController extends Controller
     public function edit(StokOpnameBarang $stokOpnameBarang)
     {
         if($stokOpnameBarang->status !== 'Open') abort('404');
-
+        $stokOpnameBarang->petugas = $stokOpnameBarang->user?->name;
         return view('stokOpnameBarang.edit',[
             'stokOpnameBarang' => $stokOpnameBarang,
             'listBarang' => $stokOpnameBarang->details

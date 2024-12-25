@@ -31,6 +31,9 @@ class StokOpnameBarangDataTable extends DataTable
                 return '<span class="label label-warning">Open</span>';
                }
             })
+            ->addColumn('petugas', function(StokOpnameBarang $stokOpnameBarang){
+                return $stokOpnameBarang->user?->name;
+             })
             ->addColumn('action', 'stokOpnameBarang.action');
     }
 
@@ -81,6 +84,7 @@ class StokOpnameBarangDataTable extends DataTable
             Column::make('tanggal'),
             Column::make('kode'),
             Column::make('nama'),
+            Column::make('petugas'),
             Column::make('status')
             ->exportable(false)
             ->printable(false)

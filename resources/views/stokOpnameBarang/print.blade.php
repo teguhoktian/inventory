@@ -15,6 +15,9 @@
                 <strong>Tanggal</strong>: {{ $stokOpnameBarang->tanggal }}
             </p>
             <p>
+                <strong>Petugas</strong> : {{ $stokOpnameBarang->user?->name }}
+            </p>
+            <p>
                 <strong>Keterangan</strong>: {{ $stokOpnameBarang->keterangan }}
             </p>
             <p>

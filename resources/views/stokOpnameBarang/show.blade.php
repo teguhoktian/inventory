@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="nama">{{__('Kode')}}</label>
                             <div>
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="nama">{{__('Nama')}}</label>
                             <div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="nama">{{__('Tanggal')}}</label>
                             <div>
@@ -56,7 +56,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="nama">{{__('Petugas')}}</label>
+                            <div>
+                                {{$stokOpnameBarang->user?->name}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="nama">{{__('Keterangan')}}</label>
                             <div>
