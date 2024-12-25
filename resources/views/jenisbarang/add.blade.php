@@ -5,7 +5,7 @@
 <div class="content-wrapper">
 
     <div class="content">
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header">
                 <h2 class="box-title">
                     {{ __('Tambah Jenis Barang') }}
@@ -17,13 +17,18 @@
                 @include('jenisbarang.form')
             </div>
             <div class="box-footer with-border">
-                <a href="{{ route('jenis-barang.index') }}" class="btn-flat btn btn-default">
-                    <i class="fa fa-list"></i> {{ __('Kembali ke Daftar') }}
-                </a>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <div class="col-sm-offset-2 col-sm-10">
 
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
-                    <i class="fa fa-save"></i> {{ __('Simpan') }}
-                </button>
+                        <button type="submit" id="btbSubmit" class="btn-flat btn btn-success">
+                            <i class="fa fa-save"></i> {{ __('Simpan') }}
+                        </button>
+
+                        <a href="{{ route('jenis-barang.index') }}" class="btn-flat btn btn-danger pull-right">
+                            &laquo; {{ __('Back') }}
+                        </a>
+                    </div>
+                </div>
             </div>
             {{ Form::close() }}
         </div>
