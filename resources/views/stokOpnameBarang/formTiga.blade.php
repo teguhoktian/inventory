@@ -1,6 +1,6 @@
-<table class="table table-bordered ">
+<table class="table table-bordered table-striped">
     <thead>
-        <tr>
+        <tr style="background-color: #415149; color:aliceblue">
             <th>{{ __('No.') }}</th>
             <th>{{ __('Kode.') }}</th>
             <th>{{ __('Nama Barang') }}</th>
