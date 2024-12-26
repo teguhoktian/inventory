@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\StokOpnameBarangDataTable;
+use App\Exports\StokOpnameBarangExport;
 use App\Http\Requests\StokOpnameBarangRequest;
+use App\Imports\StokOpnameBarangImport;
 use App\Models\DetailStokOpnameBarang;
 use App\Models\StokOpnameBarang;
-use App\Services\BarangService;
+// use App\Services\BarangService;
 use App\Traits\AutoGenerateCodeTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class StokOpnameBarangController extends Controller
@@ -178,10 +181,29 @@ class StokOpnameBarangController extends Controller
         ]);
 
         return $pdf->download('SO-CARD_' . now()->format('YmdHis') . '.pdf');
+    }
 
-        // return view('stokOpnameBarang.print',[
-        //     'stokOpnameBarang' => $stokOpnameBarang,
-        //     'listBarang' => $stokOpnameBarang->details
-        // ]);
+    public function downloadBarangStokOpname(StokOpnameBarang $stokOpnameBarang) 
+    {
+        return Excel::download(new StokOpnameBarangExport($stokOpnameBarang->id), 'so_barang.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function uploadBarangStokOpname(Request $request, StokOpnameBarang $stokOpnameBarang) 
+    {
+        $request->validate([
+            'file_upload' => 'required|mimes:xlsx,xls,csv|max:10240', // Batasi ukuran file jika diperlukan
+        ]);
+
+        // Proses file Excel
+        try {
+            $path = $request->file('file_upload')->store('uploads');
+            // return $path;
+            Excel::import(new StokOpnameBarangImport($stokOpnameBarang->id), storage_path("app/{$path}"));
+            
+            return redirect()->back()->with('success', 'Data berhasil diupload dan diperbarui.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat mengupload file: ' . $e->getMessage());
+        }
     }
 }

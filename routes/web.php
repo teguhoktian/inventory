@@ -82,6 +82,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('kantor-cabang', KantorCabangController::class);
                 
                 // Stok Opname Barang
+                Route::post('stok-opname-barang/{stokOpnameBarang}/download', [StokOpnameBarangController::class, 'downloadBarangStokOpname'])->name('stok-opname-barang.download');
+                
+                Route::post('stok-opname-barang/{stokOpnameBarang}/upload', [StokOpnameBarangController::class, 'uploadBarangStokOpname'])->name('stok-opname-barang.upload');
+
                 Route::get('stok-opname-barang/{stokOpnameBarang}/cetak-kartu', [StokOpnameBarangController::class, 'printKartuStokOpname'])->name('stok-opname-barang.cetakStok');
                 Route::patch('stok-opname-barang/{detailStokOpnameBarang}/update-stok-fisik', [StokOpnameBarangController::class, 'updateStokFisik'])->name('stok-opname-barang.updateStokFisik');
                 Route::patch('stok-opname-barang/{stokOpnameBarang}/cancel-stok-opname', [StokOpnameBarangController::class, 'batalSOBarang'])->name('stok-opname-barang.cancelStokOpname');

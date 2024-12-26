@@ -66,6 +66,19 @@
             <!-- Form Bawah -->
             @if($listBarang)
             <div class="box-body with-border">
+
+                <div style="margin-bottom: 1rem;" class="">
+                    <button type="button" class="btn btn-flat btn-primary" onclick="downloadSO()">
+                        <i class="fa fa-download"></i> {{ __('Download Template .xlxs') }}
+                    </button>
+
+                    <button type="button" class="btn btn-warning btn-flat" data-toggle="modal"
+                        data-target="#modal-upload">
+                        <i class="fa fa-upload"></i> {{ __('Upload File SO') }}
+                    </button>
+                </div>
+                <!-- ./ box-body  -->
+
                 @include('stokOpnameBarang.formTiga')
             </div>
             @endif
@@ -90,6 +103,55 @@
     }}
     {{ Form::close() }}
 
+    <!-- Cancle CO -->
+    {{ Form::model($stokOpnameBarang,
+    [
+    'route' => ['stok-opname-barang.download', $stokOpnameBarang->id],
+    'files' => true,
+    'id' => 'downloadSO',
+    'class' => 'form-horizontal',
+    'method' => 'POST'
+    ])
+    }}
+    {{ Form::close() }}
+
+    <!-- Modal Upload -->
+    {{ Form::open([ 'route' => ['stok-opname-barang.upload', $stokOpnameBarang->id], 'files' => true, 'id' =>
+    '', 'class' =>
+    'form-horizontal' ]) }}
+    <div class="modal fade" id="modal-upload">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">
+                        {{ __('Upload File SO') }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="upload" class="col-sm-2">
+                            {{ __('Pilih File') }}
+                        </label>
+                        <div class="col-sm-10">
+                            <input type="file" name="file_upload" id="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left btn-flat" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-flat">
+                        {{ __('Upload File') }}
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    {!! Form::open() !!}
+    <!-- /.modal /#modal-upload -->
 
 </div>
 <!-- /.content-wrapper -->
@@ -110,6 +172,11 @@
         if (confirm('Apakah Anda yakin ingin membatalkan Stok Opname?')) {
             form.submit();
         }
+    }
+
+    function downloadSO() {
+        var form = document.getElementById('downloadSO');
+        form.submit();
     }
 
     $(function () {
