@@ -80,7 +80,7 @@
 
 
             <!-- Form Bawah -->
-            @if($listBarang)
+            @if($groupedByJenis)
             <div class="box-body with-border">
                 @include('stokOpnameBarang.formEmpat')
             </div>

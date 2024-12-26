@@ -100,9 +100,16 @@ class StokOpnameBarangController extends Controller
      */
     public function show(StokOpnameBarang $stokOpnameBarang)
     {
-        return view('stokOpnameBarang.show',[
+        $stokOpnameBarang = StokOpnameBarang::with('details.barang.jenis')->find($stokOpnameBarang->id);
+
+        // Kelompokkan berdasarkan jenis barang
+        $groupedByJenis = $stokOpnameBarang->details->groupBy(function ($detail) {
+            return $detail->barang->jenis->nama;  // Pastikan relasi jenis barang sudah benar
+        });
+
+        return view('stokOpnameBarang.show', [
             'stokOpnameBarang' => $stokOpnameBarang,
-            'listBarang' => $stokOpnameBarang->details
+            'groupedByJenis' => $groupedByJenis
         ]);
     }
 
@@ -175,9 +182,21 @@ class StokOpnameBarangController extends Controller
     public function printKartuStokOpname(StokOpnameBarang $stokOpnameBarang)
     {
 
+        // $pdf = PDF::loadView('stokOpnameBarang.print', [
+        //     'stokOpnameBarang' => $stokOpnameBarang,
+        //     'listBarang' => $stokOpnameBarang->details
+        // ]);
+
+        $stokOpnameBarang = StokOpnameBarang::with('details.barang.jenis')->find($stokOpnameBarang->id);
+
+        // Kelompokkan berdasarkan jenis barang
+        $groupedByJenis = $stokOpnameBarang->details->groupBy(function ($detail) {
+            return $detail->barang->jenis->nama;  // Pastikan relasi jenis barang sudah benar
+        });
+
         $pdf = PDF::loadView('stokOpnameBarang.print', [
             'stokOpnameBarang' => $stokOpnameBarang,
-            'listBarang' => $stokOpnameBarang->details
+            'groupedByJenis' => $groupedByJenis
         ]);
 
         return $pdf->download('SO-CARD_' . now()->format('YmdHis') . '.pdf');

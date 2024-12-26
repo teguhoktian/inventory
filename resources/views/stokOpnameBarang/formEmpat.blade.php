@@ -4,7 +4,6 @@
             <th>{{ __('No.') }}</th>
             <th>{{ __('Kode.') }}</th>
             <th>{{ __('Nama Barang') }}</th>
-            <th>{{ __('Jenis Barang') }}</th>
             <th>{{ __('Satuan') }}</th>
             <th>{{ __('Stok System') }}</th>
             <th>{{ __('Stok Fisik') }}</th>
@@ -13,14 +12,16 @@
         </tr>
     </thead>
     <tbody>
-        @php $counter = 0; @endphp
-        @foreach($listBarang as $key => $barang)
-        @php $counter++; @endphp
+        @php $counter = 1; @endphp
+        @foreach($groupedByJenis as $jenis => $details)
+        <tr style="background-color: #f9f7f7;">
+            <td colspan="9"><strong>{{ $jenis }}</strong></td>
+        </tr>
+        @foreach($details as $index => $barang)
         <tr>
-            <td>{{ $counter }}</td>
+            <td>{{ $counter++ }}</td>
             <td>{{ $barang->barang->kode }}</td>
             <td>{{ $barang->barang->nama }}</td>
-            <td>{{ $barang->barang->jenis?->nama }}</td>
             <td>{{ $barang->barang->satuan?->nama }}</td>
             <td style="text-align: right;">{{ $barang->stok_aplikasi }}</td>
             <td style="width: 120px; text-align: right;">
@@ -31,24 +32,25 @@
             </td>
             <td>
                 @if($barang->selisih < 0) <span class="label label-danger">
-                    <i class="fa fa-exclamation"></i>
+                    <i class="fa fa-exclamation"></i> S/K
                     </span>
                     @endif
 
 
                     @if($barang->selisih == 0)
                     <span class="label label-success">
-                        <i class="fa fa-check-circle-o"></i>
+                        <i class="fa fa-check-circle-o"></i> S/B
                     </span>
                     @endif
 
                     @if($barang->selisih > 0)
                     <span class="label label-warning">
-                        <i class="fa fa-exclamation"></i>
-                        </sp>
-                        @endif
+                        <i class="fa fa-exclamation"></i> S/L
+                    </span>
+                    @endif
             </td>
         </tr>
+        @endforeach
         @endforeach
     </tbody>
 </table>
