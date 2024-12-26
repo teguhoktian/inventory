@@ -8,7 +8,7 @@
         {{ Form::open([ 'route' => 'stok-opname-barang.store', 'files' => true, 'id' => 'moduleForm', 'class'
         =>'form-horizontal' ]) }}
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success  box-flat box-shadow">
 
             <div class="box-header with-border">
 
@@ -35,7 +35,7 @@
         </div>
 
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success  box-flat box-shadow">
             <div class="box-header with-border border-top-solid">
                 <h4 class="box-title">
                     <span>{{ __('Daftar Barang') }}</span>

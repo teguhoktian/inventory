@@ -5,7 +5,7 @@
 <div class="content-wrapper">
     <div class="content">
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success  box-flat box-shadow">
 
             <div class="box-header with-border">
 

@@ -15,7 +15,7 @@
         ])
         }}
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success  box-flat box-shadow">
 
             <div class="box-header with-border">
 
@@ -51,7 +51,7 @@
         </div>
 
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success  box-flat box-shadow">
 
             <div class="box-header with-border border-top-solid">
                 <h4 class="box-title">
