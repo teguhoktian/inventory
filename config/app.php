@@ -182,6 +182,9 @@ return [
         //Datatable
         Yajra\DataTables\DataTablesServiceProvider::class,  
 
+        // Laravel Excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -238,6 +241,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        // Laravel Excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
