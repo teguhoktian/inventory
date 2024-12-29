@@ -28,10 +28,16 @@ class BarangMasukController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (request()->ajax()) return $this->services->getDT();
-        return view('barangmasuk.index');
+        // return $request;
+        if($request->has('mode') && $request->mode == 'barang'){
+            if (request()->ajax()) return $this->services->getDTBarang();
+            return view('barangmasuk.index-barang');
+        }else{
+            if (request()->ajax()) return $this->services->getDT();
+            return view('barangmasuk.index-invoice');
+        }
     }
 
     /**

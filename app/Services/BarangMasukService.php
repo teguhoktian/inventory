@@ -28,6 +28,47 @@ class BarangMasukService
             ->make(true);
     }
 
+    public function getDTBarang()
+    {
+        return DataTables::of(
+            BarangMasukDetail::select(
+                'barang_masuk_detail.*',
+                'barang_masuk.kode as kode_invoice',
+                'barang.kode as kode_barang',
+                'barang.nama as nama_barang',
+                'jenis_barang.nama as jenis_barang', // Jika ada relasi jenis_barang
+                'barang_masuk.no_faktur',
+                'barang_masuk.tanggal_masuk'
+            )
+            ->join('barang_masuk', 'barang_masuk_detail.id_barang_masuk', '=', 'barang_masuk.id')
+            ->join('barang', 'barang_masuk_detail.id_barang', '=', 'barang.id')
+            ->leftJoin('jenis_barang', 'barang.id_jenis', '=', 'jenis_barang.id')
+            ->orderBy('barang_masuk.kode', 'DESC') // Jika ada jenis barang
+        )
+        ->addColumn('harga', function ($row) {
+            return number_format($row->harga, 2);
+        })
+        ->addColumn('total_harga', function ($row) {
+            return number_format($row->quantity * $row->harga, 2);
+        })
+        ->addColumn('action', 'barangmasuk.action')
+        ->addIndexColumn()
+        ->filterColumn('kode_invoice', function($query, $keyword) {
+            $query->where('barang_masuk.kode', 'like', "%$keyword%");
+        })
+        ->filterColumn('nama_barang', function($query, $keyword) {
+            $query->where('barang.nama', 'like', "%$keyword%");
+        })
+        ->filterColumn('no_faktur', function($query, $keyword) {
+            $query->where('barang_masuk.no_faktur', 'like', "%$keyword%");
+        })
+        ->filterColumn('tanggal_masuk', function($query, $keyword) {
+            $query->where('barang_masuk.tanggal_masuk', 'like', "%$keyword%");
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
     public function destroy($collection)
     {
         $collection->detail()->get()->each->delete();

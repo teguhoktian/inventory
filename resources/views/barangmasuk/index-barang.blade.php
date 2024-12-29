@@ -5,7 +5,7 @@
 <div class="content-wrapper">
     <div class=" content">
 
-        <div class="box box-solid box-success">
+        <div class="box box-solid box-success box-flat box-shadow">
 
             <div class="box-header with-border">
                 <h3 class="box-title"> {{ __('Barang Masuk') }} </h3>
@@ -17,18 +17,23 @@
                     <a href="{{ route('barang-masuk.create') }}" class="btn btn-primary btn-flat">
                         <i class="fa fa-plus"></i> {{ __('Tambah') }}
                     </a>
+
+                    <a href="{{ route('barang-masuk.index', ['mode' => 'invoice']) }}" class="btn btn-warning btn-flat">
+                        <i class="fa fa-list"></i> {{ __('Lihat Daftar Invoice') }}
+                    </a>
                 </div>
                 <table id="dataTable" class="table table-bordered table-striped table-responsive">
                     <thead>
                         <tr>
                             <th width="1">{{ __('No.') }}</th>
-                            <th>{{ __('Kode') }}</th>
-                            <th>{{ __('Tanggal') }}</th>
+                            <th>{{ __('Nama Barang') }}</th>
+                            <th>{{ __('Jenis Barang') }}</th>
+                            <th>{{ __('Harga') }}</th>
+                            <th>{{ __('Qty') }}</th>
+                            <th>{{ __('Total') }}</th>
+                            <th>{{ __('Kode Invoice') }}</th>
                             <th>{{ __('No. Faktur') }}</th>
-                            <th>{{ __('Supplier') }}</th>
-                            <th>{{ __('Items') }}</th>
-                            <th>{{ __('Total Harga') }}</th>
-                            <th>{{ __('Aksi') }}</th>
+                            <th>{{ __('Tgl. Faktur') }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -52,7 +57,7 @@
 <script src="adminLTE/plugins/datatables/responsive.bootstrap.min.js"></script>
 <script>
     var table = '';
-    var ajaxRoute = '{{ route("barang-masuk.index") }}';
+    var ajaxRoute = '{{ route("barang-masuk.index", ["mode" => "barang"]) }}';
     table = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
@@ -65,22 +70,20 @@
             searchable: false
         },
         {
-            data: 'kode'
-        },
-
-        {
-            data: 'tanggal_masuk'
-        },
-
-        {
-            data: 'no_faktur'
-        },
-
-        {
-            data: 'supplier'
+            data: 'nama_barang'
         },
         {
-            data: 'detail_count',
+            data: 'jenis_barang',
+            sortable: false,
+            searchable: false
+        },
+        {
+            data: 'quantity',
+            sortable: false,
+            searchable: false
+        },
+        {
+            data: 'harga',
             sortable: false,
             searchable: false
         },
@@ -89,11 +92,18 @@
             sortable: false,
             searchable: false
         },
+
         {
-            data: 'action',
+            data: 'kode_invoice',
+        },
+        {
+            data: 'no_faktur',
             sortable: false,
-            searchable: false
-        }
+        },
+        {
+            data: 'tanggal_masuk'
+        },
+
         ]
     });
 
