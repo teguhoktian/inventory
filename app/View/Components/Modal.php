@@ -10,16 +10,19 @@ class Modal extends Component
 
     public $size;
 
+    public $headerClass;
+
     /**
      * Create a new component instance.
      *
      * @param string $id
      * @param string|null $size
      */
-     public function __construct($id, $size = null)
+     public function __construct($id, $size = null, $headerClass = '')
     {
         $this->id = $id;
         $this->size = $size;
+        $this->headerClass = $headerClass;
     }
 
     /**
