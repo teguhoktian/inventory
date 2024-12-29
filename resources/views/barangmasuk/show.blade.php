@@ -3,15 +3,13 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <x-content-header :title="__('Detail Transaksi')" :subtitle="__('Transaksi Barang Masuk')" />
-
     <div class="content">
-        <div class="box border-top-solid">
+        <div class="box box-success box-solid box-flat box-shadow">
 
             <div class="box-header with-border">
-                <a href="{{ route('barang-masuk.index') }}" class="btn-sm btn btn-success">
-                    <i class="fa fa-angle-double-left"></i> {{ __('Kembali') }}
-                </a>
+                <h2 class="box-title">
+                    {{ __('Transaksi Barang Masuk')}}
+                </h2>
             </div>
 
             <!-- Atas -->
@@ -59,7 +57,7 @@
             <div class="box-body" style="border-top: 1px solid #F4F4F4;">
                 <table class="table table-bordered ">
                     <thead>
-                        <tr>
+                        <tr style="background-color: rgb(71, 71, 71); color:#F4F4F4;">
                             <th>{{ __('No.') }}</th>
                             <th>{{ __('Nama Barang') }}</th>
                             <th>{{ __('Qty') }}</th>
@@ -111,16 +109,19 @@
             </div>
 
             <div class="box-footer">
-
                 {!! Form::open([
                 'id' => 'delete-form-'.$barangMasuk->id,
                 'target' => '_blank',
                 'route' => ['barang-masuk.print', $barangMasuk->id],'style'=>'display:inline'])
                 !!}
-                <button type="submit" id="btbSubmit" class="btn btn-default">
+                <button type="submit" id="btbSubmit" class="btn btn-default btn-flat">
                     <i class="fa fa-print"></i> {{ __('Cetak') }}
                 </button>
                 {!! Form::close() !!}
+
+                <a href="{{ route('barang-masuk.index') }}" class="btn btn-danger btn-flat pull-right">
+                    &laquo; {{ __('Kembali') }}
+                </a>
             </div>
         </div>
     </div>
