@@ -22,9 +22,10 @@
                     <i class="fa fa-trash"></i> {{ __('Kosongkan Cart') }}
                 </button>
 
-                <button type="submit" id="btbSubmit" class="btn-flat btn btn-success pull-right">
+                <a href="{{ route('barang-masuk.checkout') }}" id="btbSubmit"
+                    class="btn-flat btn btn-success pull-right">
                     <i class="fa fa-shopping-cart"></i> {{ __('Check out') }}
-                </button>
+                </a>
 
             </x-slot>
 

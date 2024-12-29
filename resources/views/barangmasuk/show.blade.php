@@ -119,6 +119,10 @@
                 </button>
                 {!! Form::close() !!}
 
+                <a href="{{ route('barang-masuk.create') }}" class="btn btn-success btn-flat">
+                    <i class="fa fa-plus"></i> {{ __('Buat Transaksi Baru') }}
+                </a>
+
                 <a href="{{ route('barang-masuk.index') }}" class="btn btn-danger btn-flat pull-right">
                     &laquo; {{ __('Kembali') }}
                 </a>

@@ -48,14 +48,9 @@ class BarangMasukController extends Controller
     public function create()
     {
         $cart_products = collect(request()->session()->get('cart'));
-        $supplier = Supplier::pluck('nama', 'id');
-        $barang = Barang::pluck('nama', 'id');
         return view(
             'barangmasuk.add',
             [
-                'kode' => $this->kode,
-                'supplier' => $supplier,
-                'barang' => $barang,
                 'cart' => $cart_products,
                 'cart_count' => count($cart_products)
             ]
@@ -127,6 +122,26 @@ class BarangMasukController extends Controller
         ]);
     }
 
+    public function checkout()
+    {
+        $cart_products = collect(request()->session()->get('cart'));
+        
+        if ($cart_products->isEmpty()) return redirect()->route('barang-masuk.create');
+
+        $supplier = Supplier::pluck('nama', 'id');
+        $barang = Barang::pluck('nama', 'id');
+        return view(
+            'barangmasuk.checkout',
+            [
+                'kode' => $this->kode,
+                'supplier' => $supplier,
+                'barang' => $barang,
+                'cart' => $cart_products,
+                'cart_count' => count($cart_products)
+            ]
+        );
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -146,11 +161,12 @@ class BarangMasukController extends Controller
         ]);
 
         $request['kode'] = $this->kode;
-        $this->services->create($request);
+        $data = $this->services->create($request);
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('barang-masuk.show', $data->id)
         ], 200);
     }
 

@@ -128,7 +128,7 @@
 
     <x-slot name="body">
         <!-- Tabel DataBarang -->
-        <table id="barangTable" class="table table-bordered">
+        <table id="barangTable" class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
                     <th>{{ __('Kode Barang') }}</th>
