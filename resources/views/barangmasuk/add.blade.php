@@ -228,7 +228,7 @@
         // Event listener untuk klik pada baris DataTable
         $('#barangTable tbody').on('click', 'tr', function () {
             var data = table.row(this).data();
-            console.log(data)
+            //console.log(data)
             var kodeBarang = data.kode;  // Ambil kode barang dari data baris yang dipilih
             var namaBarang = data.nama;  // Ambil kode barang dari data baris yang dipilih
             var satuanBarang = data.satuan.nama;  // Ambil kode barang dari data baris yang dipilih
