@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Services\BarangKeluarService;
 use App\Traits\AutoGenerateCodeTrait;
@@ -39,14 +40,9 @@ class BarangKeluarController extends Controller
     public function create()
     {
         $cart_products = collect(request()->session()->get('cart_out'));
-        $barang = \App\Models\Barang::where('stok', '>', 0)->pluck('nama', 'id');
-        $kantor = \App\Models\KantorCabang::pluck('nama', 'id');
         return view(
             'barangkeluar.add',
             [
-                'kode' => $this->kode,
-                'barang' => $barang,
-                'kantor' => $kantor,
                 'cart' => $cart_products,
                 'cart_count' => count($cart_products)
             ]
@@ -56,16 +52,16 @@ class BarangKeluarController extends Controller
     function addtocart(Request $request)
     {
 
-        $request->validate(
+        $validated = $request->validate(
             [
-                'id_barang' => ['required'],
+                'kode_barang' => ['required'],
                 'quantity' => ['required', 'numeric'],
                 'harga' => ['required', 'numeric'],
             ],
-            ['id_barang.required' => 'Barang harus dipilih.']
+            ['kode_barang.required' => 'Barang harus dipilih.']
         );
 
-        $product = \App\Models\Barang::findOrFail($request->id_barang);
+        $product = Barang::where('kode', $validated['kode_barang'])->first();
 
         $cart = $request->session()->get('cart_out', []);
 
@@ -75,6 +71,7 @@ class BarangKeluarController extends Controller
         } else {
             $cart[$product->id] = [
                 "id_barang" => $product->id,
+                "kode_barang" => $product->kode,
                 "satuan" => $product->satuan?->nama,
                 "jenis" => $product->jenis?->nama,
                 "nama" => $product->nama,
@@ -89,7 +86,10 @@ class BarangKeluarController extends Controller
         } else {
 
             $request->session()->put('cart_out', $cart);
-            return back();
+            return response()->json([
+                'success' => true,
+                'message' => 'Barang berhasil ditambahkan ke keranjang!'
+            ]);
         }
     }
 
@@ -101,16 +101,42 @@ class BarangKeluarController extends Controller
 
         request()->session()->put('cart_out', $cart);
 
-        return back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Barang berhasil dihapus dari keranjang!'
+        ]);
     }
 
-    function getLastPrice($id)
+    public function emptyCart()
     {
-        // if (!request()->ajax()) abort('404');
+        // Logika untuk mengosongkan cart, misalnya dengan menghapus semua item dari session
+        session()->forget('cart_out');  // Misalnya cart disimpan di session
 
-        $detailBarang = \App\Models\BarangMasukDetail::where('id_barang', $id)->latest()->first();
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart berhasil dikosongkan.',
+        ]);
+    }
 
-        return $detailBarang;
+    public function checkout()
+    {
+
+        $cart_products = collect(request()->session()->get('cart_out'));
+
+        if ($cart_products->isEmpty()) return redirect()->route('barang-keluar.create');
+
+        $barang = \App\Models\Barang::where('stok', '>', 0)->pluck('nama', 'id');
+        $kantor = \App\Models\KantorCabang::pluck('nama', 'id');
+        return view(
+            'barangkeluar.checkout',
+            [
+                'kode' => $this->kode,
+                'barang' => $barang,
+                'kantor' => $kantor,
+                'cart' => $cart_products,
+                'cart_count' => count($cart_products)
+            ]
+        );
     }
 
     /**
@@ -131,11 +157,12 @@ class BarangKeluarController extends Controller
         ]);
 
         $request['kode'] = $this->kode;
-        $this->services->create($request);
+        $data = $this->services->create($request);
 
         return response()->json([
             'status' => 'success',
-            'message' => __('Data telah berhasil disimpan.')
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('barang-keluar.show', $data->id)
         ], 200);
     }
 

@@ -18,6 +18,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-// API get data barang 
+// API get data barang berdasarkan kode
 Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang){
     $request->merge(['kode_barang' => $kode_barang]);
 
@@ -49,6 +50,7 @@ Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang)
             'nama_barang' => $barang->nama,
             'satuan' => $barang->satuan->nama,
             'kode' => $barang->kode,
+            'harga' => $barang->stoks()->where('tipe', 'masuk')->latest()->first()->harga ?? 0
         ]);
     }
 
@@ -58,10 +60,30 @@ Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang)
     ]);
 })->name('api.get-barang');
 
+// API get data barang
 Route::get('/api/barang-list', function () {
-    $barang = \App\Models\Barang::with(['satuan'])->get(); // Ambil semua barang dari database
-    return datatables()->of($barang)->make(true); // Menggunakan datatables untuk response JSON
+
+    $barang = \App\Models\Barang::with(['satuan', 'stoks'])->latest(); 
+
+    return datatables()->of($barang)->addColumn('harga', function ($row) {
+        $lastStok = $row->stoks->last();
+        return $lastStok?->harga ?? 0;
+    })
+
+    ->make(true); 
+    
 })->name('api.get-barang-list');
+
+// API get Data Users
+Route::get('/api/users-by-kantor/{kantor_id}', function ($kantor_id) {
+    $kantor = \App\Models\KantorCabang::with('users')->find($kantor_id);
+
+    if (!$kantor) {
+        return response()->json(['message' => 'Kantor tidak ditemukan'], 404);
+    }
+
+    return response()->json($kantor->users); // Mengembalikan daftar user yang terkait dengan kantor
+})->name('api.users-by-kantor');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -142,11 +164,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::delete('barang-masuk/{key}/removecartitem', [BarangMasukController::class, 'removecartitem'])->name('barang-masuk.removecartitem');
                 Route::resource('barang-masuk', BarangMasukController::class)->except(['update', 'edit']);;
 
-                // URL /auth/transaksi/barang-masuk
-                Route::post('barang-keluar/{barang_keluar}/print', [BarangKeluarController::class, 'print'])->name('barang-keluar.print');
+                // URL /auth/transaksi/barang-keluar
+                Route::get('barang-keluar/checkout', [BarangKeluarController::class, 'checkout'])->name('barang-keluar.checkout');
+                Route::post('barang-keluar/emptyCart', [BarangKeluarController::class, 'emptyCart'])->name('barang-keluar.emptyCart');
                 Route::post('barang-keluar/addtocart', [BarangKeluarController::class, 'addtocart'])->name('barang-keluar.addtocart');
+                Route::post('barang-keluar/{barang_keluar}/print', [BarangKeluarController::class, 'print'])->name('barang-keluar.print');
                 Route::delete('barang-keluar/{key}/removecartitem', [BarangKeluarController::class, 'removecartitem'])->name('barang-keluar.removecartitem');
-                Route::get('barang-keluar/{id}/getLastPrice', [BarangKeluarController::class, 'getLastPrice'])->name('barang-keluar.getLastPrice');
                 Route::resource('barang-keluar', BarangKeluarController::class)->except(['update', 'edit']);
             });
         });
