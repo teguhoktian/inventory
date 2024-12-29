@@ -146,8 +146,5 @@
         <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">
             {{ __('Close') }}
         </button>
-        <button type="submit" class="btn btn-primary btn-flat">
-            {{ __('Upload File') }}
-        </button>
     </x-slot>
 </x-modal>
