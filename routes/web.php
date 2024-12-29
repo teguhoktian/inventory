@@ -16,6 +16,7 @@ use App\Http\Controllers\StokBarangAwalController;
 use App\Http\Controllers\StokOpnameBarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,36 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes(['verify' => true]);
+
+// API get data barang 
+Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang){
+    $request->merge(['kode_barang' => $kode_barang]);
+
+    $validated = $request->validate([
+        'kode_barang' => 'required|string|max:255',
+    ]);
+
+    $barang = \App\Models\Barang::where('kode', $validated['kode_barang'])->first();
+
+    if ($barang) {
+        return response()->json([
+            'success' => true,
+            'nama_barang' => $barang->nama,
+            'satuan' => $barang->satuan->nama,
+            'kode' => $barang->kode,
+        ]);
+    }
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Barang tidak ditemukan',
+    ]);
+})->name('api.get-barang');
+
+Route::get('/api/barang-list', function () {
+    $barang = \App\Models\Barang::with(['satuan'])->get(); // Ambil semua barang dari database
+    return datatables()->of($barang)->make(true); // Menggunakan datatables untuk response JSON
+})->name('api.get-barang-list');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -108,6 +139,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('barang-masuk/{barang_masuk}/print', [BarangMasukController::class, 'print'])->name('barang-masuk.print');
                 Route::delete('barang-masuk/{key}/removecartitem', [BarangMasukController::class, 'removecartitem'])->name('barang-masuk.removecartitem');
                 Route::resource('barang-masuk', BarangMasukController::class)->except(['update', 'edit']);;
+                Route::post('barang-masuk/emptyCart', [BarangMasukController::class, 'emptyCart'])->name('barang-masuk.emptyCart');
 
                 // URL /auth/transaksi/barang-masuk
                 Route::post('barang-keluar/{barang_keluar}/print', [BarangKeluarController::class, 'print'])->name('barang-keluar.print');

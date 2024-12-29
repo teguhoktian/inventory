@@ -1,8 +1,10 @@
-<table class="table table-bordered ">
+<table class="table table-bordered">
     <thead>
-        <tr>
+        <tr class="bg-light-blue">
             <th>{{ __('No.') }}</th>
+            <th>{{ __('Kode Barang') }}</th>
             <th>{{ __('Nama Barang') }}</th>
+            <th>{{ __('Satuan') }}</th>
             <th>{{ __('Qty') }}</th>
             <th>{{ __('Harga') }}</th>
             <th>{{ __('Total') }}</th>
@@ -10,47 +12,58 @@
         </tr>
     </thead>
     <tbody>
-        {{ Form::open(['route' => 'barang-masuk.addtocart'])}}
-        <tr style="background-color: #fcf4f4;;">
+        {{ Form::open(['route' => 'barang-masuk.addtocart', 'method' => 'POST', 'class' => 'add-to-cart-form']) }}
+        <tr class="bg-warning">
             <td width="1">
                 <strong>#</strong>
             </td>
-            <td width="240">
-                {{ Form::select('id_barang', $barang, null, ['placeholder' => 'Pilih ', 'id' =>'barang',
-                'class' =>'form-control'
-                ]) }}
+            <td width="190px">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="kode_barang" id="kodebaranginput">
+                    <div class="input-group-addon" style="cursor: pointer;" data-toggle="modal"
+                        data-target="#modal-list-barang">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+
                 @error('id_barang')
-                <span class="has-error text-sm text-danger" role="alert">
+                <span class="text-danger small" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </td>
-            <td width="80">
-                <input name="quantity" id="qty" type="number" min="0" class="form-control" />
+            <td>
+                <input name="nama_barang" disabled id="nama_barang" class="form-control" aria-label="Nama Barang" />
+            </td>
+            <td width="90px">
+                <input name="satuan" id="satuan" disabled class="form-control" aria-label="Satuan" />
+            </td>
+            <td class="" width="100px">
+                <input name="quantity" id="qty" type="number" min="0" class="form-control" aria-label="Quantity" />
                 @error('quantity')
-                <span class="has-error text-sm text-danger" role="alert">
+                <span class="text-danger small" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </td>
-            <td width="120">
-                <input name="harga" id="hargaBeli" type="number" min="0" class="form-control" />
+            <td width="150px">
+                <input name="harga" id="hargaBeli" type="number" min="0" class="form-control" aria-label="Harga" />
                 @error('harga')
-                <span class="has-error text-sm text-danger" role="alert">
+                <span class="text-danger small" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </td>
-            <td width="120">
-                <input class="form-control" id="totalHarga" value="0" disabled />
+            <td width="150px">
+                <input class="form-control" id="totalHarga" value="0" disabled aria-label="Total Harga" />
             </td>
-            <td width="1">
-                <button id="addtocart" class="btn btn-success">
+            <td width="1px">
+                <button id="addtocart" class="btn btn-success" type="submit">
                     <i class="fa fa-plus"></i>
                 </button>
             </td>
         </tr>
-        {{Form::close()}}
+        {{ Form::close() }}
     </tbody>
     <tbody>
         @php
@@ -64,26 +77,25 @@
         @endphp
         <tr>
             <td>{{ $counter }}</td>
+            <td>{{ e($product['kode_barang']) }} </td>
             <td>
-                {{$product['nama']}}
-                <p><small class="help-block">{{$product['jenis']}}</small></p>
+                {{ e($product['nama']) }} -
+                <span class="text-muted small">{{ e($product['jenis']) }}</span>
             </td>
-            <td>{{$product['quantity']}} {{$product['satuan']}}</td>
-            <td>{{
-                number_format($product['harga'], 2, ".")
-                }}</td>
+            <td>{{ e($product['satuan']) }}</td>
+            <td>{{ e($product['quantity']) }} </td>
+            <td>{{ number_format($product['harga'], 2, '.', ',') }}</td>
+            <td>{{ number_format($product['harga'] * $product['quantity'], 2, '.', ',') }}</td>
             <td>
-                {{
-                number_format($product['harga'] * $product['quantity'], 2, ".")
-                }}</td>
-            <td>
-                <button class="btn btn-danger btn-sm"
-                    onclick="document.getElementById('delete-form-{{$key}}').submit();">
+                <button class="btn btn-danger" type="button" onclick="deleteItem({{ $key }})">
                     <i class="fa fa-times"></i>
                 </button>
-                {!! Form::open(['id' => 'delete-form-'.$key, 'method' => 'DELETE', 'route' =>
-                ['barang-masuk.removecartitem', $key],'style'=>'display:inline'])
-                !!}
+                {!! Form::open([
+                'id' => 'delete-form-' . $key,
+                'method' => 'DELETE',
+                'route' => ['barang-masuk.removecartitem', $key],
+                'style' => 'display:none',
+                ]) !!}
                 {!! Form::close() !!}
             </td>
         </tr>
@@ -91,19 +103,51 @@
     </tbody>
     @if($total_harga > 0)
     <tfoot>
-        <tr>
+        <tr class="">
             <th></th>
             <th>{{ __('TOTAL') }}</th>
             <th></th>
             <th></th>
-            <th>
-                {{
-                number_format($total_harga, 2, ".")
-
-                }}
-            </th>
+            <th></th>
+            <th></th>
+            <th>{{ number_format($total_harga, 2, '.', ',') }}</th>
             <th></th>
         </tr>
     </tfoot>
     @endif
 </table>
+
+<!-- Modal -->
+<x-modal id="modal-list-barang" size="modal-lg" headerClass="bg-primary text-white">
+    <x-slot name="header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">{{ __('Daftar Barang') }}</h4>
+    </x-slot>
+
+    <x-slot name="body">
+        <!-- Tabel DataBarang -->
+        <table id="barangTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>{{ __('Kode Barang') }}</th>
+                    <th>{{ __('Nama Barang') }}</th>
+                    <th>{{ __('Satuan') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- DataTable rows akan dimuat melalui JavaScript -->
+            </tbody>
+        </table>
+    </x-slot>
+
+    <x-slot name="footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">
+            {{ __('Close') }}
+        </button>
+        <button type="submit" class="btn btn-primary btn-flat">
+            {{ __('Upload File') }}
+        </button>
+    </x-slot>
+</x-modal>

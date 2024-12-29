@@ -65,16 +65,16 @@ class BarangMasukController extends Controller
     function addtocart(Request $request)
     {
 
-        $request->validate(
+        $validated = $request->validate(
             [
-                'id_barang' => ['required'],
+                'kode_barang' => ['required'],
                 'quantity' => ['required', 'numeric'],
                 'harga' => ['required', 'numeric'],
             ],
-            ['id_barang.required' => 'Barang harus dipilih.']
+            ['kode_barang.required' => 'Barang harus dipilih.']
         );
 
-        $product = Barang::findOrFail($request->id_barang);
+        $product = Barang::where('kode', $validated['kode_barang'])->first();
 
         $cart = $request->session()->get('cart', []);
 
@@ -84,6 +84,7 @@ class BarangMasukController extends Controller
         } else {
             $cart[$product->id] = [
                 "id_barang" => $product->id,
+                "kode_barang" => $product->kode,
                 "satuan" => $product->satuan?->nama,
                 "jenis" => $product->jenis?->nama,
                 "nama" => $product->nama,
@@ -93,7 +94,11 @@ class BarangMasukController extends Controller
         }
 
         $request->session()->put('cart', $cart);
-        return back();
+        // return back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Barang berhasil ditambahkan ke keranjang!'
+        ]);
     }
 
     function removecartitem($id)
@@ -104,8 +109,24 @@ class BarangMasukController extends Controller
 
         request()->session()->put('cart', $cart);
 
-        return back();
+        return response()->json([
+            'success' => true,
+            'message' => 'Barang berhasil dihapus dari keranjang!'
+        ]);
     }
+
+    // BarangMasukController.php
+    public function emptyCart()
+    {
+        // Logika untuk mengosongkan cart, misalnya dengan menghapus semua item dari session
+        session()->forget('cart');  // Misalnya cart disimpan di session
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart berhasil dikosongkan.',
+        ]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
