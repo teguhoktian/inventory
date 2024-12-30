@@ -155,8 +155,9 @@ class BarangKeluarController extends Controller
             'pic.required' => 'Nama PIC wajib diisi',
             'id_kantor.required' => 'Kantor wajib diisi',
         ]);
-
+        
         $request['kode'] = $this->kode;
+        $request['user_id'] = $request->pic;
         $data = $this->services->create($request);
 
         return response()->json([

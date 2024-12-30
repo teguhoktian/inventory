@@ -52,11 +52,9 @@
                 <div class="col-xs-3">
                     <!-- Kode Nota -->
                     <div class="form-group">
-                        <div class="col-lg-6">
-                            <label class=" control-label" for="">{{ __('PIC') }}</label>
-                            <div class="">
-                                {{ $barangKeluar->pic }}
-                            </div>
+                        <label class=" control-label" for="">{{ __('PIC') }}</label>
+                        <div class="">
+                            {{ $barangKeluar->user_name }}
                         </div>
                     </div>
                 </div>

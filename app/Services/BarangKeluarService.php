@@ -14,6 +14,9 @@ class BarangKeluarService
             ->addColumn('kantor', function ($row) {
                 return $row->kantor?->nama;
             })
+            ->editColumn('pic', function ($row) {
+                return $row->user_name;
+            })
             ->addColumn('total_harga', function ($row) {
                 
                 $total = $row->detail->sum(function($data) {

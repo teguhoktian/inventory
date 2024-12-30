@@ -54,4 +54,25 @@ class BarangKeluar extends Model
     {
         return $this->hasMany(BarangKeluarDetail::class, 'id_barang_keluar');
     }
+
+    /**
+     * Get the user that owns the BarangKeluar
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the User Name
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getUserNameAttribute() : string
+    {
+        return $this->user ? $this->user->name : null;
+    }
 }
