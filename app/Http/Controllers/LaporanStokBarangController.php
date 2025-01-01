@@ -15,12 +15,20 @@ class LaporanStokBarangController extends Controller
         $this->service = $barangService;
     }
 
-    function index(Request $request)
-    {   
+    private function getCollection($request)
+    {
         $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) 
         ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) 
         : collect(); // Pastikan collect jika kosong
-    
+        
+        return $stokBarang;
+    }
+
+    function index(Request $request)
+    {   
+        
+        $stokBarang = $this->getCollection($request);
+
         return view('laporan.stok-barang', [
             'stokBarang' => $stokBarang->groupBy(fn($item) => $item->jenis->nama), // Gunakan nama dari relasi
             'tanggal_mulai' => $request['tanggal_mulai'] ?? "",
@@ -30,9 +38,7 @@ class LaporanStokBarangController extends Controller
 
     function printPDF(Request $request)
     {
-        $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) 
-        ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) 
-        : collect(); // Pastikan collect jika kosong
+        $stokBarang = $this->getCollection($request);
 
         $pdf = PDF::loadView('laporan.stok-barang-pdf', [
             'stokBarang' => $stokBarang->groupBy(fn($item) => $item->jenis->nama), // Gunakan nama dari relasi

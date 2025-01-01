@@ -15,10 +15,16 @@ class LaporanBarangMasukController extends Controller
         $this->service = $service;
     }
 
+    private function getCollection($request)
+    {
+        return $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangMasukReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
+               
+    }
+
     function index(Request $request)
     {   
-        $barangMasuk = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangMasukReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
-        
+        $barangMasuk = $this->getCollection($request);
+
         return view('laporan.barang-masuk',[
             'barangMasuk' => $barangMasuk,
             'tanggal_mulai' => $request['tanggal_mulai'] ?:"",
@@ -28,8 +34,8 @@ class LaporanBarangMasukController extends Controller
 
     function printPDF(Request $request)
     {
-        $barangMasuk = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangMasukReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
-        
+        $barangMasuk = $this->getCollection($request);
+
         $pdf = PDF::loadView('laporan.barang-masuk-pdf', [
             'barangMasuk' => $barangMasuk,
             'tanggal_mulai' => $request['tanggal_mulai'] ?:"",
