@@ -31,3 +31,21 @@
 .box.box-shadow {
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
+
+.skin-black .main-header > .logo,
+.skin-black .main-header > .logo:hover {
+    background-color: #222;
+    color: #fff;
+    border-right: #222;
+}
+
+.skin-black .navbar-static-top {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.skin-black .sidebar-menu > li:hover > a,
+.skin-black .sidebar-menu > li.active > a {
+    color: #fff;
+    background: #1e282c;
+    border-left-color: #035cde;
+}

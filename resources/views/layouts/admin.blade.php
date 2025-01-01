@@ -59,7 +59,7 @@ $collapsedRoutes = ['barang-masuk.create', 'barang-keluar.create'];
 @endphp
 
 <body
-    class="sidebar-mini skin-blue fixed {{ in_array(Route::currentRouteName(), $collapsedRoutes) ? 'sidebar-collapse' : '' }}">
+    class="sidebar-mini skin-black fixed {{ in_array(Route::currentRouteName(), $collapsedRoutes) ? 'sidebar-collapse' : '' }}">
     <div id="loading">
         <i id="spinner" class="fa fa-cog fa-spin fa-5x fa-fw"></i>
     </div>
