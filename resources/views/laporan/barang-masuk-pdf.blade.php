@@ -21,15 +21,16 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Kode</th>
-                        <th>Tanggal Masuk</th>
+                        <th>Kode Transaksi</th>
                         <th>Kode Barang</th>
-                        <th>Nama Barang</th>
                         <th>Jenis Barang</th>
+                        <th>Nama Barang</th>
                         <th>Satuan</th>
-                        <th>Qty</th>
                         <th>Harga</th>
+                        <th>Qty</th>
                         <th>Total</th>
+                        <th>No. Faktur</th>
+                        <th>Tanggal Masuk</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,14 +44,15 @@
                     <tr>
                         <td>{{ $counter }}</td>
                         <td>{{ $data->barangMasuk->kode }}</td>
-                        <td>{{ $data->barangMasuk->tanggal_masuk }}</td>
                         <td>{{ $data->barang->kode }}</td>
-                        <td>{{ $data->barang->nama }}</td>
                         <td>{{ $data->barang->jenis->nama }}</td>
+                        <td>{{ $data->barang->nama }}</td>
                         <td>{{ $data->barang->satuan->nama }}</td>
-                        <td>{{ $data->quantity }}</td>
                         <td>{{ number_format($data->harga ,2) }}</td>
+                        <td>{{ $data->quantity }}</td>
                         <td>{{ number_format($data->harga * $data->quantity, 2) }}</td>
+                        <td>{{ $data->barangMasuk->no_faktur }}</td>
+                        <td>{{ $data->barangMasuk->tanggal_masuk }}</td>
                     </tr>
                     @php
                     $totalHarga += $data->harga * $data->quantity;
@@ -67,8 +69,9 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                         <th>{{ number_format($totalHarga, 2) }}</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </tfoot>
             </table>
