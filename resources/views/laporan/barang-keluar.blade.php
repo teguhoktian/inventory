@@ -3,19 +3,16 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-
-    <x-content-header :title="__('Laporan Barang Keluar')" :subtitle="__('')" />
-
     <div class="content">
-        <div class="box border-top-solid">
+        <div class="box box-solid box-success box-flat box-shadow">
 
             <div class="box-header with-border">
-                <h4 class="box-title">&nbsp;</h4>
+                <h4 class="box-title">
+                    {{ __('Laporan Barang Keluar') }}
+                </h4>
                 <div class="box-tools">
                     <div class="btn-group">
-                        <button class="btn btn-success" onclick="submitForm('laporanBarangKeluar')">
-                            <i class="fa fa-search"></i> {{ __('Tampilkan') }}
-                        </button>
+
                     </div>
                 </div>
             </div>
@@ -60,36 +57,46 @@
             </div>
 
             <!-- /.box-body -->
+
+            <div class="box-footer with-border">
+                <a href="{{ route('laporan.barang-keluar.index') }}" class="pull-right btn btn-flat btn-danger">
+                    <i class="fa fa-refresh"></i>
+                </a>
+                <button class="btn btn-flat btn-success" onclick="submitForm('laporanBarangKeluar')">
+                    <i class="fa fa-search"></i> {{ __('Tampilkan') }}
+                </button>
+
+                <button onclick="submitForm('printPDF')" class="btn btn-flat btn-primary">
+                    <i class="fa fa-print"></i> {{__('Print')}}
+                </button>
+
+
+                <!-- Form Print PDF -->
+                {!! Form::open(['route' => 'laporan.barang-keluar.print', 'method' => 'POST', 'id' => 'printPDF'])
+                !!}
+                <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
+                    value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
+                <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
+                    value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
+                {!! Form::close() !!}
+                <!-- /.Form Print PDF -->
+            </div>
         </div>
         <!-- /.box -->
 
 
         @if($barangKeluar)
 
-        <div class="box border-top-solid">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <i class="fa fa-search"></i> {{ __('Daftar Barang Keluar') }}
                 </h3>
                 <div class="box-tools">
                     <div class="btn-group">
-                        <a href="{{ route('laporan.barang-keluar.index') }}" class="btn btn-danger">
-                            <i class="fa fa-close"></i> {{ __('Close') }}
-                        </a>
-                        <button onclick="submitForm('printPDF')" class="btn btn-primary">
-                            <i class="fa fa-print"></i> {{__('Print')}}
-                        </button>
+
 
                     </div>
-                    <!-- Form Print PDF -->
-                    {!! Form::open(['route' => 'laporan.barang-keluar.print', 'method' => 'POST', 'id' => 'printPDF'])
-                    !!}
-                    <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
-                        value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
-                    <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
-                        value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
-                    {!! Form::close() !!}
-                    <!-- /.Form Print PDF -->
                 </div>
             </div>
 
@@ -97,15 +104,13 @@
             <div class="box-body">
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="bg-light-blue">
                             <th>No.</th>
                             <th>Kode</th>
                             <th>Tanggal Keluar</th>
-                            <th>Kantor</th>
-                            <th>PIC</th>
+                            <th>User</th>
                             <th>Kode Barang</th>
                             <th>Nama Barang</th>
-                            <th>Jenis Barang</th>
                             <th>Satuan</th>
                             <th>Qty</th>
                             <th>Harga</th>
@@ -113,38 +118,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                        $counter = 0;
-                        $totalHarga = 0;
-                        @endphp
-                        @foreach($barangKeluar as $key => $data)
-                        @php $counter++ @endphp
-
+                        @php $totalHarga = 0 ; @endphp
+                        @foreach ($barangKeluar as $kantor => $jenisGroup)
+                        <tr style="background-color: rgb(203, 226, 255);">
+                            <td colspan="10"><strong>{{ strtoupper($kantor) }}</strong></td>
+                        </tr>
+                        @foreach ($jenisGroup as $jenis => $items)
+                        <tr style="background-color: #ebebeb;">
+                            <td colspan="10" style="padding-left: 20px;"><strong>{{ $jenis }}</strong></td>
+                        </tr>
+                        @foreach ($items as $index => $item)
                         <tr>
-                            <td>{{ $counter }}</td>
-                            <td>{{ $data->barangKeluar->kode }}</td>
-                            <td>{{ $data->barangKeluar->tanggal_keluar }}</td>
-                            <td>{{ $data->barangKeluar->kantor->nama }}</td>
-                            <td>{{ $data->barangKeluar->pic }}</td>
-                            <td>{{ $data->barang->kode }}</td>
-                            <td>{{ $data->barang->nama }}</td>
-                            <td>{{ $data->barang->jenis->nama }}</td>
-                            <td>{{ $data->barang->satuan->nama }}</td>
-                            <td>{{ $data->quantity }}</td>
-                            <td>{{ number_format($data->harga ,2) }}</td>
-                            <td>{{ number_format($data->harga * $data->quantity, 2) }}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->barangKeluar->kode }}</td>
+                            <td>{{ $item->barangKeluar->tanggal_keluar }}</td>
+                            <td>{{ $item->barangKeluar->user->name }}</td>
+                            <td>{{ $item->barang->kode }}</td>
+                            <td>{{ $item->barang->nama }}</td>
+                            <td>{{ $item->barang->satuan->nama }}</td>
+                            <td align="right">{{ $item->quantity }}</td>
+                            <td align="right">{{ number_format($item->harga, 0, ',', '.') }}</td>
+                            <td align="right">{{ number_format($item->quantity * $item->harga, 0, ',', '.') }}</td>
                         </tr>
                         @php
-                        $totalHarga += $data->harga * $data->quantity;
+                        $totalHarga += $item->harga * $item->quantity;
                         @endphp
+                        @endforeach
+                        @endforeach
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr class="bg-gray">
                             <th></th>
-                            <th>Total</th>
-                            <th></th>
-                            <th></th>
+                            <th>TOTAL</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -152,7 +158,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>{{ number_format($totalHarga, 2) }}</th>
+                            <th align="right">{{ number_format($totalHarga, 2) }}</th>
                         </tr>
                     </tfoot>
                 </table>

@@ -14,9 +14,23 @@ class LaporanBarangKeluarController extends Controller
         $this->service = $service;
     }
 
+    private function getCollection($request)
+    {
+        $barangKeluar = $request->has(['tanggal_mulai', 'tanggal_akhir']) 
+        ? $this->service->getBarangKeluarReport($request['tanggal_mulai'], $request['tanggal_akhir'])
+        : collect();
+
+        $groupedBarangKeluar = $barangKeluar->groupBy([
+            fn($item) => $item->barangKeluar->kantor->nama ?? 'Tidak Diketahui',
+            fn($item) => $item->barang->jenis->nama ?? 'Tidak Diketahui',
+        ]); 
+        
+        return $groupedBarangKeluar;
+    }
+
     function index(Request $request)
     {   
-        $barangKeluar = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangKeluarReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
+        $barangKeluar = $this->getCollection($request);
         
         return view('laporan.barang-keluar',[
             'barangKeluar' => $barangKeluar,
@@ -27,7 +41,7 @@ class LaporanBarangKeluarController extends Controller
 
     function printPDF(Request $request)
     {
-        $barangKeluar = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangKeluarReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
+        $barangKeluar = $this->getCollection($request);
         
         $pdf = PDF::loadView('laporan.barang-keluar-pdf', [
             'barangKeluar' => $barangKeluar,
