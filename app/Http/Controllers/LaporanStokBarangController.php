@@ -17,21 +17,25 @@ class LaporanStokBarangController extends Controller
 
     function index(Request $request)
     {   
-        $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
-        
-        return view('laporan.stok-barang',[
-            'stokBarang' => $stokBarang,
-            'tanggal_mulai' => $request['tanggal_mulai'] ?:"",
-            'tanggal_akhir' => $request['tanggal_akhir'] ?:"",
-        ]); 
+        $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) 
+        ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) 
+        : collect(); // Pastikan collect jika kosong
+    
+        return view('laporan.stok-barang', [
+            'stokBarang' => $stokBarang->groupBy(fn($item) => $item->jenis->nama), // Gunakan nama dari relasi
+            'tanggal_mulai' => $request['tanggal_mulai'] ?? "",
+            'tanggal_akhir' => $request['tanggal_akhir'] ?? "",
+        ]);  
     }
 
     function printPDF(Request $request)
     {
-        $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
-        
+        $stokBarang = $request->has(['tanggal_mulai', 'tanggal_akhir']) 
+        ? $this->service->getKartuStok($request['tanggal_mulai'], $request['tanggal_akhir']) 
+        : collect(); // Pastikan collect jika kosong
+
         $pdf = PDF::loadView('laporan.stok-barang-pdf', [
-            'stokBarang' => $stokBarang,
+            'stokBarang' => $stokBarang->groupBy(fn($item) => $item->jenis->nama), // Gunakan nama dari relasi
             'tanggal_mulai' => $request['tanggal_mulai'] ?:"",
             'tanggal_akhir' => $request['tanggal_akhir'] ?:"",
         ]);

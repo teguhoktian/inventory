@@ -3,22 +3,22 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-
-    <x-content-header :title="__('Laporan Stok Barang')" :subtitle="__('')" />
-
     <div class="content">
-        <div class="box border-top-solid">
+        <div class="box box-solid box-success box-flat box-shadow">
 
             <div class="box-header with-border">
-                <h4 class="box-title">&nbsp;</h4>
+                <h4 class="box-title">
+                    <i class="fa fa-list"></i> {{ __('Laporan Stok Barang') }}
+                </h4>
                 <div class="box-tools">
                     <div class="btn-group">
-                        <button class="btn btn-success" onclick="submitForm('laporanStokbarangForm')">
-                            <i class="fa fa-search"></i> {{ __('Tampilkan') }}
-                        </button>
+                        <!-- Tombol -->
                     </div>
+                    <!-- /. btn-group -->
                 </div>
+                <!-- /. box-tools -->
             </div>
+            <!-- /.box-title -->
 
             <div class="box-body">
 
@@ -42,65 +42,60 @@
                                     value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
                             </div>
                         </div>
-
-                        <!-- Jenis Barang -->
-                        <!-- <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="jenis_barang">{{ __('Jenis Barang') }}</label>
-                                <select id="jenis_barang" name="jenis_barang" class="form-control">
-                                    <option>A</option>
-                                    <option>A</option>
-                                    <option>A</option>
-                                </select>
-                            </div>
-                        </div> -->
-
                     </form>
                 </div>
             </div>
-
             <!-- /.box-body -->
+
+            <div class="box-footer with-border">
+                <button class="btn btn-default btn-flat" onclick="submitForm('laporanStokbarangForm')">
+                    <i class="fa fa-search"></i> {{ __('Tampilkan') }}
+                </button>
+
+                <a href="{{ route('laporan.stok-barang.index') }}" class="pull-right btn btn-danger btn-flat">
+                    <i class="fa fa-refresh"></i>
+                </a>
+
+                <button onclick="submitForm('printPDF')" class="btn btn-primary btn-flat">
+                    <i class="fa fa-print"></i> {{__('Print')}}
+                </button>
+
+                <!-- Form Print PDF -->
+                {!! Form::open(['route' => 'laporan.stok-barang.print', 'method' => 'POST', 'id' => 'printPDF']) !!}
+                <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
+                    value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
+                <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
+                    value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
+                {!! Form::close() !!}
+                <!-- /.Form Print PDF -->
+            </div>
         </div>
         <!-- /.box -->
 
 
-        @if($stokBarang)
+        @if(!$stokBarang->isEmpty())
 
-        <div class="box border-top-solid">
+        <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
                 <h3 class="box-title">
                     <i class="fa fa-search"></i> {{ __('Daftar Stok Barang') }}
                 </h3>
                 <div class="box-tools">
                     <div class="btn-group">
-                        <a href="{{ route('laporan.stok-barang.index') }}" class="btn btn-danger">
-                            <i class="fa fa-close"></i> {{ __('Close') }}
-                        </a>
-                        <button onclick="submitForm('printPDF')" class="btn btn-primary">
-                            <i class="fa fa-print"></i> {{__('Print')}}
-                        </button>
+
 
                     </div>
-                    <!-- Form Print PDF -->
-                    {!! Form::open(['route' => 'laporan.stok-barang.print', 'method' => 'POST', 'id' => 'printPDF']) !!}
-                    <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
-                        value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
-                    <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
-                        value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
-                    {!! Form::close() !!}
-                    <!-- /.Form Print PDF -->
                 </div>
             </div>
 
             <!-- Body -->
-            <div class="box-body">
-                <table class="table table-bordered">
+            <div class="box-body with-border">
+                <table class="table table-bordered table-striped table-hovered">
                     <thead>
-                        <tr>
+                        <tr class="bg-light-blue">
                             <th>No.</th>
                             <th>Kode Barang</th>
                             <th>Nama Barang</th>
-                            <th>Jenis Barang</th>
                             <th>Stok Awal</th>
                             <th>Masuk</th>
                             <th>Keluar</th>
@@ -108,20 +103,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $counter = 0; @endphp
-                        @foreach($stokBarang as $key => $data)
-                        @php $counter++ @endphp
-
+                        @foreach($stokBarang as $jenis => $items)
                         <tr>
-                            <td>{{ $counter }}</td>
-                            <td>{{ $data->kode }}</td>
-                            <td>{{ $data->nama }}</td>
-                            <td>{{ $data->jenis?->nama }}</td>
-                            <td>{{ $data->stok_awal }}</td>
-                            <td>{{ $data->stok_masuk }}</td>
-                            <td>{{ $data->stok_keluar }}</td>
-                            <td>{{ $data->stok_awal + $data->stok_masuk - $data->stok_keluar }}</td>
+                            <td colspan="7" style="background-color: beige;"><strong>{{ $jenis }}</strong></td>
                         </tr>
+                        @foreach($items as $key => $item)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $item->kode }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td align="right">{{ number_format($item->stok_awal, 0, ',', '.') }}</td>
+                            <td align="right">{{ number_format($item->stok_masuk, 0, ',', '.') }}</td>
+                            <td align="right">{{ number_format($item->stok_keluar, 0, ',', '.') }}</td>
+                            <td align="right">{{ number_format($item->stok_awal + $item->stok_masuk -
+                                $item->stok_keluar, 0, ',', '.')
+                                }}</td>
+                        </tr>
+                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
