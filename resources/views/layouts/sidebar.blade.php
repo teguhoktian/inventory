@@ -22,7 +22,7 @@
             @hasrole('Admin')
             <li class="treeview">
                 <a href="#" onchange="javasctipt:void(0);">
-                    <i class="fa fa-users"></i> <span>{{ __('Pengguna') }}</span>
+                    <i class="fa fa-users"></i> <span>{{ __('Manajemen Pengguna') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -74,7 +74,7 @@
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-dropbox"></i>
-                    <span>{{ __('Managemen Barang') }}</span>
+                    <span>{{ __('Manajemen Barang') }}</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
