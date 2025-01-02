@@ -38,10 +38,10 @@ class HomeController extends Controller
         return view('profile.show');
     }
 
-    public function editProfile()
-    {
-        return view('profile.edit');
-    }
+    // public function editProfile()
+    // {
+    //     return view('profile.edit');
+    // }
 
     public function updateProfile(Request $request)
     {
@@ -56,8 +56,13 @@ class HomeController extends Controller
         } else {
             $request['password'] = \Illuminate\Support\Facades\Hash::make($request['password']);
         }
-        $user = Auth::user()->update($request->all());
 
-        return redirect()->route('profile.me');
+        Auth::user()->update($request->all());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('Data telah berhasil disimpan.'),
+            'redirectTo' => route('profile.me')
+        ], 200);
     }
 }

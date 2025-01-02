@@ -92,7 +92,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('profile')->group(function () {
         Route::get('/me', [\App\Http\Controllers\HomeController::class, 'profile'])->name('profile.me');
-        Route::get('/edit', [\App\Http\Controllers\HomeController::class, 'editProfile'])->name('profile.edit');
+        // Route::get('/edit', [\App\Http\Controllers\HomeController::class, 'editProfile'])->name('profile.edit');
         Route::post('/update', [\App\Http\Controllers\HomeController::class, 'updateProfile'])->name('profile.update');
     });
 

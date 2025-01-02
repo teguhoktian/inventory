@@ -3,38 +3,27 @@
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <x-content-header :title="__('User Profile')" :subtitle="__('')" />
-
     <div class="content">
-        <div class="box border-top-solid">
+        <div class="box box-solid box-flat box-shadow box-success">
             <div class="box-header with-border">
-                <a href="{{ route('profile.edit') }}" class="btn btn-primary">
-                    {{ __('Ubah Profil') }}
-                </a>
+                <h2 class="box-title">
+                    {{ __('My Profile') }}
+                </h2>
             </div>
             <div class="box-body">
-                <table class="table">
-                    <tr>
-                        <th width="10%">{{ __('Nama') }}</th>
-                        <td width="1">:</td>
-                        <td>{{ Auth::user()->name }}</td>
-                    </tr>
-                    <tr>
-                        <th width="10%">{{ __('Username') }}</th>
-                        <td width="1">:</td>
-                        <td>{{ Auth::user()->username }}</td>
-                    </tr>
-                    <tr>
-                        <th width="10%">{{ __('Email') }}</th>
-                        <td width="1">:</td>
-                        <td>{{ Auth::user()->email }}</td>
-                    </tr>
-                    <tr>
-                        <th width="10%">{{ __('Hak Akses') }}</th>
-                        <td width="1">:</td>
-                        <td>{{ Auth::user()->roles->pluck('name')->implode(', ') }}</td>
-                    </tr>
-                </table>
+                @include('profile.personal')
+            </div>
+        </div>
+        <!-- /.box -->
+
+        <div class="box box-flat box-success box-sadow box-solid">
+            <div class="box-header with-border">
+                <h2 class="box-title">
+                    {{ __('Password') }}
+                </h2>
+            </div>
+            <div class="box-body">
+                @include('profile.password')
             </div>
         </div>
     </div>
@@ -42,3 +31,20 @@
 </div>
 <!-- /.content-wrapper -->
 @endsection
+
+@section('style')
+
+@endsection
+
+
+@section('javascript')
+<script type="text/javascript">
+
+    $(function () {
+
+        submitForm("personalForm", "personalBtn");
+        submitForm("passwordForm", "passwordBtn");
+
+    });
+</script>
+@stop
