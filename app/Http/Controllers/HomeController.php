@@ -7,6 +7,7 @@ use App\Models\BarangKeluarDetail;
 use App\Models\BarangMasukDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -45,24 +46,39 @@ class HomeController extends Controller
 
     public function updateProfile(Request $request)
     {
-        //validate $request
+        // Validasi input
         $request->validate([
             'password' => 'nullable|confirmed|min:6',
             'password_confirmation' => 'nullable',
+            'image_profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file gambar
         ]);
 
-        if (is_null($request['password'])) {
-            $request['password'] = Auth::user()->password;
-        } else {
-            $request['password'] = \Illuminate\Support\Facades\Hash::make($request['password']);
+        $user = Auth::user();
+
+        // Proses password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
         }
 
-        Auth::user()->update($request->all());
+        // Update data user kecuali password dan image_profile
+        $user->update($request->except(['password', 'password_confirmation', 'image_profile']));
+
+        // Proses unggah gambar profil
+        if ($request->hasFile('image_profile')) {
+            // Hapus gambar lama jika ada
+            if ($user->hasMedia('profile_image')) {
+                $user->clearMediaCollection('profile_image');
+            }
+
+            // Tambahkan gambar baru
+            $user->addMedia($request->file('image_profile'))
+                ->toMediaCollection('profile_image');
+        }
 
         return response()->json([
             'status' => 'success',
             'message' => __('Data telah berhasil disimpan.'),
-            'redirectTo' => route('profile.me')
+            'redirectTo' => route('profile.me'),
         ], 200);
     }
 }

@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -66,5 +68,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(KantorCabang::class, 'kantor_cabang_user', 'user_id', 'kantor_cabang_id')
                     ->withTimestamps(); 
+    }
+
+    /**
+     * Register media collections.
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('profile_image')
+             ->singleFile(); // Hanya satu file untuk gambar profil
+    }
+
+    /**
+     * Get the URL of the profile image or a default image.
+     *
+     * @return string
+     */
+    public function getProfileImageUrl(): string
+    {
+        return $this->getFirstMediaUrl('profile_image') ?: asset('images/default-profile.png');
     }
 }

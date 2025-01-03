@@ -42,7 +42,7 @@
 
     $(function () {
 
-        submitForm("personalForm", "personalBtn");
+        submitFile("personalForm", "personalBtn");
         submitForm("passwordForm", "passwordBtn");
 
     });

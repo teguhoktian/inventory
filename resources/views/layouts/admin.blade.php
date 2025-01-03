@@ -209,6 +209,59 @@ $collapsedRoutes = ['barang-masuk.create', 'barang-keluar.create'];
             });
         }
 
+        //Fungsi AJAXForm dengan File Submit
+        function submitFile(formId, submitButtonId) {
+            $("#" + formId).submit(function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var _url = form.attr('action');
+                var _method = form.attr('method');
+                var formData = new FormData(this); // Gunakan FormData untuk menangani file
+
+                $.ajax({
+                    url: _url,
+                    type: _method,
+                    data: formData,
+                    processData: false, // Jangan proses data, karena FormData sudah menangani
+                    contentType: false, // Jangan tetapkan contentType secara otomatis
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $('div').removeClass('has-error');
+                        $('.help-block').remove();
+                        $("#" + submitButtonId).attr("disabled", true);
+                    },
+                    error: function (response) {
+                        $("#" + submitButtonId).attr("disabled", false); // Aktifkan tombol lagi jika gagal
+                        if (response.status === 422) {
+                            $.each(response.responseJSON.errors, function (i, error) {
+                                var el = $(document).find('[name="' + i + '"]');
+                                el.parent().addClass("has-error").append('<span class="help-block">' + error[0] + '</span>');
+                            });
+                        } else {
+                            swal({
+                                title: "Terjadi Kesalahan",
+                                type: "error",
+                                text: "Ada kesalahan dalam proses penyimpanan data."
+                            });
+                        }
+                    },
+                    success: function (response) {
+                        swal({
+                            title: "Simpan Data",
+                            type: "success",
+                            text: response.message
+                        }, function () {
+                            window.location = response.redirectTo;
+                        });
+                    },
+                    complete: function () {
+                        $("#" + submitButtonId).attr("disabled", false); // Aktifkan tombol lagi setelah selesai
+                    }
+                });
+            });
+        }
+
     </script>
 
     @yield('javascript')
