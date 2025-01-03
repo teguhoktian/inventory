@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
@@ -82,12 +83,30 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     /**
-     * Get the URL of the profile image or a default image.
+     * Accessor untuk mendapatkan URL gambar profil.
      *
      * @return string
      */
-    public function getProfileImageUrl(): string
+    public function getImageAttribute()
     {
-        return $this->getFirstMediaUrl('profile_image') ?: asset('images/default-profile.png');
+        // Cek apakah user memiliki media dengan collection 'image_profile'
+        $media = $this->getFirstMediaUrl('profile_image', 'thumb');
+
+        // Jika ada media, kembalikan URL-nya; jika tidak, kembalikan URL default
+        return $media ?: url('/img/no_foto.png');
+    }
+    
+    /**
+     * Daftarkan konversi media.
+     *
+     * @param Media|null $media
+     * @return void
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(100)
+            ->height(100)
+            ->sharpen(10);
     }
 }

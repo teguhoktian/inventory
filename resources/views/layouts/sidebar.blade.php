@@ -3,7 +3,7 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-        <x-user-panel-sidebar userAvatar="{{ url('/img/no_foto.png') }}" userName="{{ Auth::user()->name }}"
+        <x-user-panel-sidebar userAvatar="{{ Auth::user()->image }}" userName="{{ Auth::user()->name }}"
             userEmail="{{ Auth::user()->email }}" />
 
         <!-- Sidebar Menu -->
