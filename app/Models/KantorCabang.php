@@ -88,25 +88,13 @@ class KantorCabang extends Model
     }
 
     /**
-     * The users that belong to the KantorCabang
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'kantor_cabang_user', 'kantor_cabang_id', 'user_id')
-        ->withTimestamps();
-    }
-
-    /**
      * The jabatans that belong to the KantorCabang
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function jabatans(): BelongsToMany
     {
-        return $this->belongsToMany(Jabatan::class, 'user_jabatans')
-                    ->withPivot('kantor_id', 'status')
-                    ->withTimestamps();
+        return $this->belongsToMany(Jabatan::class, 'jabatan_user', 'user_id', 'jabatan_id')
+            ->withPivot(['status']);
     }
 }

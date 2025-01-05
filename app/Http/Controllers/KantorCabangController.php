@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jabatan;
 use App\Models\KantorCabang;
 use App\Models\User;
 use App\Services\KantorCabangService;
@@ -69,10 +70,23 @@ class KantorCabangController extends Controller
      */
     public function show(KantorCabang $kantorCabang)
     {
+        // User
         $users = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Admin');
         })->orderBy('name', 'asc')->pluck('name', 'id');
-        return view('kantorcabang.show', ['kantorCabang' => $kantorCabang, 'users' => $users]);
+
+        //Jabatan
+        $jabatans = Jabatan::getAllJabatan();
+
+        //User di Kantor Cabang
+        $userKantorCabang = Jabatan::getUserByKantor($kantorCabang->id);
+
+        return view('kantorcabang.show', [
+            'kantorCabang' => $kantorCabang, 
+            'users' => $users,
+            'jabatans' => $jabatans,
+            'userKantorCabang' => $userKantorCabang
+        ]);
     }
 
     /**
@@ -130,7 +144,19 @@ class KantorCabangController extends Controller
 
     public function addUser(Request $request, KantorCabang $kantorCabang) 
     {   
-        $kantorCabang->users()->syncWithoutDetaching($request->user_id);
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id', // Pastikan user_id ada di tabel users
+            'jabatan_id' => 'required|exists:jabatan,id', // Pastikan parent_id ada di tabel jabatan
+            'status' => 'required|in:Definitif,Pj.,Plt.', // Validasi status jabatan
+        ]);
+
+        // Menambahkan jabatan dan status ke dalam pivot tabel jabatan_user
+        $kantorCabang->jabatans()->attach($request->jabatan_id, [
+            'user_id' => $request->user_id,  // Menambahkan user_id
+            'kantor_id' => $kantorCabang->id,  // Menambahkan kantor_id
+            'status' => $request->status,      // Menambahkan status jabatan
+        ]);
+
         return response()->json([
             'status' => 'success',
             'message' => __('User berhasil ditambahkan.'),
@@ -140,7 +166,8 @@ class KantorCabangController extends Controller
 
     public function deleteUser(Request $request, KantorCabang $kantorCabang)
     {
-        $kantorCabang->users()->detach($request->user_id);
+        // $kantorCabang->jabatans()->detach($request->jabatan_id);
+        $kantorCabang->jabatans()->wherePivot('jabatan_id', $request->jabatan_id);
         return redirect()->back();
     }
 }

@@ -78,6 +78,7 @@
                     {{ Form::open(['route' => ['kantor-cabang.addUser', $kantorCabang->id], 'files' => true, 'id' =>
                     'moduleForm', 'class' => 'form-inline']) }}
 
+                    <!-- User -->
                     <div class="form-group">
                         <label for="" class="sr-only">
                             {{ __('Pilih User') }}
@@ -90,9 +91,42 @@
                         </select>
                     </div>
 
-                    <button class="btn btn-flat btn-primary" id="btnSubmit">
-                        <i class="fa fa-plus"></i> {{ __('Attach') }}
-                    </button>
+                    <!-- Pilih Jabatan -->
+                    <div class="form-group">
+                        <label for="" class="sr-only">
+                            {{ __('Pilih Jabatan') }}
+                        </label>
+                        <select name="jabatan_id" class="form-control" id="jabatan">
+                            <option value="">-- Pilih Jabatan --</option>
+                            @foreach ($jabatans as $data)
+                            <option value="{{ $data->id }}">
+                                {{ str_repeat('---', $data->level - 1) }} {{ $data->deskripsi }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Pilih Status Jabatan -->
+                    <div class="form-group">
+                        <label for="" class="sr-only">
+                            {{ __('Pilih Status') }}
+                        </label>
+                        <select class="form-control" name="status">
+                            <option value="">-- Pilih Status --</option>
+                            <option value="Definitif">Definitif</option>
+                            <option value="Pj.">Pj.</option>
+                            <option value="Plt.">Plt.</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+
+                        <button class="btn btn-flat btn-primary" id="btnSubmit">
+                            <i class="fa fa-plus"></i> {{ __('Attach') }}
+                        </button>
+                    </div>
+
+
                     </form>
                 </div>
 
@@ -101,13 +135,16 @@
                     <thead>
                         <tr style="background-color: #EEE;">
                             <th>
-                                {{ __('Username') }}
+                                {{ __('No.') }}
                             </th>
                             <th>
-                                {{ __('Name') }}
+                                {{ __('Nama') }}
                             </th>
                             <th>
-                                {{ __('Email') }}
+                                {{ __('Jabatan') }}
+                            </th>
+                            <th>
+                                {{ __('Status') }}
                             </th>
                             <th>
                                 {{ __('Action') }}
@@ -115,29 +152,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($kantorCabang->users as $user)
+                        @foreach($userKantorCabang as $jabatan)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>
-                                {{ $user->username }}
+                                {{ $jabatan->name }}
                             </td>
                             <td>
-                                {{ $user->name }}
+                                {{ $jabatan->nama_jabatan }}
                             </td>
                             <td>
-                                {{ $user->email }}
+                                {{ $jabatan->status }}
                             </td>
                             <td width="1px">
                                 <button class="btn btn-sm btn-danger text-muted"
-                                    onclick="submitDelete('delete-form-{{ $user->id }}')">
+                                    onclick="submitDelete('delete-form-{{ $jabatan->id }}')">
                                     <i class="fa fa-unlink"></i>
-                                    Delete
+                                    {{ __('Detach') }}
                                 </button>
                                 {!! Form::open([
-                                'id' => 'delete-form-'.$user->id,
+                                'id' => 'delete-form-'.$jabatan->id,
                                 'method' => 'DELETE',
-                                'route' => ['kantor-cabang.deleteUser', $kantorCabang->id],'style'=>'display:inline'])
+                                'route' => ['kantor-cabang.deleteUser',
+                                $kantorCabang->id],'style'=>'display:inline'])
                                 !!}
-                                {!! Form::hidden('user_id', $user->id) !!}
+                                {!! Form::hidden('jabatan_id', $jabatan->id) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>
@@ -161,7 +200,7 @@
     var routeIndex = "{{ route('kantor-cabang.index') }}";
     $(function () {
 
-        $('#select2').select2({
+        $('#select2, #jabatan').select2({
 
         });
 
