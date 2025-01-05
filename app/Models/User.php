@@ -109,4 +109,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             ->height(100)
             ->sharpen(10);
     }
+
+    /**
+     * The jabatans that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function jabatans(): BelongsToMany
+    {
+        return $this->belongsToMany(Jabatan::class, 'jabatan_user', 'user_id', 'jabatan_id')
+            ->withPivot(['status']);
+    }
 }

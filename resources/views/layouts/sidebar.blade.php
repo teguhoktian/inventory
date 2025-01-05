@@ -68,6 +68,22 @@
                     </li>
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user-plus"></i> <span>{{ __('Jabatan') }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@if(Route::is('jabatan.index')) active @endif">
+                        <a href="{{ route('jabatan.index') }}">
+                            <i class="fa fa-list"></i> {{ __('Daftar Jabatan') }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
             @endhasrole
 
             @hasrole('Admin|Admin ATK')

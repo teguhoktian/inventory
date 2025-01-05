@@ -123,6 +123,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {
+                
+                // Barang
                 Route::get('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStok'])->name('barang.adjust-stok');
                 Route::post('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStokStore'])->name('barang.adjust-stok-store');
                 Route::resource('barang', BarangController::class);
@@ -130,15 +132,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('satuan-barang', SatuanBarangController::class)->except(['show']);
                 Route::resource('supplier', SupplierController::class)->except(['show']);
+
+                // Kantor Cabang
                 Route::post('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'addUser'])->name('kantor-cabang.addUser');
                 Route::delete('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'deleteUser'])->name('kantor-cabang.deleteUser');
                 Route::resource('kantor-cabang', KantorCabangController::class);
                 
                 // Stok Opname Barang
                 Route::post('stok-opname-barang/{stokOpnameBarang}/download', [StokOpnameBarangController::class, 'downloadBarangStokOpname'])->name('stok-opname-barang.download');
-                
                 Route::post('stok-opname-barang/{stokOpnameBarang}/upload', [StokOpnameBarangController::class, 'uploadBarangStokOpname'])->name('stok-opname-barang.upload');
-
                 Route::get('stok-opname-barang/{stokOpnameBarang}/cetak-kartu', [StokOpnameBarangController::class, 'printKartuStokOpname'])->name('stok-opname-barang.cetakStok');
                 Route::patch('stok-opname-barang/{detailStokOpnameBarang}/update-stok-fisik', [StokOpnameBarangController::class, 'updateStokFisik'])->name('stok-opname-barang.updateStokFisik');
                 Route::patch('stok-opname-barang/{stokOpnameBarang}/cancel-stok-opname', [StokOpnameBarangController::class, 'batalSOBarang'])->name('stok-opname-barang.cancelStokOpname');
@@ -150,7 +152,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('stok-awal', [StokBarangAwalController::class, 'store'])->name('stok-awal.store');
                 Route::get('stok-awal', [StokBarangAwalController::class, 'create'])->name('stok-awal.add');
 
-
+                // route resource jabatan
+                Route::resource('jabatan', App\Http\Controllers\JabatanController::class)->except(['show']);
             });
 
             // URL /auth/transaksi
