@@ -14,7 +14,7 @@
     <label class="col-sm-2 control-label" for="inputName">{{ __('Induk') }}</label>
     <div class="col-sm-10">
         <select name="parent_id" class="form-control">
-            <option value="null">None</option>
+            <option value="">None</option>
             @foreach ($jabatans as $data)
             <option value="{{ $data->id }}" {{ ($jabatan && $jabatan->parent_id == $data->id) ? 'selected' : '' }}>
                 {{ str_repeat('---', $data->level - 1) }} {{ $data->nama_jabatan }}
