@@ -166,8 +166,13 @@ class KantorCabangController extends Controller
 
     public function deleteUser(Request $request, KantorCabang $kantorCabang)
     {
-        // $kantorCabang->jabatans()->detach($request->jabatan_id);
-        $kantorCabang->jabatans()->wherePivot('jabatan_id', $request->jabatan_id);
-        return redirect()->back();
+        $pivot = $kantorCabang->jabatans()->wherePivot('jabatan_id', $request->jabatan_id)->first();
+
+        if ($pivot) {
+            $kantorCabang->jabatans()->detach($request->jabatan_id);
+            return redirect()->back();
+        } 
+
+        abort(404, __('Route not found'));
     }
 }
