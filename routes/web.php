@@ -35,7 +35,7 @@ use Yajra\DataTables\Facades\DataTables;
 Auth::routes(['verify' => true]);
 
 // API get data barang berdasarkan kode
-Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang){
+Route::get('/api/barang/{kode_barang}', function (Request $request, $kode_barang) {
     $request->merge(['kode_barang' => $kode_barang]);
 
     $validated = $request->validate([
@@ -63,15 +63,14 @@ Route::get('/api/barang/{kode_barang}', function(Request $request, $kode_barang)
 // API get data barang
 Route::get('/api/barang-list', function () {
 
-    $barang = \App\Models\Barang::with(['satuan', 'stoks'])->latest(); 
+    $barang = \App\Models\Barang::with(['satuan', 'stoks'])->latest();
 
     return datatables()->of($barang)->addColumn('harga', function ($row) {
         $lastStok = $row->stoks->last();
         return $lastStok?->harga ?? 0;
     })
 
-    ->make(true); 
-    
+        ->make(true);
 })->name('api.get-barang-list');
 
 // API get Data Users
@@ -107,7 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // settings/general-settings
             Route::get('settings/general-settings', [GeneralSettingController::class, 'index'])->name('settings.general-settings');
             Route::post('settings/general-settings', [GeneralSettingController::class, 'store'])->name('settings.general-settings.store');
-            
+
             // settings/backup
             Route::get('settings/backup', [BackupController::class, 'index'])->name('settings.backup');
             Route::get('settings/backup/status', [BackupController::class, 'backupStatuses'])->name('settings.backup-status');
@@ -123,7 +122,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             // URL /auth/master
             Route::prefix('master')->group(function () {
-                
+
+                //Role and Permission
+                Route::get('role', [\App\Http\Controllers\RoleController::class, 'index'])->name('role.index');
+                Route::post('role/create-role', [\App\Http\Controllers\RoleController::class, 'addRole'])->name('role.create-role');
+                Route::post('role/create-permission', [\App\Http\Controllers\RoleController::class, 'addPermission'])->name('role.create-permission');
+                Route::post('role/sync', [\App\Http\Controllers\RoleController::class, 'syncPermission'])->name('role.syncPermission');
+                Route::delete('role/{role}', [\App\Http\Controllers\RoleController::class, 'destroy'])->name('role.delete');
+
                 // Barang
                 Route::get('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStok'])->name('barang.adjust-stok');
                 Route::post('barang/{barang}/penyesuaian-stok', [BarangController::class, 'adjustmentStokStore'])->name('barang.adjust-stok-store');
@@ -137,7 +143,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'addUser'])->name('kantor-cabang.addUser');
                 Route::delete('kantor-cabang/{kantor_cabang}/user', [KantorCabangController::class, 'deleteUser'])->name('kantor-cabang.deleteUser');
                 Route::resource('kantor-cabang', KantorCabangController::class);
-                
+
                 // Stok Opname Barang
                 Route::post('stok-opname-barang/{stokOpnameBarang}/download', [StokOpnameBarangController::class, 'downloadBarangStokOpname'])->name('stok-opname-barang.download');
                 Route::post('stok-opname-barang/{stokOpnameBarang}/upload', [StokOpnameBarangController::class, 'uploadBarangStokOpname'])->name('stok-opname-barang.upload');
@@ -185,16 +191,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::prefix('laporan')->group(function () {
                 Route::get('stok-barang', [LaporanStokBarangController::class, 'index'])->name('laporan.stok-barang.index');
                 Route::post('stok-barang', [LaporanStokBarangController::class, 'printPDF'])->name('laporan.stok-barang.print');
-                
+
                 Route::get('barang-masuk', [LaporanBarangMasukController::class, 'index'])->name('laporan.barang-masuk.index');
                 Route::post('barang-masuk', [LaporanBarangMasukController::class, 'printPDF'])->name('laporan.barang-masuk.print');
-                                
+
                 Route::get('barang-keluar', [LaporanBarangKeluarController::class, 'index'])->name('laporan.barang-keluar.index');
                 Route::post('barang-keluar', [LaporanBarangKeluarController::class, 'printPDF'])->name('laporan.barang-keluar.print');
             });
-
         });
     });
-
-    
 });

@@ -40,8 +40,8 @@
                             <span>{{ __('Daftar Pengguna') }}</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="">
+                    <li class="@if(Route::is('role.*')) active @endif">
+                        <a href="{{ route('role.index') }}">
                             <i class="fa fa-lock"></i>
                             <span>{{ __('Role & Permission') }}</span>
                         </a>

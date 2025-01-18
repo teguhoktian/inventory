@@ -1,8 +1,7 @@
 @props(['headerClass' => ''])
 
-<div class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="{{ $id }}Label" aria-hidden="true"
-    data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog {{ $size ?? '' }}" role="document">
+<div class="modal fade" id="{{ $id }}">
+    <div class="modal-dialog {{ $size ?? '' }}">
         <div class="modal-content">
             @isset($header)
             <div class="modal-header {{ $headerClass }}">
