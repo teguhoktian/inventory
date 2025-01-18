@@ -36,7 +36,7 @@ class UserServices
         $request['kode_desa'] = env('APP_KODE_DESA');
         $user = User::create($request->all());
         $user->syncRoles([$request->roles]);
-        $user->kantorCabangs()->sync($request->cabangs);
+        // $user->kantorCabangs()->sync($request->cabangs); Diganti di Jabatan User
         //$user->notify(new UserEmailVerification());
         return $user;
     }
@@ -51,7 +51,7 @@ class UserServices
 
         $user->roles()->sync([$request->roles]);
 
-        $user->kantorCabangs()->sync($request->cabangs);
+        // $user->kantorCabangs()->sync($request->cabangs); diganti di Jabatan user
 
         return $user->update($request->all());
     }

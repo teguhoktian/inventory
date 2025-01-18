@@ -28,7 +28,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="@if(Route::is('user.create')) active @endif">
+                    <li class="@if(Route::is('user.create') || Route::is('user.edit')) active @endif">
                         <a href="{{ route('user.create') }}">
                             <i class="fa fa-plus"></i>
                             <span>{{ __('Tambah Pengguna') }}</span>

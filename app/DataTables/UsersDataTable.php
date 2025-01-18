@@ -33,8 +33,8 @@ class UsersDataTable extends DataTable
                 return '<span class="btn btn-xs btn-info">' . $user->roles->pluck('name')->implode(', ') . '</span>';
             })
             ->addColumn('kantor_cabang', function(User $user){
-                return $user->kantorCabangs->map(function($kantorCabang) {
-                    return '<span class="label label-warning">' . $kantorCabang->nama . '</span>';
+                return $user->kantorCabangs->map(function ($kantorCabang) {
+                    return '<span class="label label-success">' . e($kantorCabang->nama) . '</span>';
                 })->implode(' ');  
             })
             ->rawColumns(['action', 'role', 'status', 'kantor_cabang'])

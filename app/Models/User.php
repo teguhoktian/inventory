@@ -65,10 +65,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function kantorCabangs(): BelongsToMany
+    // public function kantorCabangs(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(KantorCabang::class, 'kantor_cabang_user', 'user_id', 'kantor_cabang_id')
+    //                 ->withTimestamps(); 
+    // }
+    public function kantorCabangs()
     {
-        return $this->belongsToMany(KantorCabang::class, 'kantor_cabang_user', 'user_id', 'kantor_cabang_id')
-                    ->withTimestamps(); 
+        return $this->belongsToMany(KantorCabang::class, 'jabatan_user', 'user_id', 'kantor_id')
+        ->withPivot(['jabatan_id', 'status']);
     }
 
     /**
