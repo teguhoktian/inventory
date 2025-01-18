@@ -58,9 +58,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
-    }
+    public function show(User $user) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -72,8 +70,8 @@ class UserController extends Controller
     {
         $options = $services->options();
         $user->roles = $user->roles->pluck('id', 'id');
-        $user->cabangs = $user->kantorCabangs()->pluck('kantor_cabang_id', 'kantor_cabang_id');
-      
+        $user->cabangs = $user->kantorCabangs()->pluck('kantor_id', 'kantor_id');
+
         return view('user.edit', [
             'user' => $user,
             'roles' => $options['roles'],
