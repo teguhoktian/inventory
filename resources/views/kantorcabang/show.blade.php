@@ -144,6 +144,9 @@
                                 {{ __('Jabatan') }}
                             </th>
                             <th>
+                                {{ __('Status') }}
+                            </th>
+                            <th>
                                 {{ __('Action') }}
                             </th>
                         </tr>
@@ -158,6 +161,9 @@
                             <td>
                                 @if($jabatan->status !== 'Definitif') {{ $jabatan->status }} @endif
                                 {{ $jabatan->nama_jabatan }}
+                            </td>
+                            <td>
+                                {{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif'}}
                             </td>
                             <td width="1px">
                                 <button class="btn btn-sm btn-danger text-muted"

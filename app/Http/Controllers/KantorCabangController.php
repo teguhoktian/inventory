@@ -49,7 +49,8 @@ class KantorCabangController extends Controller
     {
         $request->validate(
             [
-                'nama' => 'required', 'kode' => 'required|unique:kantor_cabang,kode',
+                'nama' => 'required',
+                'kode' => 'required|unique:kantor_cabang,kode',
                 'parent_id' => 'nullable|exists:kantor_cabang,id'
             ]
         );
@@ -82,7 +83,7 @@ class KantorCabangController extends Controller
         $userKantorCabang = Jabatan::getUserByKantor($kantorCabang->id);
 
         return view('kantorcabang.show', [
-            'kantorCabang' => $kantorCabang, 
+            'kantorCabang' => $kantorCabang,
             'users' => $users,
             'jabatans' => $jabatans,
             'userKantorCabang' => $userKantorCabang
@@ -112,10 +113,10 @@ class KantorCabangController extends Controller
     {
         $request->validate(
             [
-                'nama' => 'required', 
+                'nama' => 'required',
                 'kode' => 'required|unique:kantor_cabang,kode,' . $kantorCabang->id,
                 'parent_id' => 'nullable|exists:kantor_cabang,id|not_in:' . $kantorCabang->id,
-                ]
+            ]
         );
 
         $this->services->update($request, $kantorCabang);
@@ -142,9 +143,9 @@ class KantorCabangController extends Controller
         ], 200);
     }
 
-    public function addUser(Request $request, KantorCabang $kantorCabang) 
-    {   
-        $validated = $request->validate([
+    public function addUser(Request $request, KantorCabang $kantorCabang)
+    {
+        $request->validate([
             'user_id' => 'required|exists:users,id', // Pastikan user_id ada di tabel users
             'jabatan_id' => 'required|exists:jabatan,id', // Pastikan parent_id ada di tabel jabatan
             'status' => 'required|in:Definitif,Pj.,Plt.', // Validasi status jabatan
@@ -171,7 +172,7 @@ class KantorCabangController extends Controller
         if ($pivot) {
             $kantorCabang->jabatans()->detach($request->jabatan_id);
             return redirect()->back();
-        } 
+        }
 
         abort(404, __('Route not found'));
     }

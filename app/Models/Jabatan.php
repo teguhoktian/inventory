@@ -46,7 +46,8 @@ class Jabatan extends Model
         return $this->hasMany(Jabatan::class, 'parent_id');
     }
 
-    public static function getAllJabatan(){
+    public static function getAllJabatan()
+    {
         return DB::select("
             WITH RECURSIVE jabatan_hierarchy AS (
                 SELECT 
@@ -89,12 +90,12 @@ class Jabatan extends Model
                 FROM jabatan j
                 JOIN jabatan_hierarchy h ON j.parent_id = h.id
             )
-            SELECT jh.*, ju.user_id, ju.status, u.name
+            SELECT jh.*, ju.user_id, ju.status, ju.is_active, u.name
             FROM jabatan_hierarchy jh
             JOIN jabatan_user ju ON ju.jabatan_id = jh.id
             JOIN users u ON u.id = ju.user_id
             WHERE ju.kantor_id = ?
             ORDER BY jh.level, FIELD(ju.status, 'Definitif', 'Pj.', 'Plt.')
-        ", [$kantorId]);    
+        ", [$kantorId]);
     }
 }
