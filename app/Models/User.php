@@ -154,6 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             return DB::table('jabatan_user')
                 ->where('jabatan_id', $atasanJabatan->id)
                 ->where('kantor_id', $idKantor)
+                ->where('is_active', true)
                 ->get()
                 ->map(function ($atasanUser) use ($atasanJabatan) {
                     return [
@@ -174,6 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
             return DB::table('jabatan_user')
                 ->where('jabatan_id', $atasanDariAtasanJabatan->id)
                 ->where('kantor_id', $idKantor)
+                ->where('is_active', true)
                 ->get()
                 ->map(function ($atasanDariAtasanUser) use ($atasanDariAtasanJabatan) {
                     return [
