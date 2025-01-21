@@ -18,7 +18,14 @@ class LaporanBarangMasukController extends Controller
 
     private function getCollection($request)
     {
-        return $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangMasukReport($request['tanggal_mulai'], $request['tanggal_akhir']) : [];
+        $barangMasuk = $request->has(['tanggal_mulai', 'tanggal_akhir']) ? $this->service->getBarangMasukReport($request['tanggal_mulai'], $request['tanggal_akhir']) : collect();
+
+        $groupedBarangMasuk = $barangMasuk->groupBy([
+            // fn($item) => $item->barangKeluar->kantor->nama ?? 'Tidak Diketahui',
+            fn($item) => $item->barang->jenis->nama ?? 'Tidak Diketahui',
+        ]);
+
+        return $groupedBarangMasuk;
     }
 
     function index(Request $request)
