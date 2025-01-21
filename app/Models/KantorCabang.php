@@ -95,6 +95,7 @@ class KantorCabang extends Model
     public function jabatans(): BelongsToMany
     {
         return $this->belongsToMany(Jabatan::class, 'jabatan_user', 'kantor_id', 'jabatan_id')
+            ->withTimestamps()
             ->withPivot(['status']);
     }
 }
