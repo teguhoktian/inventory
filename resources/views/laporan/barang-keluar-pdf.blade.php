@@ -58,8 +58,8 @@
                         <td>{{ $item->barang->nama }}</td>
                         <td>{{ $item->barang->satuan->nama }}</td>
                         <td align="right">{{ $item->quantity }}</td>
-                        <td align="right">{{ number_format($item->harga, 0, ',', '.') }}</td>
-                        <td align="right">{{ number_format($item->quantity * $item->harga, 0, ',', '.') }}</td>
+                        <td align="right">{{ number_format($item->harga, 0) }}</td>
+                        <td align="right">{{ number_format($item->quantity * $item->harga, 0) }}</td>
                     </tr>
                     @php
                     $jenisTotalQty += $item->quantity;
@@ -74,14 +74,14 @@
                         <td colspan="7" align="right"><strong>Total untuk {{ $jenis }}</strong></td>
                         <td align="right"><strong>{{ $jenisTotalQty }}</strong></td>
                         <td></td>
-                        <td align="right"><strong>{{ number_format($jenisTotalHarga, 0, ',', '.') }}</strong></td>
+                        <td align="right"><strong>{{ number_format($jenisTotalHarga, 0) }}</strong></td>
                     </tr>
                     @endforeach
                     <tr style="background-color: rgb(235, 245, 255);">
                         <td colspan="7" align="right"><strong>Total untuk {{ strtoupper($kantor) }}</strong></td>
                         <td align="right"><strong>{{ $kantorTotalQty }}</strong></td>
                         <td></td>
-                        <td align="right"><strong>{{ number_format($kantorTotalHarga, 0, ',', '.') }}</strong></td>
+                        <td align="right"><strong>{{ number_format($kantorTotalHarga, 0) }}</strong></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -90,7 +90,7 @@
                         <td colspan="7" align="right"><strong>TOTAL</strong></td>
                         <td align="right"><strong>{{ $totalItem }}</strong></td>
                         <td></td>
-                        <td align="right"><strong>{{ number_format($totalHarga, 2) }}</strong></td>
+                        <td align="right"><strong>{{ number_format($totalHarga,0) }}</strong></td>
                     </tr>
                 </tfoot>
             </table>
@@ -99,7 +99,40 @@
 
         <div class="signing-section">
             <div style="margin-top: 50px;">
+                @if(count($signer['atasan_dari_atasan']) === 0)
                 <table style="width: 100%; border: none; text-align: center;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;"></td>
+                        <td style="width: 50%; vertical-align: top;">
+                            {{ __('Cirebon') }}, {{ date('d F Y') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            <p>Mengetahui,</p>
+                            <p><strong>{{ $signer['atasan'][0]['position'] }}</strong></p>
+                            <br><br><br> <!-- Ruang untuk tanda tangan -->
+                            <p>________________________</p>
+                            <p><em>{{ $signer['atasan'][0]['name'] }}</em></p>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            <p>{{ $signer['user']['position'] }}</p>
+                            <p><strong>{{ __('Dibuat oleh') }},</strong></p>
+                            <br><br><br> <!-- Ruang untuk tanda tangan -->
+                            <p>________________________</p>
+                            <p><em>{{ $signer['user']['name'] }}</em></p>
+                        </td>
+                    </tr>
+                </table>
+                @else
+                <table style="width: 100%; border: none; text-align: center;">
+                    <tr>
+                        <td style="width: 33%; vertical-align: top;"></td>
+                        <td style="width: 33%; vertical-align: top;"></td>
+                        <td style="width: 33%; vertical-align: top;">
+                            {{ __('Cirebon') }}, {{ date('d F Y') }}
+                        </td>
+                    </tr>
                     <tr>
                         <td style="width: 33%; vertical-align: top;">
                             <p>Mengetahui,</p>
@@ -116,7 +149,7 @@
                             <p><em>{{ $signer['atasan'][0]['name'] }}</em></p>
                         </td>
                         <td style="width: 33%; vertical-align: top;">
-                            <p>{{ __('Cirebon') }}, {{ date('d F Y') }}</p>
+                            <p>{{ $signer['user']['position'] }}</p>
                             <p><strong>{{ __('Dibuat oleh') }},</strong></p>
                             <br><br><br> <!-- Ruang untuk tanda tangan -->
                             <p>________________________</p>
@@ -124,6 +157,7 @@
                         </td>
                     </tr>
                 </table>
+                @endif
             </div>
         </div>
         <!-- /.signing-section -->

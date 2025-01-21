@@ -34,6 +34,7 @@
             text-align: center;
         }
 
+        .header h3,
         .header h2,
         .header h1 {
             margin: 0;

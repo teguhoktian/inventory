@@ -157,10 +157,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
                 ->where('is_active', true)
                 ->get()
                 ->map(function ($atasanUser) use ($atasanJabatan) {
+                    $position = $atasanUser->status === 'Definitif' ? $atasanJabatan->nama_jabatan : $atasanUser->status . " " . $atasanJabatan->nama_jabatan;
                     return [
                         'id' => $atasanUser->user_id,
                         'name' => DB::table('users')->where('id', $atasanUser->user_id)->value('name'),
-                        'position' => $atasanJabatan->nama_jabatan,
+                        'position' => $position,
                     ];
                 });
         })->flatten(1);
@@ -178,10 +179,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
                 ->where('is_active', true)
                 ->get()
                 ->map(function ($atasanDariAtasanUser) use ($atasanDariAtasanJabatan) {
+                    $position = $atasanDariAtasanUser->status === 'Definitif' ? $atasanDariAtasanJabatan->nama_jabatan : $atasanDariAtasanUser->status . " " . $atasanDariAtasanJabatan->nama_jabatan;
                     return [
                         'id' => $atasanDariAtasanUser->user_id,
                         'name' => DB::table('users')->where('id', $atasanDariAtasanUser->user_id)->value('name'),
-                        'position' => $atasanDariAtasanJabatan->nama_jabatan,
+                        'position' => $position,
                     ];
                 });
         })->flatten(1);

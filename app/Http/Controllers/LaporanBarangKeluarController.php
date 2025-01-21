@@ -42,14 +42,14 @@ class LaporanBarangKeluarController extends Controller
 
     function printPDF(Request $request)
     {
-        // return \App\Models\User::getUserAndAtasan(14, 4);
+        // return \App\Models\User::getUserAndAtasan(26, 10);
         $barangKeluar = $this->getCollection($request);
 
         $pdf = PDF::loadView('laporan.barang-keluar-pdf', [
             'barangKeluar' => $barangKeluar,
             'tanggal_mulai' => $request['tanggal_mulai'] ?: "",
             'tanggal_akhir' => $request['tanggal_akhir'] ?: "",
-            'signer' => \App\Models\User::getUserAndAtasan(14, 4),
+            'signer' => \App\Models\User::getUserAndAtasan(26, 10),
         ]);
 
         return $pdf->download('Laporan_barang_keluar' . now()->format('YmdHis') . '.pdf');
