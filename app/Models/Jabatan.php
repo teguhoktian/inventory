@@ -90,7 +90,7 @@ class Jabatan extends Model
                 FROM jabatan j
                 JOIN jabatan_hierarchy h ON j.parent_id = h.id
             )
-            SELECT jh.*, ju.user_id, ju.status, ju.is_active, u.name
+            SELECT jh.*, ju.user_id, ju.status, ju.is_active, ju.id AS posisi_id, u.name
             FROM jabatan_hierarchy jh
             JOIN jabatan_user ju ON ju.jabatan_id = jh.id
             JOIN users u ON u.id = ju.user_id

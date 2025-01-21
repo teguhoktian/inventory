@@ -7,6 +7,7 @@ use App\Models\KantorCabang;
 use App\Models\User;
 use App\Services\KantorCabangService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KantorCabangController extends Controller
 {
@@ -175,5 +176,32 @@ class KantorCabangController extends Controller
         }
 
         abort(404, __('Route not found'));
+    }
+
+    function toggleStatus(Request $request, $id)
+    {
+        $jabatanUser  = DB::table('jabatan_user')->where('id', $id)->first();
+
+        if (!$jabatanUser) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan.',
+            ], 404);
+        }
+
+        // Toggle nilai is_active
+        $newStatus = !$jabatanUser->is_active;
+
+        // Update status di tabel jabatan_user
+        DB::table('jabatan_user')
+            ->where('id', $id)
+            ->update(['is_active' => $newStatus]);
+
+        // Kirim respons JSON
+        return response()->json([
+            'success' => true,
+            'is_active' => $newStatus,
+            'message' => 'Status berhasil diubah.',
+        ]);
     }
 }

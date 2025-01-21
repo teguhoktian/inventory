@@ -163,7 +163,11 @@
                                 {{ $jabatan->nama_jabatan }}
                             </td>
                             <td>
-                                {{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif'}}
+                                <button class="btn btn-sm {{ $jabatan->is_active ? 'btn-success' : 'btn-danger' }}"
+                                    onclick="toggleStatus({{ $jabatan->posisi_id }})"
+                                    id="status-button-{{ $jabatan->posisi_id }}">
+                                    {{ $jabatan->is_active ? 'Aktif' : 'Tidak Aktif' }}
+                                </button>
                             </td>
                             <td width="1px">
                                 <button class="btn btn-sm btn-danger text-muted"
@@ -211,6 +215,38 @@
 
     function submitDelete(formId) {
         document.getElementById(formId).submit();
+    }
+
+    // Toggle Status Jabatan
+    function toggleStatus(jabatanId) {
+        // Kirim AJAX request
+        fetch(`{{ route('kantor-cabang.status', ['id' => ':id']) }}`.replace(':id', jabatanId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({})
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.success) {
+                    // Update tombol status
+                    const statusButton = document.getElementById(`status-button-${jabatanId}`);
+                    statusButton.textContent = data.is_active ? 'Aktif' : 'Tidak Aktif';
+                    statusButton.className = data.is_active ? 'btn btn-sm btn-success' : 'btn btn-sm btn-danger';
+
+                    // Tampilkan pesan sukses (opsional)
+                    //alert(data.message);
+                } else {
+                    alert('Gagal mengubah status.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengubah status.');
+            });
     }
 </script>
 @stop
