@@ -29,6 +29,21 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
+        .header {
+            align-items: center;
+            text-align: center;
+        }
+
+        .header h2,
+        .header h1 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header h1 {
+            margin-bottom: 2px;
+        }
+
         .wrapper {
             padding: 8px 12px;
         }

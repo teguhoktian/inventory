@@ -85,7 +85,7 @@
         <!-- /.box -->
 
 
-        @if($barangKeluar)
+        @if($barangKeluar->count() > 0)
 
         <div class="box box-solid box-success box-flat box-shadow">
             <div class="box-header with-border">
@@ -118,12 +118,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php $totalHarga = 0 ; @endphp
+                        @php
+                        $totalHarga = 0;
+                        $totalItem = 0;
+                        @endphp
                         @foreach ($barangKeluar as $kantor => $jenisGroup)
+                        @php
+                        $kantorTotalQty = 0;
+                        $kantorTotalHarga = 0;
+                        @endphp
                         <tr style="background-color: rgb(203, 226, 255);">
                             <td colspan="10"><strong>{{ strtoupper($kantor) }}</strong></td>
                         </tr>
                         @foreach ($jenisGroup as $jenis => $items)
+                        @php
+                        $jenisTotalQty = 0;
+                        $jenisTotalHarga = 0;
+                        @endphp
                         <tr style="background-color: #ebebeb;">
                             <td colspan="10" style="padding-left: 20px;"><strong>{{ $jenis }}</strong></td>
                         </tr>
@@ -141,24 +152,35 @@
                             <td align="right">{{ number_format($item->quantity * $item->harga, 0, ',', '.') }}</td>
                         </tr>
                         @php
-                        $totalHarga += $item->harga * $item->quantity;
+                        $jenisTotalQty += $item->quantity;
+                        $jenisTotalHarga += $item->quantity * $item->harga;
+                        $kantorTotalQty += $item->quantity;
+                        $kantorTotalHarga += $item->quantity * $item->harga;
+                        $totalHarga += $item->quantity * $item->harga;
+                        $totalItem += $item->quantity;
                         @endphp
                         @endforeach
+                        <tr style="background-color: #f0f0f0;">
+                            <td colspan="7" align="right"><strong>Total untuk {{ $jenis }}</strong></td>
+                            <td align="right"><strong>{{ $jenisTotalQty }}</strong></td>
+                            <td></td>
+                            <td align="right"><strong>{{ number_format($jenisTotalHarga, 0, ',', '.') }}</strong></td>
+                        </tr>
                         @endforeach
+                        <tr style="background-color: rgb(235, 245, 255);">
+                            <td colspan="7" align="right"><strong>Total untuk {{ strtoupper($kantor) }}</strong></td>
+                            <td align="right"><strong>{{ $kantorTotalQty }}</strong></td>
+                            <td></td>
+                            <td align="right"><strong>{{ number_format($kantorTotalHarga, 0, ',', '.') }}</strong></td>
+                        </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr class="bg-gray">
-                            <th></th>
-                            <th>TOTAL</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th align="right">{{ number_format($totalHarga, 2) }}</th>
+                            <td colspan="7" align="right"><strong>TOTAL</strong></td>
+                            <td align="right"><strong>{{ $totalItem }}</strong></td>
+                            <td></td>
+                            <td align="right"><strong>{{ number_format($totalHarga, 2) }}</strong></td>
                         </tr>
                     </tfoot>
                 </table>
