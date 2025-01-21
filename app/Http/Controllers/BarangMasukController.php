@@ -20,7 +20,7 @@ class BarangMasukController extends Controller
     function __construct(BarangMasukService $services)
     {
         $this->services = $services;
-        $this->kode = $this->generateCode(BarangMasuk::class, 'TBM-');
+        $this->kode = $this->generateCode(BarangMasuk::class, 'TBM');
     }
 
     /**
@@ -31,10 +31,10 @@ class BarangMasukController extends Controller
     public function index(Request $request)
     {
         // return $request;
-        if($request->has('mode') && $request->mode == 'barang'){
+        if ($request->has('mode') && $request->mode == 'barang') {
             if (request()->ajax()) return $this->services->getDTBarang();
             return view('barangmasuk.index-barang');
-        }else{
+        } else {
             if (request()->ajax()) return $this->services->getDT();
             return view('barangmasuk.index-invoice');
         }
@@ -125,7 +125,7 @@ class BarangMasukController extends Controller
     public function checkout()
     {
         $cart_products = collect(request()->session()->get('cart'));
-        
+
         if ($cart_products->isEmpty()) return redirect()->route('barang-masuk.create');
 
         $supplier = Supplier::pluck('nama', 'id');
@@ -241,7 +241,7 @@ class BarangMasukController extends Controller
         //             'barangMasuk' => $barangMasuk,
         //             'cart' => $barangMasuk->detail
         // ]);
-        
+
         // return $pdf->download($barangMasuk->kode . ' Invoice Barang Masuk.pdf');    
     }
 }

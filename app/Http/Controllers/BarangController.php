@@ -24,7 +24,7 @@ class BarangController extends Controller
     function __construct(BarangService $services)
     {
         $this->services = $services;
-        $this->kode = $this->generateCode(Barang::class, 'BRG-');
+        $this->kode = $this->generateCode(Barang::class, 'BRG');
     }
 
 
@@ -38,7 +38,6 @@ class BarangController extends Controller
         // if (request()->ajax()) return $this->services->getDT();
         // return view('barang.index');
         return $dataTable->render('barang.index');
-
     }
 
     /**
@@ -104,24 +103,24 @@ class BarangController extends Controller
         $endDate = $request->end_date ?? Carbon::now()->endOfMonth()->toDateString();
 
         $saldoAwal = KartuStokBarang::where('id_barang', $barang->id)
-        ->where('created_at', '<', $startDate)
-        ->selectRaw("
+            ->where('created_at', '<', $startDate)
+            ->selectRaw("
         SUM(CASE WHEN tipe = 'Masuk' THEN harga * jumlah ELSE -1 * harga * jumlah END) as saldo")
-        ->value('saldo') ?? 0;
+            ->value('saldo') ?? 0;
 
         $stokAwal = KartuStokBarang::where('id_barang', $barang->id)
-        ->where('created_at', '<', $startDate)
-        ->selectRaw("
+            ->where('created_at', '<', $startDate)
+            ->selectRaw("
             SUM(CASE WHEN tipe = 'Masuk' THEN jumlah ELSE -jumlah END) as stok
         ")
-        ->value('stok') ?? 0;
+            ->value('stok') ?? 0;
 
         // dd($saldoAwal);
 
         $timeLineBarang = KartuStokBarang::where('id_barang', $barang->id)
-        ->whereBetween('created_at', [$startDate, $endDate])
-        ->orderBy('created_at', 'ASC')->get();
-        
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'ASC')->get();
+
         // dd($timeLineBarang->toArray());
 
         return view(
@@ -208,19 +207,19 @@ class BarangController extends Controller
     function adjustmentStok(Barang $barang)
     {
         abort_if($barang->stoks->last() === null, 404, __('Halaman tidak ditemukan.'), []);
-        
+
         $barang->harga = $barang->stoks->last()?->harga ?: 0;
-        
+
         return view('barang.adjust', [
             'barang' => $barang,
         ]);
     }
 
-    function adjustmentStokStore(Request $request, Barang $barang) 
+    function adjustmentStokStore(Request $request, Barang $barang)
     {
         $request->validate([
             'keterangan' => 'required',
-            'tipe_penyesuaian' =>'required',
+            'tipe_penyesuaian' => 'required',
             'stok_penyesuaian' => 'required'
         ]);
 
@@ -249,6 +248,5 @@ class BarangController extends Controller
             'redirectTo' => route('barang.show', $barang->id),
             'message' => __('Data telah berhasil dihapus.')
         ], 200);
-        
     }
 }
