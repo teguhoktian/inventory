@@ -16,8 +16,8 @@
                 <p><em>{{ $signer['atasan'][0]['name'] }}</em></p>
             </td>
             <td style="width: 50%; vertical-align: top;">
-                <p>{{ $signer['user']['position'] }}</p>
-                <p><strong>{{ __('Dibuat oleh') }},</strong></p>
+                <p>{{ __('Dibuat oleh') }},</p>
+                <p><strong>{{ $signer['user']['position'] }}</strong></p>
                 <br><br><br> <!-- Ruang untuk tanda tangan -->
                 <p>________________________</p>
                 <p><em>{{ $signer['user']['name'] }}</em></p>
@@ -49,8 +49,8 @@
                 <p><em>{{ $signer['atasan'][0]['name'] }}</em></p>
             </td>
             <td style="width: 33%; vertical-align: top;">
-                <p>{{ $signer['user']['position'] }}</p>
-                <p><strong>{{ __('Dibuat oleh') }},</strong></p>
+                <p>{{ __('Dibuat oleh') }},</p>
+                <p><strong>{{ $signer['user']['position'] }}</strong></p>
                 <br><br><br> <!-- Ruang untuk tanda tangan -->
                 <p>________________________</p>
                 <p><em>{{ $signer['user']['name'] }}</em></p>
