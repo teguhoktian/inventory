@@ -3,17 +3,18 @@
 @section('content')
 <div class="wrapper">
     <div class="header">
-        <h1>Daftar Stok Barang</h1>
+        <h1>{{ __('Laporan Stok Barang') }}</h1>
+        <h3>
+            <strong>Periode: </strong> {{ date('d-M-Y', strtotime($tanggal_mulai)) }} s.d {{ date('d-M-Y',
+            strtotime($tanggal_akhir)) }}
+        </h3>
     </div>
+
+    <hr />
 
     <div class="body">
         <div class="header-section">
-            <p>
-                <strong>Tanggal</strong>: {{ $tanggal_mulai }} s.d {{ $tanggal_akhir }}
-            </p>
-            <p>
-                <strong>Tanggal Cetak</strong>: {{ now()->format('Y-m-d') }}
-            </p>
+
         </div>
 
         <div class="content-section">
@@ -51,6 +52,11 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="signing-section">
+            @include('laporan.signer')
+        </div>
+        <!-- /.signing-section -->
     </div>
 </div>
 @endsection
