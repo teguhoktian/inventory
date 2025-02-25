@@ -180,10 +180,12 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
 
         //Datatable
-        Yajra\DataTables\DataTablesServiceProvider::class,  
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         // Laravel Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        Spatie\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -245,6 +247,8 @@ return [
         // Laravel Excel
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
+        'Html' => Spatie\Html\Facades\Html::class,
+        'Form' => Spatie\Html\Elements\Form::class,
     ],
 
 ];
