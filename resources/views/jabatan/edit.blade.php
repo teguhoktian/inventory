@@ -12,14 +12,12 @@
                 </h2>
             </div>
 
-            {{ Form::model($jabatan,[
-            'route' => ['jabatan.update', $jabatan->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'PATCH'
-            ])
-            }}
+            {!! html()->modelForm($jabatan, 'PATCH', route('jabatan.update', $jabatan->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
+
             <div class="box-body my-form-body">
                 @include('jabatan.form')
             </div>
@@ -40,7 +38,7 @@
 
             </div>
 
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

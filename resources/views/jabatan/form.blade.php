@@ -1,7 +1,7 @@
 <div class="form-group">
     <label class="col-sm-2 control-label" for="inputName">{{ __('Nama Jabatan') }}</label>
     <div class="col-sm-10 {{ ($errors->has('nama_jabatan') ? ' is-invalid' : '') }}">
-        {{ Form::text('nama_jabatan', null, [ 'class' => 'form-control']) }}
+        {!! html()->text('nama_jabatan')->class('form-control') !!}
         @error('nama_jabatan')
         <span class="has-error text-sm" role="alert">
             {{ $message }}
@@ -33,7 +33,7 @@
 <div class="form-group">
     <label class="col-sm-2 control-label" for="">{{ __('Deskripsi') }}</label>
     <div class="col-sm-10 {{ ($errors->has('kode') ? ' is-invalid' : '') }}">
-        {{ Form::text('deskripsi', null, [ 'class' => 'form-control']) }}
+        {!! html()->text('deskripsi')->class('form-control') !!}
         @error('deskripsi')
         <span class="has-error text-sm" role="alert">
             {{ $message }}

@@ -13,8 +13,11 @@
 
             </div>
 
-            {{ Form::open([ 'route' => 'jabatan.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('jabatan.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
             <div class="box-body">
                 @include('jabatan.form')
@@ -35,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
