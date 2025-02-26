@@ -91,20 +91,21 @@
 <!-- /. End Content Wrapper -->
 
 <!-- Modal Form untunk Add New Role -->
-{{ Form::open([ 'route' => 'role.create-role', 'id' =>'addNewRoleForm', 'class' => 'form-horizontal' ]) }}
+{!! html()->form('POST', route('role.create-role'))
+->attribute('id', 'addNewRoleForm')
+->class('form-horizontal')
+->acceptsFiles()
+->open() !!}
+
 <x-modal id="role-modal">
     <x-slot name="header">
         <h4 class="modal-title">{{ __('Add New Role') }}</h4>
     </x-slot>
     <x-slot name="body">
-        {{
-        Form::label('role_name', __('Role Name'), ['class' => 'col-form-label'])
-        }}
-        {{
-        Form::text('role_name', null, ['class' => 'form-control', 'placeholder'
-        => __('Role Name'), 'required'])
-
-        }}
+        <label class="col-form-label" for="role_name">{{ __('Role Name') }}</label>
+        {!! html()->text('role_name')
+        ->class('form-control')
+        ->placeholder('Role Name') !!}
     </x-slot>
     <x-slot name="footer">
         <button type="submit" class="btn btn-primary btn-flat" id="addNewRoleBtn">
@@ -112,10 +113,14 @@
         </button>
     </x-slot>
 </x-modal>
-{{ Form::close() }}
+{{ html()->form()->close() }}
 
 <!-- Modal Form untunk Add New Permission -->
-{{ Form::open([ 'route' => 'role.create-permission', 'id' => 'addNewPermissionForm', 'class' => 'form-horizontal' ]) }}
+{!! html()->form('POST', route('role.create-permission'))
+->attribute('id', 'addNewPermissionForm')
+->class('form-horizontal')
+->acceptsFiles()
+->open() !!}
 <x-modal id="permission-modal">
     <x-slot name="header">
         <h4 class="modal-title">{{ __('Add Permission') }}</h4>
@@ -129,7 +134,7 @@
         </button>
     </x-slot>
 </x-modal>
-{{ Form::close() }}
+{{ html()->form()->close() }}
 
 @endsection
 
