@@ -9,15 +9,11 @@
                 <h2 class="box-title">{{ __('Edit Pengguna') }}</h2>
             </div>
 
-            {{ Form::model($user,
-            [
-            'route' => ['user.update', $user->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'PATCH'
-            ])
-            }}
+            {!! html()->modelForm($user, 'PATCH', route('user.update', $user->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
             <div class="box-body">
                 @include('user.form')
@@ -42,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

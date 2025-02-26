@@ -8,8 +8,11 @@
             <div class="box-header">
                 <h3 class="box-title">{{ __('Tambah Pengguna') }}</h3>
             </div>
-            {{ Form::open([ 'route' => 'user.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('user.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
             <div class="box-body">
                 @include('user.form')
             </div>
@@ -29,7 +32,7 @@
 
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

@@ -69,7 +69,7 @@ class UserController extends Controller
     public function edit(User $user, UserServices $services)
     {
         $options = $services->options();
-        $user->roles = $user->roles->pluck('id', 'id');
+        $user->roles = $user->roles->pluck('name', 'name');
         $user->cabangs = $user->kantorCabangs()->pluck('kantor_id', 'kantor_id');
 
         return view('user.edit', [

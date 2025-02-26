@@ -59,7 +59,7 @@ class UserServices
     public function options()
     {
         return [
-            'roles' => Role::pluck('name', 'id'),
+            'roles' => Role::pluck('name', 'name'),
             'cabangs' => KantorCabang::orderby('nama', 'ASC')->pluck('nama', 'id'),
         ];
     }
