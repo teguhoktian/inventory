@@ -11,16 +11,12 @@
                     {{ __('Ubah Data') }}
                 </h2>
             </div>
+            {!! html()->modelForm($kantorCabang, 'PATCH', route('kantor-cabang.update', $kantorCabang->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
-            {{ Form::model($kantorCabang,
-            [
-            'route' => ['kantor-cabang.update', $kantorCabang->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'PATCH'
-            ])
-            }}
             <div class="box-body my-form-body">
                 @include('kantorcabang.form')
             </div>
@@ -40,8 +36,7 @@
                 </div>
 
             </div>
-
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

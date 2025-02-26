@@ -19,27 +19,31 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="">{{ __('Kode') }}</label>
                         <div class="col-sm-10 {{ ($errors->has('kode') ? ' is-invalid' : '') }}">
-                            {{ Form::text('nama', $kantorCabang->kode, [ 'class' => 'form-control', 'disabled'
-                            =>
-                            'disabled']) }}
+
+
+                            {!! html()->text('kode', $kantorCabang->kode)
+                            ->class('form-control')
+                            ->disabled(true) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="inputName">{{ __('Nama') }}</label>
                         <div class="col-sm-10 {{ ($errors->has('nama') ? ' is-invalid' : '') }}">
-                            {{ Form::text('nama', $kantorCabang->nama, [ 'class' => 'form-control', 'disabled' =>
-                            'disabled']) }}
+
+                            {!! html()->text('nama', $kantorCabang->nama)
+                            ->class('form-control')
+                            ->disabled(true) !!}
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="inputName">{{ __('Induk') }}</label>
                         <div class="col-sm-10">
-                            {{ Form::text('nama', $kantorCabang->parent_text, [
-                            'class' => 'form-control', 'disabled'
-                            =>
-                            'disabled']) }}
+
+                            {!! html()->text('nama', $kantorCabang->parent_text)
+                            ->class('form-control')
+                            ->disabled(true) !!}
                         </div>
                     </div>
 
@@ -75,8 +79,12 @@
             <div class="box-body">
 
                 <div style="margin-bottom: 1rem;">
-                    {{ Form::open(['route' => ['kantor-cabang.addUser', $kantorCabang->id], 'files' => true, 'id' =>
-                    'moduleForm', 'class' => 'form-inline']) }}
+
+                    {!! html()->form('POST', route('kantor-cabang.addUser', $kantorCabang->id))
+                    ->attribute('id', 'moduleForm')
+                    ->class('form-inline')
+                    ->acceptsFiles()
+                    ->open() !!}
 
                     <!-- User -->
                     <div class="form-group">
@@ -127,7 +135,8 @@
                     </div>
 
 
-                    </form>
+
+                    {{ html()->form()->close() }}
                 </div>
 
                 <!-- Table Form -->
@@ -175,14 +184,15 @@
                                     <i class="fa fa-unlink"></i>
                                     {{ __('Detach') }}
                                 </button>
-                                {!! Form::open([
-                                'id' => 'delete-form-'.$jabatan->id,
-                                'method' => 'DELETE',
-                                'route' => ['kantor-cabang.deleteUser',
-                                $kantorCabang->id],'style'=>'display:inline'])
-                                !!}
-                                {!! Form::hidden('jabatan_id', $jabatan->id) !!}
-                                {!! Form::close() !!}
+
+                                {!! html()->form('DELETE', route('kantor-cabang.deleteUser', $kantorCabang->id))
+                                ->id('delete-form-'.$jabatan->id)
+                                ->style('display: inline;')
+                                ->open() !!}
+
+                                {!! html()->hidden('jabatan_id', $jabatan->id) !!}
+
+                                {!! html()->form()->close() !!}
                             </td>
                         </tr>
                         @endforeach

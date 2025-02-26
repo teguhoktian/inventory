@@ -12,9 +12,11 @@
                 </h2>
 
             </div>
-
-            {{ Form::open([ 'route' => 'kantor-cabang.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('kantor-cabang.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
             <div class="box-body">
                 @include('kantorcabang.form')
@@ -35,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
