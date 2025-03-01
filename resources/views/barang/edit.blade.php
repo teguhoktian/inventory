@@ -14,15 +14,11 @@
             </div>
             <!-- ./ box-header box-title -->
 
-            {{ Form::model($barang,
-            [
-            'route' => ['barang.update', $barang->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'PATCH'
-            ])
-            }}
+            {!! html()->modelForm($barang, 'PATCH', route('barang.update', $barang->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
             <div class="box-body my-form-body">
 
@@ -58,7 +54,7 @@
 
             </div>
 
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

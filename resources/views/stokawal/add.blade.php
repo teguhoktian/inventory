@@ -17,8 +17,11 @@
             </div>
 
             @if($cart_count>0)
-            {{ Form::open([ 'route' => 'stok-awal.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('stok-awal.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
             <div class="box-footer">
                 <a href="{{ route('barang.index') }}" class="btn-flat btn btn-danger">
                     <i class="fa fa-angle-double-left"></i> {{ __('Cancel') }}
@@ -27,7 +30,7 @@
                     <i class="fa fa-save"></i> {{ __('Simpan') }}
                 </button>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
             @endif
         </div>
     </div>

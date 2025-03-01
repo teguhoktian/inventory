@@ -10,15 +10,20 @@
         </tr>
     </thead>
     <tbody>
-        {{ Form::open(['route' => 'stok-awal.addtocart'])}}
+        {!! html()->form('POST', route('stok-awal.addtocart'))
+        ->class('form-horizontal')
+        ->open() !!}
+
         <tr style="background-color: #fcf4f4;;">
             <td width="1">
                 <strong>#</strong>
             </td>
             <td width="240">
-                {{ Form::select('id_barang', $barang, null, ['placeholder' => 'Pilih ', 'id' =>'barang',
-                'class' =>'form-control'
-                ]) }}
+                {!! html()->select('id_barang', $barang)
+                ->placeholder('Pilih')
+                ->id('barang')
+                ->class('form-control') !!}
+
                 @error('id_barang')
                 <span class="has-error text-sm text-danger" role="alert">
                     {{ $message }}
@@ -50,7 +55,7 @@
                 </button>
             </td>
         </tr>
-        {{Form::close()}}
+        {{ html()->form()->close() }}
     </tbody>
     <tbody>
         @php
@@ -81,10 +86,14 @@
                     onclick="document.getElementById('delete-form-{{$key}}').submit();">
                     <i class="fa fa-times"></i>
                 </button>
-                {!! Form::open(['id' => 'delete-form-'.$key, 'method' => 'DELETE', 'route' =>
-                ['stok-awal.removecartitem', $key],'style'=>'display:inline'])
-                !!}
-                {!! Form::close() !!}
+
+                {!! html()->form('DELETE', route('stok-awal.removecartitem', $key))
+                ->attribute('id', 'delete-form-'.$key)
+                ->class('form-horizontal')
+                ->attribute('style', 'display:inline')
+                ->acceptsFiles()
+                ->open() !!}
+                {{ html()->form()->close() }}
             </td>
         </tr>
         @endforeach

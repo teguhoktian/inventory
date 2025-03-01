@@ -24,9 +24,11 @@
 <a href="javascript:void(0)" onclick="submitDelete('delete-form-{{$id}}')" class="btn btn-flat btn-sm btn-danger">
     <i class="fa fa-trash"></i> {{ __('Hapus') }}
 </a>
-{!! Form::open([
-'id' => 'delete-form-'.$id,
-'method' => 'DELETE',
-'route' => ['barang.destroy', $id],'style'=>'display:inline'])
-!!}
-{!! Form::close() !!}
+
+
+{!! html()->form('DELETE', route('barang.destroy', $id))
+->id('delete-form-' . $id)
+->style('display: inline;')
+->open() !!}
+
+{!! html()->form()->close() !!}

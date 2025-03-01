@@ -10,43 +10,37 @@
                     {{ __('Adjusment Stok') }}
                 </h2>
             </div>
-            {{ Form::model($barang,
-            [
-            'route' => ['barang.adjust-stok-store', $barang->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'POST'
-            ])
-            }}
 
-            {{
-            Form::hidden('harga', $barang->harga)
-            }}
+            {!! html()->modelForm($barang, 'POST', route('barang.adjust-stok-store', $barang->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->open() !!}
+
+            {!! html()->hidden('harga', $barang->harga)->class('form-control') !!}
             <div class="box-body">
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Kode') }}</label>
                     <div class="col-sm-10">
-                        {{ Form::text('kode', null, [ 'class' => 'form-control' ,'disabled']) }}
+                        {!! html()->text('kode')->class('form-control')->disabled(true) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Nama') }}</label>
                     <div class="col-sm-10">
-                        {{ Form::text('nama', null, [ 'class' => 'form-control' ,'disabled']) }}
+                        {!! html()->text('nama')->class('form-control')->disabled(true) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Stok Akhir') }}</label>
                     <div class="col-sm-10">
-                        {{ Form::text('stok', null, [ 'class' => 'form-control' ,'disabled']) }}
+                        {!! html()->text('stok')->class('form-control')->disabled(true) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="inputName">{{ __('Harga') }}</label>
                     <div class="col-sm-10">
-                        {{ Form::text('harga', null, [ 'class' => 'form-control' ,'disabled']) }}
+                        {!! html()->text('harga')->class('form-control')->disabled(true) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,7 +81,7 @@
 
 
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
