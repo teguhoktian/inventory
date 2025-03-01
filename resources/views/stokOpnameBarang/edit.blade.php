@@ -5,15 +5,11 @@
 <div class="content-wrapper">
     <div class="content">
 
-        {{ Form::model($stokOpnameBarang,
-        [
-        'route' => ['stok-opname-barang.update', $stokOpnameBarang->id],
-        'files' => true,
-        'id' => 'moduleForm',
-        'class' => 'form-horizontal',
-        'method' => 'PATCH'
-        ])
-        }}
+        {!! html()->modelForm($stokOpnameBarang, 'PATCH', route('stok-opname-barang.update', $stokOpnameBarang->id))
+        ->attribute('id', 'moduleForm')
+        ->class('form-horizontal')
+        ->acceptsFiles()
+        ->open() !!}
 
         <div class="box box-solid box-success  box-flat box-shadow">
 
@@ -47,7 +43,7 @@
                     </button>
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
 
 
@@ -92,33 +88,28 @@
     </div>
 
     <!-- Cancle CO -->
-    {{ Form::model($stokOpnameBarang,
-    [
-    'route' => ['stok-opname-barang.cancelStokOpname', $stokOpnameBarang->id],
-    'files' => true,
-    'id' => 'cancelCOForm',
-    'class' => 'form-horizontal',
-    'method' => 'PATCH'
-    ])
-    }}
-    {{ Form::close() }}
+    {!! html()->modelForm($stokOpnameBarang, 'PATCH', route('stok-opname-barang.cancelStokOpname',
+    $stokOpnameBarang->id))
+    ->attribute('id', 'cancelCOForm')
+    ->class('form-horizontal')
+    ->open() !!}
+    {{ html()->form()->close() }}
 
     <!-- Cancle CO -->
-    {{ Form::model($stokOpnameBarang,
-    [
-    'route' => ['stok-opname-barang.download', $stokOpnameBarang->id],
-    'files' => true,
-    'id' => 'downloadSO',
-    'class' => 'form-horizontal',
-    'method' => 'POST'
-    ])
-    }}
-    {{ Form::close() }}
+    {!! html()->modelForm($stokOpnameBarang, 'POST', route('stok-opname-barang.download',
+    $stokOpnameBarang->id))
+    ->attribute('id', 'downloadSO')
+    ->class('form-horizontal')
+    ->open() !!}
+    {{ html()->form()->close() }}
 
     <!-- Modal Upload -->
-    {{ Form::open([ 'route' => ['stok-opname-barang.upload', $stokOpnameBarang->id], 'files' => true, 'id' =>
-    '', 'class' =>
-    'form-horizontal' ]) }}
+    {!! html()->form('POST', route('stok-opname-barang.upload', $stokOpnameBarang->id))
+    ->attribute('id', '')
+    ->acceptsFiles()
+    ->class('form-horizontal')
+    ->open() !!}
+
     <div class="modal fade" id="modal-upload">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -150,7 +141,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    {!! Form::open() !!}
+    {{ html()->form()->close() }}
     <!-- /.modal /#modal-upload -->
 
 </div>

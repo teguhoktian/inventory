@@ -14,8 +14,7 @@
 <div class="form-group">
     <label class="col-sm-2 control-label" for="inputName">{{ __('Email') }}</label>
     <div class="col-sm-10">
-        {!! html()->text('email')
-        ->class('form-control' . ($errors->has('email') ? ' is-invalid' : '')) !!}
+        {!! html()->text('email')->class('form-control' . ($errors->has('email') ? ' is-invalid' : '')) !!}
         @error('email')
         <span class="has-error text-sm" role="alert">
             {{ $message }}

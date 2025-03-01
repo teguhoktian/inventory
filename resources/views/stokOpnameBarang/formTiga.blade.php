@@ -23,10 +23,11 @@
             <td>{{ $barang->barang->satuan?->nama }}</td>
             <td style="text-align: right;">{{ $barang->stok_aplikasi }}</td>
             <td style="width: 120px;">
-                {{ Form::open([
-                'route' => ['stok-opname-barang.updateStokFisik', $barang->id],
-                'method' => 'patch',
-                ]) }}
+
+                {!! html()->form('PATCH', route('stok-opname-barang.updateStokFisik', $barang->id))
+                ->attribute('id', '')
+                ->class('form-horizontal')
+                ->open() !!}
                 <div class="input-group input-group-sm">
                     <input type="number" class="form-control" min="0" name="stok_fisik"
                         value="{{ $barang->stok_fisik ?: 0 }}">
@@ -36,7 +37,7 @@
                         </button>
                     </span>
                 </div>
-                {{ Form::close() }}
+                {{ html()->form()->close() }}
             </td>
             <td>
                 @if($barang->stok_fisik === null)

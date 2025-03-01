@@ -4,8 +4,7 @@
         <div class="form-group">
             <label class="col-md-3">{{ __('Nama') }}</label>
             <div class="col-md-9">
-                {{ Form::text('nama', null, ['class' => 'form-control ' . ($errors->has('nama') ? ' is-invalid' : '') ,
-                '' => ' ']) }}
+                {!! html()->text('nama')->class('form-control' . ($errors->has('nama') ? ' is-invalid' : '')) !!}
                 @error('nama')
                 <span class="has-error text-sm" role="alert">
                     {{ $message }}
@@ -17,8 +16,8 @@
         <div class="form-group">
             <label class="col-md-3">{{ __('Tanggal') }}</label>
             <div class="col-md-9">
-                {{ Form::text('tanggal', null, ['class' => 'form-control ' . ($errors->has('tanggal') ? ' is-invalid' :
-                ''),'id' => 'tanggal']) }}
+                {!! html()->date('tanggal')->class('form-control' . ($errors->has('tanggal') ? ' is-invalid' :
+                '')) !!}
                 @error('tanggal')
                 <span class="has-error text-sm" role="alert">
                     {{ $message }}
@@ -31,9 +30,8 @@
         <div class="form-group">
             <label class="col-md-3">{{ __('Petugas') }}</label>
             <div class="col-md-9">
-                {{ Form::text('petugas', null, ['class' => 'form-control ' .
-                ($errors->has('nama') ? ' is-invalid' : '') ,
-                'disabled' => 'disabled']) }}
+                {!! html()->text('petugas')->class('form-control' . ($errors->has('nama') ? ' is-invalid' :
+                ''))->disabled(true) !!}
             </div>
         </div>
     </div>
@@ -42,10 +40,8 @@
         <div class="form-group">
             <label class="col-md-3">{{ __('Keterangan') }}</label>
             <div class="col-md-9">
-                {{ Form::textarea('keterangan', null, ['class' => 'form-control ' . ($errors->has('keterangan') ? '
-                is-invalid' :
-                '') ,
-                'rows' => '6']) }}
+                {!! html()->textarea('keterangan')->class('form-control' . ($errors->has('keterangan') ? ' is-invalid' :
+                '')) !!}
                 @error('keterangan')
                 <span class="has-error text-sm" role="alert">
                     {{ $message }}

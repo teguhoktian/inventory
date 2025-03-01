@@ -5,8 +5,11 @@
 <div class="content-wrapper">
     <div class="content">
 
-        {{ Form::open([ 'route' => 'stok-opname-barang.store', 'files' => true, 'id' => 'moduleForm', 'class'
-        =>'form-horizontal' ]) }}
+        {!! html()->form('POST', route('stok-opname-barang.store'))
+        ->attribute('id', 'moduleForm')
+        ->class('form-horizontal')
+        ->acceptsFiles()
+        ->open() !!}
 
         <div class="box box-solid box-success  box-flat box-shadow">
 
@@ -54,7 +57,7 @@
             </div>
 
         </div>
-        {{ Form::close() }}
+        {{ html()->form()->close() }}
     </div>
 </div>
 <!-- /.content-wrapper -->
