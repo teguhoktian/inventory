@@ -10,8 +10,13 @@
                     {{ __('Tambah Satuan Barang') }}
                 </h2>
             </div>
-            {{ Form::open([ 'route' => 'satuan-barang.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+
+            {!! html()->form('POST', route('satuan-barang.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
+
             <div class="box-body my-form-body">
                 @include('jenisbarang.form')
             </div>
@@ -30,7 +35,7 @@
                 </div>
 
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>

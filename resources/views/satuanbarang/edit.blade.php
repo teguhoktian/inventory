@@ -12,15 +12,11 @@
                 </h2>
             </div>
 
-            {{ Form::model($satuanBarang,
-            [
-            'route' => ['satuan-barang.update', $satuanBarang->id],
-            'files' => true,
-            'id' => 'moduleForm',
-            'class' => 'form-horizontal',
-            'method' => 'PATCH'
-            ])
-            }}
+            {!! html()->modelForm($satuanBarang, 'PATCH', route('satuan-barang.update', $satuanBarang->id))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
 
             <div class="box-body my-form-body">
 
@@ -40,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
     </div>
 </div>
