@@ -75,13 +75,8 @@ Route::get('/api/barang-list', function () {
 
 // API get Data Users
 Route::get('/api/users-by-kantor/{kantor_id}', function ($kantor_id) {
-    $kantor = \App\Models\KantorCabang::with('users')->find($kantor_id);
-
-    if (!$kantor) {
-        return response()->json(['message' => 'Kantor tidak ditemukan'], 404);
-    }
-
-    return response()->json($kantor->users); // Mengembalikan daftar user yang terkait dengan kantor
+    $kantor = \App\Models\Jabatan::getUserByKantor($kantor_id);
+    return response()->json($kantor); // Mengembalikan daftar user yang terkait dengan kantor
 })->name('api.users-by-kantor');
 
 Route::middleware(['auth', 'verified'])->group(function () {
