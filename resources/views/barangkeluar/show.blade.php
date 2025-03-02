@@ -121,16 +121,15 @@
             </div>
 
             <div class="box-footer">
-
-                {!! Form::open([
-                'id' => 'delete-form-'.$barangKeluar->id,
-                'target' => '_blank',
-                'route' => ['barang-keluar.print', $barangKeluar->id],'style'=>'display:inline'])
-                !!}
+                {!! html()->form('POST', route('barang-keluar.print', $barangKeluar->id))
+                ->id('delete-form-'.$barangKeluar->id)
+                ->target('_blank')
+                ->style('display: inline;')
+                ->open() !!}
                 <button type="submit" id="btbSubmit" class="btn btn-default btn-flat">
                     <i class="fa fa-print"></i> {{ __('Cetak') }}
                 </button>
-                {!! Form::close() !!}
+                {!! html()->form()->close() !!}
 
                 <a href="{{ route('barang-keluar.create') }}" class="btn btn-success btn-flat">
                     <i class="fa fa-plus"></i> {{ __('Buat Transaksi Baru') }}

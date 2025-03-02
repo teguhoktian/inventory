@@ -12,7 +12,10 @@
         </tr>
     </thead>
     <tbody>
-        {{ Form::open(['route' => 'barang-keluar.addtocart', 'method' => 'POST', 'class' => 'add-to-cart-form']) }}
+        {!! html()->form('POST', route('barang-keluar.addtocart'))
+        ->attribute('id', '')
+        ->class('add-to-cart-form')
+        ->open() !!}
         <tr class="bg-warning">
             <td width="1">
                 <strong>#</strong>
@@ -63,7 +66,7 @@
                 </button>
             </td>
         </tr>
-        {{ Form::close() }}
+        {{ html()->form()->close() }}
     </tbody>
     <tbody>
         @php
@@ -90,13 +93,12 @@
                 <button class="btn btn-danger" type="button" onclick="deleteItem({{ $key }})">
                     <i class="fa fa-times"></i>
                 </button>
-                {!! Form::open([
-                'id' => 'delete-form-' . $key,
-                'method' => 'DELETE',
-                'route' => ['barang-keluar.removecartitem', $key],
-                'style' => 'display:none',
-                ]) !!}
-                {!! Form::close() !!}
+                {!! html()->form('DELETE', route('barang-keluar.removecartitem', $key))
+                ->attribute('id', '')
+                ->class('delete-form-' . $key)
+                ->style('display: inline;')
+                ->open() !!}
+                {{ html()->form()->close() }}
             </td>
         </tr>
         @endforeach

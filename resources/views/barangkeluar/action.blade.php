@@ -8,9 +8,9 @@
     </a>
 </div>
 
-{!! Form::open([
-'id' => 'delete-form-'.$id,
-'method' => 'DELETE',
-'route' => ['barang-keluar.destroy', $id],'style'=>'display:inline'])
-!!}
-{!! Form::close() !!}
+{!! html()->form('DELETE', route('barang-keluar.destroy', $id))
+->id('delete-form-' . $id)
+->style('display: inline;')
+->open() !!}
+
+{!! html()->form()->close() !!}

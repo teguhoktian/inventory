@@ -7,8 +7,11 @@
     <div class="content">
 
         <div class="col-sm-7">
-            {{ Form::open([ 'route' => 'barang-keluar.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('barang-keluar.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
             <x-box type="success" flat="true" shadow="true">
                 <x-slot name="header">
                     {{ __('Document Detail') }}
@@ -25,7 +28,7 @@
                     </button>
                 </x-slot>
             </x-box>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
         <div class="col-sm-5">
             <x-box type="success" flat="true" shadow="true">
@@ -124,7 +127,7 @@
 
                         // Memasukkan daftar user ke dalam select
                         data.forEach(function (user) {
-                            $('#user').append(new Option(user.name, user.id)); // Asumsi user memiliki field name dan id
+                            $('#user').append(new Option(user.name, user.user_id)); // Asumsi user memiliki field name dan id
                         });
 
                         // Mengaktifkan Select2 untuk dropdown user setelah di-update
