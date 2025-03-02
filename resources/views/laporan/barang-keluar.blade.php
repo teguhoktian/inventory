@@ -72,13 +72,16 @@
 
 
                 <!-- Form Print PDF -->
-                {!! Form::open(['route' => 'laporan.barang-keluar.print', 'method' => 'POST', 'id' => 'printPDF'])
-                !!}
+                {!! html()->form('POST', route('laporan.barang-keluar.print'))
+                ->attribute('id', 'printPDF')
+                ->class('')
+                ->acceptsFiles()
+                ->open() !!}
                 <input type="hidden" id="tanggal_mulai" name="tanggal_mulai" class="form-control"
                     value="{{ $tanggal_mulai ?: date('Y-m-d') }}">
                 <input type="hidden" type="date" id="tanggal_akhir" name="tanggal_akhir" class="form-control"
                     value="{{ $tanggal_akhir ?: date('Y-m-d') }}">
-                {!! Form::close() !!}
+                {!! html()->form()->close() !!}
                 <!-- /.Form Print PDF -->
             </div>
         </div>
