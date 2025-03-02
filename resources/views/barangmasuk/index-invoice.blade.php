@@ -5,7 +5,7 @@
 <div class="content-wrapper">
     <div class=" content">
 
-        <div class="box box-solid box-success box-flat box-shadow">
+        <div class="box box-solid box-warning box-flat box-shadow">
 
             <div class="box-header with-border">
                 <h3 class="box-title"> {{ __('Invoice Barang Masuk') }} </h3>
@@ -18,7 +18,7 @@
                         <i class="fa fa-plus"></i> {{ __('Tambah') }}
                     </a>
 
-                    <a href="{{ route('barang-masuk.index', ['mode' => 'barang']) }}" class="btn btn-warning btn-flat">
+                    <a href="{{ route('barang-masuk.index', ['mode' => 'barang']) }}" class="btn btn-success btn-flat">
                         <i class="fa fa-list"></i> {{ __('Lihat Daftar Barang') }}
                     </a>
                 </div>

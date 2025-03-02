@@ -6,8 +6,11 @@
     <div class="content">
 
         <div class="col-sm-7">
-            {{ Form::open([ 'route' => 'barang-masuk.store', 'files' => true, 'id' => 'moduleForm', 'class' =>
-            'form-horizontal' ]) }}
+            {!! html()->form('POST', route('barang-masuk.store'))
+            ->attribute('id', 'moduleForm')
+            ->class('form-horizontal')
+            ->acceptsFiles()
+            ->open() !!}
             <x-box type="success" flat="true" shadow="true">
                 <x-slot name="header">
                     {{ __('Document Detail') }}
@@ -24,7 +27,7 @@
                     </button>
                 </x-slot>
             </x-box>
-            {{ Form::close() }}
+            {{ html()->form()->close() }}
         </div>
         <div class="col-sm-5">
             <x-box type="success" flat="true" shadow="true">
